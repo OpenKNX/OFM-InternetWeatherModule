@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../Organization/knxprod-support/knx_project_14/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+  <ManufacturerData>
+    <Manufacturer>
+      <ApplicationPrograms>
+        <ApplicationProgram>
+          <Static>
+            <ParameterTypes>
+             <ParameterType Id="%AID%_PT-APIKEY" Name="API Key">
+                <TypeText SizeInBit="320" /> <!-- 40 characters -->
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-WheaterLocationType" Name="WheaterLocation">
+                <TypeRestriction Base="Value" SizeInBit="1">
+                  <Enumeration Text="Gerätestandort aus Allgemein" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Anderer Ort"                  Value="1" Id="%ENID%" />                       
+                </TypeRestriction>
+              </ParameterType>
+            </ParameterTypes>
+            <Parameters>       
+              <!-- OpenWheaterMap API Key -->
+              <Union SizeInBit="320">
+                <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%00001" Name="API Key" ParameterType="%AID%_PT-APIKEY" Offset="0"  BitOffset="0" Text="OpenWheaterMap API Key" Value="" />
+             </Union>
+            </Parameters>
+            <ParameterRefs>
+              <!-- OpenWheaterMap API Key -->
+              <ParameterRef Id="%AID%_UP-%TT%00001_R-%TT%0000100" RefId="%AID%_UP-%TT%00001" />
+            </ParameterRefs>
+            <ComObjectTable>
+            </ComObjectTable>
+            <ComObjectRefs>
+            </ComObjectRefs>
+          </Static>
+          <Dynamic>
+            <ChannelIndependentBlock>
+              <ParameterBlock Id="%AID%_PB-nnn" Name="WheaterSettings" Text="Wetter Basiseinstellungen" Icon="ethernet" HelpContext="Empty">
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="OpenWheaterMap" UIHint="Headline" />
+                <!-- OpenWheaterMap API Key -->
+                <ParameterRefRef RefId="%AID%_UP-%TT%00001_R-%TT%0000100" IndentLevel="1" HelpContext="IW-OpenWheaterMapAPIKey" />              
+              </ParameterBlock>
+            </ChannelIndependentBlock>
+          </Dynamic>
+        </ApplicationProgram>
+      </ApplicationPrograms>
+      <Baggages>
+        <Baggage TargetPath="" Name="Help_de.zip" Id="%FILE-HELP-de%">
+          <FileInfo TimeInfo="%DATETIME%" />
+        </Baggage>
+        <!-- <Baggage TargetPath="" Name="Icons.zip" Id="%FILE-ICONS%">
+          <FileInfo TimeInfo="%DATETIME%" />
+        </Baggage> -->
+      </Baggages>
+    </Manufacturer>
+  </ManufacturerData>
+</KNX>

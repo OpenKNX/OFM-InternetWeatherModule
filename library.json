@@ -1,0 +1,19 @@
+{
+    "name": "OAM-InternetWheaterModule",
+    "version": "1.1.1",
+    "dependencies": {
+       
+    },
+    "description": "Internet Wheater Service",
+    "homepage": "https://openknx.de",
+    "authors": {
+        "name": "OpenKNX",
+        "email": "info@openknx.de",
+        "url": "https://openknx.de",
+        "maintainer": true
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/OpenKNX/OAM-InternetWheaterModule"
+    }
+}

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../Organization/knxprod-support/knx_project_14/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+  <ManufacturerData>
+    <Manufacturer>
+      <ApplicationPrograms>
+        <ApplicationProgram>
+          <Static>
+            <Parameters>
+              <Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%CC%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />           
+              <!-- Wheater location -->
+              <Union SizeInBit="65">
+                <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%001" Name="CH%C%WheaterLocationType"  ParameterType="%AID%_PT-WheaterLocationType"  Offset="0" BitOffset="0" Text="Ort für Wetter" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%Latitude"  ParameterType="%AID%_PT-Latitude"  Offset="1" BitOffset="0" Text="Breitengrad" Value="48.2083" />
+                <Parameter Id="%AID%_UP-%TT%%CC%003" Name="CH%C%Longitude" ParameterType="%AID%_PT-Longitude" Offset="5" BitOffset="0" Text="Längengrad" Value="16.3731"  />
+              </Union>
+            </Parameters>
+            <ParameterRefs>
+              <!-- Channel name -->
+              <ParameterRef Id="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" RefId="%AID%_P-%TT%%CC%000" />
+              <!-- Wheater location type -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00100" RefId="%AID%_UP-%TT%%CC%001" />
+              <!-- Latitude -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00200" RefId="%AID%_UP-%TT%%CC%002" />
+              <!-- Longitude -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00300" RefId="%AID%_UP-%TT%%CC%003" />
+            </ParameterRefs>
+            <ComObjectTable>
+              <!-- Aktuelle Temperatur -->
+              <ComObject Id="%AID%_O-%TT%%CC%000" Name="CH%C%CurrentTemparatur" Number="%K0%" Text="" ObjectSize="1 Byte" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-9-1" />
+            </ComObjectTable>
+            <ComObjectRefs>
+              <!-- Aktuelle Temperatur -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" RefId="%AID%_O-%TT%%CC%000"  Text="%C%: Aktuelle Temperatur"  FunctionText="{{0:-}} Aktuelle Temperatur"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+            </ComObjectRefs>
+          </Static>
+          <Dynamic>
+            <ChannelIndependentBlock>
+              <!-- START INCLUDE HERE -->
+              <ParameterBlock Id="%AID%_PB-%C%1" Name="Channel%C%Page" Text="Wetter %Z%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="import" HelpContext="Empty">
+                <Channel Id="%AID%_CH-IW%CC%" Name="f%CC%IW" Number="IW%CC%" Text="Wetter %Z%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001">
+                  <ParameterBlock Id="%AID%_PB-%TT%%CC%01" Name="Channel%C%Wrapper" Inline="true">
+                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Standort" UIHint="Headline" />
+                    <!-- Name -->
+                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="IW-ChannelName" />
+                    <!-- Wheater location type -->
+                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%T%%CCC%00100" HelpContext="IW-WheaterLocationType" />
+
+                    <choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%T%%CCC%00100">  <!-- Wheater location type -->
+                      <when test="1" >  <!-- Anderer Ort -->
+                        <!-- Latitude -->
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%T%%CCC%00200" HelpContext="IW-Latitude" />
+                        <!-- Longitude -->
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%T%%CCC%00300" HelpContext="IW-Longitude" />
+                      </when>
+                    </choose>
+                     <!-- Aktuelle Temperatur -->
+                    <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
+                  </ParameterBlock>
+                </Channel>
+              </ParameterBlock>
+            </ChannelIndependentBlock>
+          </Dynamic>
+        </ApplicationProgram>
+      </ApplicationPrograms>
+    </Manufacturer>
+  </ManufacturerData>
+</KNX>
