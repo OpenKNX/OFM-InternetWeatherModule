@@ -8,23 +8,30 @@
           <Static>
             <Parameters>
               <Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%CC%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />           
+              <!-- Wheater channel type -->
+              <Union SizeInBit="8">
+                <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%001" Name="CH%C%WheaterChannelType"  ParameterType="%AID%_PT-WheaterChannelType"  Offset="0" BitOffset="0" Text="Wetterdienst" Value="0" />
+              </Union>
               <!-- Wheater location -->
               <Union SizeInBit="65">
-                <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%001" Name="CH%C%WheaterLocationType"  ParameterType="%AID%_PT-WheaterLocationType"  Offset="0" BitOffset="0" Text="Ort für Wetter" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%Latitude"  ParameterType="%AID%_PT-Latitude"  Offset="1" BitOffset="0" Text="Breitengrad" Value="48.2083" />
-                <Parameter Id="%AID%_UP-%TT%%CC%003" Name="CH%C%Longitude" ParameterType="%AID%_PT-Longitude" Offset="5" BitOffset="0" Text="Längengrad" Value="16.3731"  />
+                <Memory CodeSegment="%MID%" Offset="1" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%WheaterLocationType"  ParameterType="%AID%_PT-WheaterLocationType"  Offset="0" BitOffset="0" Text="Ort für Wetter" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%003" Name="CH%C%Latitude"  ParameterType="%AID%_PT-Latitude"  Offset="1" BitOffset="0" Text="Breitengrad" Value="48.2083" />
+                <Parameter Id="%AID%_UP-%TT%%CC%004" Name="CH%C%Longitude" ParameterType="%AID%_PT-Longitude" Offset="5" BitOffset="0" Text="Längengrad" Value="16.3731"  />
               </Union>
             </Parameters>
             <ParameterRefs>
               <!-- Channel name -->
               <ParameterRef Id="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" RefId="%AID%_P-%TT%%CC%000" />
-              <!-- Wheater location type -->
+              <!-- WheaterChannelType -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00100" RefId="%AID%_UP-%TT%%CC%001" />
-              <!-- Latitude -->
+              <!-- Wheater location type -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00200" RefId="%AID%_UP-%TT%%CC%002" />
-              <!-- Longitude -->
+              <!-- Latitude -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00300" RefId="%AID%_UP-%TT%%CC%003" />
+              <!-- Longitude -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00400" RefId="%AID%_UP-%TT%%CC%004" />
             </ParameterRefs>
             <ComObjectTable>
               <!-- Aktuelle Temperatur -->
@@ -36,27 +43,31 @@
             </ComObjectRefs>
           </Static>
           <Dynamic>
-            <ChannelIndependentBlock>
-              <!-- START INCLUDE HERE -->
-              <ParameterBlock Id="%AID%_PB-%C%1" Name="Channel%C%Page" Text="Wetter %Z%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="import" HelpContext="Empty">
-                <Channel Id="%AID%_CH-IW%CC%" Name="f%CC%IW" Number="IW%CC%" Text="Wetter %Z%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001">
-                  <ParameterBlock Id="%AID%_PB-%TT%%CC%01" Name="Channel%C%Wrapper" Inline="true">
+            <ChannelIndependentBlock> 
+              <ParameterBlock Id="%AID%_PB-%C%1" Name="IW%C%Page" Text="Ort %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="tent" HelpContext="IW-Service">
+                <Channel Id="%AID%_CH-IW%CC%" Name="f%CC%IW" Number="IW%CC%" Text="Ort %CC%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001">
+                  <ParameterBlock Id="%AID%_PB-%TT%%CC%01" Name="IW%C%Wrapper" Inline="true">                    
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Standort" UIHint="Headline" />
                     <!-- Name -->
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="IW-ChannelName" />
-                    <!-- Wheater location type -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%T%%CCC%00100" HelpContext="IW-WheaterLocationType" />
-
-                    <choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%T%%CCC%00100">  <!-- Wheater location type -->
-                      <when test="1" >  <!-- Anderer Ort -->
-                        <!-- Latitude -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%T%%CCC%00200" HelpContext="IW-Latitude" />
-                        <!-- Longitude -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%T%%CCC%00300" HelpContext="IW-Longitude" />
+                    <!-- WheaterChannelType -->
+                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00100" HelpContext="IW-WeatherLocationType" />
+                    <choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00100">  <!-- WheaterChannelType -->
+                      <when test="1" > <!-- OpenWheater Map -->
+                        <!-- Wheater location type -->
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00200" HelpContext="IW-WeatherLocationType" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00200">  <!-- Wheater location type -->
+                          <when test="1" >  <!-- Anderer Ort -->
+                            <!-- Latitude -->
+                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00200" HelpContext="IW-Latitude" />
+                            <!-- Longitude -->
+                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00300" HelpContext="IW-Longitude" />
+                          </when>
+                        </choose>
+                        <!-- Aktuelle Temperatur -->
+                        <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
                       </when>
                     </choose>
-                     <!-- Aktuelle Temperatur -->
-                    <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
                   </ParameterBlock>
                 </Channel>
               </ParameterBlock>

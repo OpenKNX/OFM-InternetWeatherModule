@@ -1,4 +1,4 @@
-### WheaterLocationType
+### Wetterort
 
 Ort für den das Wetter bestimmt werden soll
 

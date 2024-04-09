@@ -20,7 +20,13 @@ const std::string InternetWheaterModule::version()
 
 OpenKNX::Channel* InternetWheaterModule::createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */)
 {
-    return new OpenWheaterMapChannel(_channelIndex);
+    switch (ParamIW_CHWheaterChannelType)
+    {
+        case 1:
+            return new OpenWheaterMapChannel(_channelIndex);
+        default:
+            return nullptr;
+    }
 }
 
 
