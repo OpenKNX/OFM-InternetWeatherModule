@@ -25,9 +25,9 @@
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-WheaterChannelType" Name="WheaterChannelType">
-                <TypeRestriction Base="Value" SizeInBit="8">
+                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
                   <Enumeration Text="Deaktiviert"  Value="0" Id="%ENID%" />
-                  <Enumeration Text="OpenWheater Map"   Value="1" Id="%ENID%" />                   
+                  <Enumeration Text="OpenWheaterMap"   Value="1" Id="%ENID%" />                   
                 </TypeRestriction>
               </ParameterType>
             </ParameterTypes>
@@ -39,7 +39,7 @@
              </Union>
               <!-- WheaterRefreshInterval -->
               <Union SizeInBit="8">
-                <Memory CodeSegment="%MID%" Offset="1" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="40" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%00002" Name="WheaterRefreshInterval" ParameterType="%AID%_PT-WheaterRefreshInterval" Offset="0"  BitOffset="0" Text="Automatische Aktualisierung" Value="3" />
              </Union>
              

@@ -24,10 +24,59 @@ OpenKNX::Channel* InternetWheaterModule::createChannel(uint8_t _channelIndex /* 
     {
         case 1:
             return new OpenWheaterMapChannel(_channelIndex);
-        default:
+         default:
             return nullptr;
     }
 }
 
+void InternetWheaterModule::showHelp()
+{
+   openknx.console.printHelpLine("iw<CC>", "Update data of channel CC. i.e. iw01");
+}
+
+bool InternetWheaterModule::processCommand(const std::string cmd, bool diagnoseKo)
+{
+    if (cmd.rfind("iw", 0) == 0)
+    {
+        auto channelString = cmd.substr(2);
+        if (channelString.length() > 0)
+        {
+            auto pos = channelString.find_first_of(' ');
+            std::string channelNumberString;
+            std::string channelCmd;
+            if (pos > 0 && pos != std::string::npos)
+            {
+                channelNumberString = channelString.substr(0, pos);
+                channelCmd = channelString.substr(pos + 1);
+            }
+            else
+            {
+                channelNumberString = channelString;
+                channelCmd = "";
+            }
+            auto channel = atoi(channelNumberString.c_str());
+            if (channel < 1 || channel > getNumberOfChannels())
+            {
+                Serial.println();
+                Serial.printf("Channel %d not found\r\n", channel);
+                return true;
+            }
+            auto wheaterChannel = (BaseWheaterChannel*) getChannel(channel - 1);
+            if (wheaterChannel == nullptr)
+            {
+                Serial.println();
+                Serial.printf("Channel not %d activated\r\n", channel);
+                return true;
+            }
+            if (channelCmd.length() == 0)
+            {
+                wheaterChannel->makeCall();
+                return true;
+            }
+        }
+    }
+    return false;
+}
+ 
 
 InternetWheaterModule openknxInternetWheaterModule;
