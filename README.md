@@ -1,9 +1,33 @@
-# OFM-BinaryInput
+# OFM-InternetWheaterModule
 
-Dies ist eine Library zur Integration von Binäreingängen. Das Featureset ist auf das wesentliche beschränkt, da eine Verwendung als Taster über OFM-VirtualButton abgebildet wird.
+Dies ist eine Library zur Integration von Internet Wetterdiensten.
+
+Derzeit wird OpenWheaterMap als Wetteranbieter unterstützt
   
 Features
-- Senden eines DPT1 bei "Offen" oder "Geschlossen"
-- Sperre
-- Entprellung
-- Zyklisches senden 
+- Aktuelle Werte
+- Prognose Heute
+- Prognose Morgen
+
+KO's für
+- Wetterbeschreibung
+- Tagestemperatur
+- Nachttemperatur
+- Frühtemperatur
+- Abendtemperatur
+- Minimum Temperatur
+- Maximum Temperatur
+- Gefühlte Tagestemperatur
+- Gefühlte Nachtemperatur
+- Gefühlte Frühtemperatur
+- Gefühlte Abendtemperatur
+- Luftdruck
+- Luftfeuchte
+- Wind
+- Windböen
+- Windrichtung
+- Regen
+- Schnee
+- UV-Index
+- Wolken
+

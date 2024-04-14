@@ -1,7 +1,6 @@
 #include "OpenWheaterMapChannel.h"
 
-
-#define OpenWheaterMapUrl "https://api.openweathermap.org/data/2.5/onecall?units=metric&lang=de&exclude=minutely,dailyX,currentX,hourly"
+#define OpenWheaterMapUrl "https://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,hourly"
 
 
 OpenWheaterMapChannel::OpenWheaterMapChannel(uint8_t index)
@@ -24,15 +23,14 @@ void OpenWheaterMapChannel::makeCall()
     url += ParamIW_CHWheaterLocationType == 0 ? ParamBASE_Latitude : ParamIW_CHLatitude;
     url += "&lon=";
     url += ParamIW_CHWheaterLocationType == 0 ? ParamBASE_Longitude : ParamIW_CHLongitude;
-    
-    logDebugP("Call: %s", url);
+    logDebugP("Call: %s", url.c_str());
     http.begin(url);
 
     // Send HTTP GET request
     auto status = http.GET();
     if (status != 200)
     {
-        logErrorP("Http result %d for '%s'", status, url);
+        logErrorP("Http result %d for '%s'", status, url.c_str());
         return;
     }
 
@@ -43,21 +41,27 @@ void OpenWheaterMapChannel::makeCall()
     // deserializeJson(doc, json);
     deserializeJson(doc, http.getString());
 
-    //  float lat = doc["lat"]; // 47.07
-    //  float lon = doc["lon"]; // 15.42
-    //  const char* timezone = doc["timezone"]; // "Europe/Vienna"
-    //  int timezone_offset = doc["timezone_offset"]; // 7200
-
     JsonObject current = doc["current"];
-    //  long current_dt = current["dt"]; // 1598723553
-    //  long current_sunrise = current["sunrise"]; // 1598674453
-    //  long current_sunset = current["sunset"]; // 1598723074
+ 
     float tempValue = current["temp"]; // 22.34
     logDebugP("Temperature: %f", tempValue);
     if ((float) KoIW_CHCurrentTemparatur.value(DPT_Value_Temp) != tempValue)
     {
         KoIW_CHCurrentTemparatur.value(tempValue, DPT_Value_Temp);
     }
+    float humidity = current["humidity"]; // 69
+    logDebugP("Humidity: %f", humidity);
+    if ((float) KoIW_CHCurrentHumidity.value(DPT_Value_Humidity) != humidity)
+    {
+        KoIW_CHCurrentHumidity.value(humidity, DPT_Value_Humidity);
+    }
+    float windSpeed = current["wind_speed"]; // 69
+    logDebugP("Wind Speed: %f", windSpeed);   
+    if ((float) KoIW_CHCurrentWind.value(DPT_Value_Wsp_kmh) != windSpeed)
+    {
+        KoIW_CHCurrentWind.value(windSpeed, DPT_Value_Wsp_kmh);
+    }
+
 
                                     //  float current_feels_like = current["feels_like"]; // 21.95
                                     //  int current_pressure = current["pressure"]; // 1006

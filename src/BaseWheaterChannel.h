@@ -17,6 +17,7 @@ class BaseWheaterChannel : public OpenKNX::Channel
     BaseWheaterChannel(uint8_t index);
   public:
     void loop() override;
+    void setup() override;
     virtual void makeCall() = 0;
     void processInputKo(GroupObject &ko);
  };
