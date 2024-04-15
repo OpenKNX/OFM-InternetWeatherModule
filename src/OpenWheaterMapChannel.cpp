@@ -69,13 +69,13 @@ void OpenWheaterMapChannel::makeCall()
         {
             KoIW_CHCurrentPressure.value(pressure, DPT_Value_Pres);
         }
-        float windSpeed = current["wind_speed"]; // 69
+        float windSpeed = 3.6 * (float) current["wind_speed"]; // 69
         logDebugP("Wind Speed: %f", windSpeed);   
         if ((float) KoIW_CHCurrentWind.value(DPT_Value_Wsp_kmh) != windSpeed)
         {
             KoIW_CHCurrentWind.value(windSpeed, DPT_Value_Wsp_kmh);
         }
-        float windGust = current["wind_gust"]; // 69
+        float windGust = 3.6 * (float) current["wind_gust"]; // 69
         logDebugP("Wind Gust: %f", windGust);   
         if ((float) KoIW_CHCurrentWindGust.value(DPT_Value_Wsp_kmh) != windGust)
         {
@@ -206,13 +206,13 @@ void OpenWheaterMapChannel::makeCall()
             {
                 KoIW_CHTodayPressure.value(pressure, DPT_Value_Pres);
             }
-            float windSpeed = today["wind_speed"]; // 69
+            float windSpeed = 3.6 * (float) today["wind_speed"]; // 69
             logDebugP("Today Wind Speed: %f", windSpeed);   
             if ((float) KoIW_CHTodayWind.value(DPT_Value_Wsp_kmh) != windSpeed)
             {
                 KoIW_CHTodayWind.value(windSpeed, DPT_Value_Wsp_kmh);
             }
-            float windGust = today["wind_gust"]; // 69
+            float windGust = 3.6 * (float) today["wind_gust"]; // 69
             logDebugP("Today Wind Gust: %f", windGust);   
             if ((float) KoIW_CHTodayWindGust.value(DPT_Value_Wsp_kmh) != windGust)
             {
@@ -224,26 +224,18 @@ void OpenWheaterMapChannel::makeCall()
             {
                 KoIW_CHTodayWindDirection.value(windDirection, DPT_Angle);
             }   
-            JsonObject rainObject = today["rain"];    
-            if (rainObject != nullptr)
+            float rain = today["rain"]; // 2.5
+            logDebugP("Today Rain: %f", rain); 
+            if ((float) KoIW_CHTodayRain.value(DPT_Rain_Amount) != rain)
             {
-                float rain = rainObject["1h"]; // 2.5
-                logDebugP("Today Rain: %f", rain); 
-                if ((float) KoIW_CHTodayRain.value(DPT_Rain_Amount) != rain)
-                {
-                    KoIW_CHTodayRain.value(rain, DPT_Rain_Amount);
-                }   
-            }  
-            JsonObject snowObject = today["snow"];    
-            if (snowObject != nullptr)
+                KoIW_CHTodayRain.value(rain, DPT_Rain_Amount);
+            }   
+            float snow = today["snow"]; // 2.5
+            logDebugP("Today Snow: %f", snow); 
+            if ((float) KoIW_CHTodaySnow.value(DPT_Length_mm) != snow)
             {
-                float snow = snowObject["1h"]; // 2.5
-                logDebugP("Today Snow: %f", snow); 
-                if ((float) KoIW_CHTodaySnow.value(DPT_Length_mm) != snow)
-                {
-                    KoIW_CHTodaySnow.value(snow, DPT_Length_mm);
-                }   
-            }            
+                KoIW_CHTodaySnow.value(snow, DPT_Length_mm);
+            }               
             int uvi = round((float)today["uvi"]); // 6.29   
             logDebugP("Today UVI: %d", uvi);   
             if ((int) KoIW_CHTodayUVI.value(DPT_DecimalFactor) != uvi)
@@ -340,13 +332,13 @@ void OpenWheaterMapChannel::makeCall()
             {
                 KoIW_CHTomorrowPressure.value(pressure, DPT_Value_Pres);
             }
-            float windSpeed = tomorrow["wind_speed"]; // 69
+            float windSpeed = 3.6 * (float) tomorrow["wind_speed"]; // 69
             logDebugP("Tomorrow Wind Speed: %f", windSpeed);   
             if ((float) KoIW_CHTomorrowWind.value(DPT_Value_Wsp_kmh) != windSpeed)
             {
                 KoIW_CHTomorrowWind.value(windSpeed, DPT_Value_Wsp_kmh);
             }
-            float windGust = tomorrow["wind_gust"]; // 69
+            float windGust = 3.6 * (float) tomorrow["wind_gust"]; // 69
             logDebugP("Tomorrow Wind Gust: %f", windGust);   
             if ((float) KoIW_CHTomorrowWindGust.value(DPT_Value_Wsp_kmh) != windGust)
             {
@@ -357,27 +349,19 @@ void OpenWheaterMapChannel::makeCall()
             if ((float) KoIW_CHTomorrowWindDirection.value(DPT_Angle) != windDirection)
             {
                 KoIW_CHTomorrowWindDirection.value(windDirection, DPT_Angle);
+            }              
+            float rain = tomorrow["rain"]; // 2.5
+            logDebugP("Tomorrow Rain: %f", rain); 
+            if ((float) KoIW_CHTomorrowRain.value(DPT_Rain_Amount) != rain)
+            {
+                KoIW_CHTomorrowRain.value(rain, DPT_Rain_Amount);
             }   
-            JsonObject rainObject = tomorrow["rain"];    
-            if (rainObject != nullptr)
+            float snow = tomorrow["snow"]; // 2.5
+            logDebugP("Tomorrow Snow: %f", snow); 
+            if ((float) KoIW_CHTomorrowSnow.value(DPT_Length_mm) != snow)
             {
-                float rain = rainObject["1h"]; // 2.5
-                logDebugP("Tomorrow Rain: %f", rain); 
-                if ((float) KoIW_CHTomorrowRain.value(DPT_Rain_Amount) != rain)
-                {
-                    KoIW_CHTomorrowRain.value(rain, DPT_Rain_Amount);
-                }   
-            }  
-            JsonObject snowObject = tomorrow["snow"];    
-            if (snowObject != nullptr)
-            {
-                float snow = snowObject["1h"]; // 2.5
-                logDebugP("Tomorrow Snow: %f", snow); 
-                if ((float) KoIW_CHTomorrowSnow.value(DPT_Length_mm) != snow)
-                {
-                    KoIW_CHTomorrowSnow.value(snow, DPT_Length_mm);
-                }   
-            }            
+                KoIW_CHTomorrowSnow.value(snow, DPT_Length_mm);
+            }   
             int uvi = round((float)tomorrow["uvi"]); // 6.29   
             logDebugP("Tomorrow UVI: %d", uvi);   
             if ((int) KoIW_CHTomorrowUVI.value(DPT_DecimalFactor) != uvi)
