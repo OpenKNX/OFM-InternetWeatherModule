@@ -35,7 +35,7 @@
             </ParameterRefs>
             <ComObjectTable>
               <!-- Diagnose HTTP Status -->
-              <ComObject Id="%AID%_O-%TT%%CC%000" Number="%K0%" Name="CH%C%HTTPStatus" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%000" Number="%K0%" Name="CH%C%HTTPStatus" Text="" ObjectSize="2 Bytes" DatapointType="DPST-8-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
       
               <!-- Aktuelle Temperatur -->
               <ComObject Id="%AID%_O-%TT%%CC%001" Number="%K1%" Name="CH%C%CurrentTemparatur" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
@@ -54,9 +54,9 @@
               <!-- Aktueller Regen -->
               <ComObject Id="%AID%_O-%TT%%CC%008" Number="%K8%" Name="CH%C%CurrentRain" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-26" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- Aktueller Schnee -->
-              <ComObject Id="%AID%_O-%TT%%CC%009" Number="%K9%" Name="CH%C%CurrentSnow" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-11" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%009" Number="%K9%" Name="CH%C%CurrentSnow" Text="" ObjectSize="2 Bytes" DatapointType="DPST-7-11" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- Aktueller UV Index -->
-              <ComObject Id="%AID%_O-%TT%%CC%010" Number="%K10%" Name="CH%C%CurrentUVI" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-11" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%010" Number="%K10%" Name="CH%C%CurrentUVI" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-5" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- Aktuelle Wolken -->
               <ComObject Id="%AID%_O-%TT%%CC%011" Number="%K11%" Name="CH%C%CurrentClouds" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
      
@@ -95,9 +95,9 @@
               <!-- Prognose Heute Regen -->
               <ComObject Id="%AID%_O-%TT%%CC%028" Number="%K28%" Name="CH%C%TodayRain" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-26" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- Prognose Heute Schnee -->
-              <ComObject Id="%AID%_O-%TT%%CC%029" Number="%K29%" Name="CH%C%TodaySnow" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-11" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%029" Number="%K29%" Name="CH%C%TodaySnow" Text="" ObjectSize="2 Bytes" DatapointType="DPST-7-11" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- Prognose Heute UV Index -->
-              <ComObject Id="%AID%_O-%TT%%CC%030" Number="%K30%" Name="CH%C%TodayUVI" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-11" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%030" Number="%K30%" Name="CH%C%TodayUVI" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-5" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- Prognose Heute Wolken -->
               <ComObject Id="%AID%_O-%TT%%CC%031" Number="%K31%" Name="CH%C%TodayClouds" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
            
@@ -136,9 +136,9 @@
               <!-- Prognose Morgen Regen -->
               <ComObject Id="%AID%_O-%TT%%CC%048" Number="%K48%" Name="CH%C%TomorrowRain" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-26" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- Prognose Morgen Schnee -->
-              <ComObject Id="%AID%_O-%TT%%CC%049" Number="%K49%" Name="CH%C%TomorrowSnow" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-11" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%049" Number="%K49%" Name="CH%C%TomorrowSnow" Text="" ObjectSize="2 Bytes" DatapointType="DPST-7-11" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- Prognose Morgen UV Index -->
-              <ComObject Id="%AID%_O-%TT%%CC%050" Number="%K50%" Name="CH%C%TomorrowUVI" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-11" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%050" Number="%K50%" Name="CH%C%TomorrowUVI" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-5" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- Prognose Morgen Wolken -->
               <ComObject Id="%AID%_O-%TT%%CC%051" Number="%K51%" Name="CH%C%TomorrowClouds" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
            </ComObjectTable>
