@@ -235,6 +235,12 @@ void OpenWheaterMapChannel::makeCall()
             if ((float) KoIW_CHTodaySnow.value(DPT_Length_mm) != snow)
             {
                 KoIW_CHTodaySnow.value(snow, DPT_Length_mm);
+            }  
+            int probabilityOfPrecipitation = today["pop"]; // 70
+            logDebugP("Today Probability Of Precipitation: %d", probabilityOfPrecipitation);   
+            if ((float) KoIW_CHTodayProbabilityOfPrecipitation.value(DPT_Scaling) != probabilityOfPrecipitation)
+            {
+                KoIW_CHTodayProbabilityOfPrecipitation.value(probabilityOfPrecipitation, DPT_Scaling);
             }               
             int uvi = round((float)today["uvi"]); // 6.29   
             logDebugP("Today UVI: %d", uvi);   
@@ -362,6 +368,12 @@ void OpenWheaterMapChannel::makeCall()
             {
                 KoIW_CHTomorrowSnow.value(snow, DPT_Length_mm);
             }   
+            int probabilityOfPrecipitation = today["pop"]; // 70
+            logDebugP("Tomorrow Probability Of Precipitation: %d", probabilityOfPrecipitation);   
+            if ((float) KoIW_CHTomorrowProbabilityOfPrecipitation.value(DPT_Scaling) != probabilityOfPrecipitation)
+            {
+                KoIW_CHTomorrowProbabilityOfPrecipitation.value(probabilityOfPrecipitation, DPT_Scaling);
+            }
             int uvi = round((float)tomorrow["uvi"]); // 6.29   
             logDebugP("Tomorrow UVI: %d", uvi);   
             if ((int) KoIW_CHTomorrowUVI.value(DPT_DecimalFactor) != uvi)
