@@ -70,7 +70,7 @@ bool InternetWheaterModule::processCommand(const std::string cmd, bool diagnoseK
             }
             if (channelCmd.length() == 0)
             {
-                wheaterChannel->makeCall();
+                wheaterChannel->fetchData();
                 return true;
             }
         }

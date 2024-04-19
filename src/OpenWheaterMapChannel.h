@@ -4,9 +4,10 @@
 
 class OpenWheaterMapChannel : public BaseWheaterChannel
 {
+  protected:
+      void makeCall() override;
+
   public:
     OpenWheaterMapChannel(uint8_t index);
-
-    void makeCall() override;
     const std::string name() override;
  };
