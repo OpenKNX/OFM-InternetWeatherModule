@@ -31,7 +31,9 @@ OpenKNX::Channel* InternetWheaterModule::createChannel(uint8_t _channelIndex /* 
 
 void InternetWheaterModule::showHelp()
 {
-   openknx.console.printHelpLine("iw<CC>", "Update data of channel CC. i.e. iw01");
+   openknx.console.printHelpLine("iw<CC>", "Update wheater data of channel CC. i.e. iw01");
+   openknx.console.printHelpLine("iw<CC> s0", "Set forecast of channel CC to today. i.e. iw1 s0");
+   openknx.console.printHelpLine("iw<CC> s1", "Set forecast of channel CC to tomorrow. i.e. iw1 s1");
 }
 
 bool InternetWheaterModule::processCommand(const std::string cmd, bool diagnoseKo)
@@ -72,6 +74,10 @@ bool InternetWheaterModule::processCommand(const std::string cmd, bool diagnoseK
             {
                 wheaterChannel->fetchData();
                 return true;
+            }
+            else
+            {
+                return wheaterChannel->processCommand(channelCmd, diagnoseKo);
             }
         }
     }

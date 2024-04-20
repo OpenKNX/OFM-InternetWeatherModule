@@ -39,7 +39,7 @@ void BaseWheaterChannel::processInputKo(GroupObject& ko)
     // module ko
     switch (ko.asap())
     {
-         case IW_KoRefreshWheaterData: 
+        case IW_KoRefreshWheaterData:
             if (ko.value(DPT_Trigger))
                 fetchData();
             break;
@@ -67,18 +67,37 @@ void BaseWheaterChannel::loop()
     }
 }
 
-void replaceAll(std::string& str, const std::string& from, const std::string& to) {
+void replaceAll(std::string& str, const std::string& from, const std::string& to)
+{
     size_t start_pos = 0;
-    while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+    while ((start_pos = str.find(from, start_pos)) != std::string::npos)
+    {
         str.replace(start_pos, from.length(), to);
         start_pos += to.length(); // Handles case where 'to' is a substring of 'from'
     }
 }
 
-void BaseWheaterChannel::setDescription(GroupObject& ko, const char* prefix, float rain, float snow, int clouds, int probabilityOfPrecipitation)
+bool BaseWheaterChannel::processCommand(const std::string cmd, bool diagnoseKo)
+{  
+    if (cmd == "s0")
+    {
+        Serial.println();
+        KoIW_CHForecastSelection.value(0, DPT_Switch);
+        return true;
+    }
+    if (cmd == "s1")
+    {
+        Serial.println();
+        KoIW_CHForecastSelection.value(1, DPT_Switch);
+        return true;
+    }
+    return false;
+}
+
+void BaseWheaterChannel::buildDescription(ForecastWheatherDataWithDescription& wheaterData, const char* prefix)
 {
-    char description[15] = {0}; // Must be 0 terminated
-    char* buffer = description;
+    memset(wheaterData.description, 0, 15) ; // Must be 0 terminated
+    char* buffer = wheaterData.description;
     int bufferSize = 15;
     auto prefixLen = strlen(prefix);
     if (prefixLen > 0)
@@ -87,6 +106,8 @@ void BaseWheaterChannel::setDescription(GroupObject& ko, const char* prefix, flo
         bufferSize -= prefixLen;
         buffer += prefixLen;
     }
+    float rain = wheaterData.rain;
+    float snow = wheaterData.snow;
     auto all = rain + snow;
     if (all > 0.5)
     {
@@ -109,7 +130,7 @@ void BaseWheaterChannel::setDescription(GroupObject& ko, const char* prefix, flo
     }
     else
     {
-        if (clouds <= 5)
+        if (wheaterData.clouds <= 5)
         {
             snprintf(buffer, bufferSize, "%s", (const char*)ParamIW_WheaterConditionSun);
         }
@@ -118,26 +139,149 @@ void BaseWheaterChannel::setDescription(GroupObject& ko, const char* prefix, flo
             std::string formatText((const char*)ParamIW_WheaterConditionClouds);
             replaceAll(formatText, "%", "%%");
             replaceAll(formatText, "XXX", "%d");
-            snprintf(buffer, bufferSize, formatText.c_str(), clouds);
+            snprintf(buffer, bufferSize, formatText.c_str(), wheaterData.clouds);
         }
     }
-    if (ko.valueNoSendCompare(description, DPT_String_8859_1))
-    {
-        ko.objectWritten();
-        logDebugP("written: %s", description);
-    }
-    else
-    {
-        logDebugP("not written: %s", description);
-    }
+}
+
+void BaseWheaterChannel::setValueCompare(GroupObject& groupObject, const KNXValue& value, const Dpt& type)
+{
+    if (groupObject.valueNoSendCompare(value, type))
+        groupObject.objectWritten();
 }
 void BaseWheaterChannel::fetchData()
 {
-    makeCall();
+    CurrentWheatherData current = CurrentWheatherData();
+    ForecastWheatherDataWithDescription today = ForecastWheatherDataWithDescription();
+    ForecastWheatherDataWithDescription tomorrow = ForecastWheatherDataWithDescription();
+
+    int httpStatus = fillWheater(current, today, tomorrow);
+    KoIW_CHHTTPStatus.value(httpStatus, DPT_Value_2_Count);
+    if (httpStatus != 200)
+    {
+        logErrorP("Http result %d", httpStatus);
+        return;
+    }
+    else
+    {
+        logDebugP("Http result %d", httpStatus);
+    } 
+    buildDescription(today, (const char*)ParamIW_WheaterConditionCurrentDayPrefix);
+    buildDescription(tomorrow, (const char*)ParamIW_WheaterConditionNextDayPrefix);
+
+    logDebugP("Temperature: %f", current.temperature);
+    setValueCompare(KoIW_CHCurrentTemparatur, current.temperature, DPT_Value_Temp);
+    logDebugP("Temperature feels like: %f", current.temperatureFeelsLike);
+    setValueCompare(KoIW_CHCurrentTemparaturFeelsLike, current.temperatureFeelsLike, DPT_Value_Temp);
+    logDebugP("Humidity: %f", current.humidity);
+    setValueCompare(KoIW_CHCurrentHumidity, current.humidity, DPT_Value_Humidity);
+    logDebugP("Pressure: %f", current.pressure);
+    setValueCompare(KoIW_CHCurrentPressure, current.pressure, DPT_Value_Pres);
+    logDebugP("Wind speed: %f", current.windSpeed);
+    setValueCompare(KoIW_CHCurrentWind, current.windSpeed, DPT_Value_Wsp_kmh);
+    logDebugP("Wind gust: %f", current.windGust);
+    setValueCompare(KoIW_CHCurrentWindGust, current.windGust, DPT_Value_Wsp_kmh);
+    logDebugP("Wind direction: %d", (int) current.windDirection);
+    setValueCompare(KoIW_CHCurrentWindDirection, current.windDirection, DPT_Angle);
+    logDebugP("Rain: %f", current.rain);
+    setValueCompare(KoIW_CHCurrentRain, current.rain, DPT_Rain_Amount);
+    logDebugP("Snow: %f", current.rain);
+    setValueCompare(KoIW_CHCurrentSnow, current.snow, DPT_Length_mm);
+    logDebugP("UVI: %f", current.uvi);
+    setValueCompare(KoIW_CHCurrentUVI, (uint8_t)round(current.uvi), DPT_DecimalFactor);
+    logDebugP("Clouds: %d", (int) current.clouds);
+    setValueCompare(KoIW_CHCurrentClouds, current.clouds, DPT_Scaling);
+
+    logDebugP("Today description: %s", today.description);
+    setValueCompare(KoIW_CHTodayDescription, today.description, DPT_String_8859_1);
+    logDebugP("Today temperature morning: %f", today.temperatureMorning);
+    setValueCompare(KoIW_CHTodayTemparaturMorning, today.temperatureMorning, DPT_Value_Temp);
+    logDebugP("Today temperature day: %f", today.temperatureDay);
+    setValueCompare(KoIW_CHTodayTemparaturDay, today.temperatureDay, DPT_Value_Temp);
+    logDebugP("Today temperature evening: %f", today.temperatureEvening);
+    setValueCompare(KoIW_CHTodayTemparaturEvening, today.temperatureEvening, DPT_Value_Temp);
+    logDebugP("Today temperature night: %f", today.temperatureNight);
+    setValueCompare(KoIW_CHTodayTemparaturNight, today.temperatureNight, DPT_Value_Temp);
+    logDebugP("Today temperature min: %f", today.temperatureMin);
+    setValueCompare(KoIW_CHTodayTemparaturMin, today.temperatureMin, DPT_Value_Temp);
+    logDebugP("Today temperature max: %f", today.temperatureMax);
+    setValueCompare(KoIW_CHTodayTemparaturMax, today.temperatureMax, DPT_Value_Temp);
+    logDebugP("Today temperature morning feels like: %f", today.temperatureFeelsLikeMorning);
+    setValueCompare(KoIW_CHTodayTemparaturMorningFeelsLike, today.temperatureFeelsLikeEvening, DPT_Value_Temp);
+    logDebugP("Today temperature day feels like: %f", today.temperatureFeelsLikeDay);
+    setValueCompare(KoIW_CHTodayTemparaturDayFeelsLike, today.temperatureFeelsLikeDay, DPT_Value_Temp);
+    logDebugP("Today temperature evening feels like: %f", today.temperatureFeelsLikeEvening);
+    setValueCompare(KoIW_CHTodayTemparaturEveningFeelsLike, today.temperatureFeelsLikeEvening, DPT_Value_Temp);
+    logDebugP("Today temperature night feels like: %f", today.temperatureFeelsLikeNight);
+    setValueCompare(KoIW_CHTodayTemparaturNightFeelsLike, today.temperatureFeelsLikeNight, DPT_Value_Temp);
+    logDebugP("Today humidity: %f", today.humidity);
+    setValueCompare(KoIW_CHTodayHumidity, today.humidity, DPT_Value_Humidity);
+    logDebugP("Today pressure: %d", (int) today.pressure);
+    setValueCompare(KoIW_CHTodayPressure, today.pressure, DPT_Value_Pres);
+    logDebugP("Today wind speed: %f", today.windSpeed);
+    setValueCompare(KoIW_CHTodayWind, today.windSpeed, DPT_Value_Wsp_kmh);
+    logDebugP("Today wind gust: %f", today.windGust);
+    setValueCompare(KoIW_CHTodayWindGust, today.windGust, DPT_Value_Wsp_kmh);
+    logDebugP("Today wind direction: %d", (int) today.windDirection);
+    setValueCompare(KoIW_CHTodayWindDirection, today.windDirection, DPT_Angle);
+    logDebugP("Today rain: %f", today.rain);
+    setValueCompare(KoIW_CHTodayRain, today.rain, DPT_Rain_Amount);
+    logDebugP("Today snow: %f", today.snow);
+    setValueCompare(KoIW_CHTodaySnow, today.snow, DPT_Length_mm);
+    logDebugP("Today snow: %d", (int) today.probabilityOfPrecipitation);
+    setValueCompare(KoIW_CHTodayProbabilityOfPrecipitation, today.probabilityOfPrecipitation, DPT_Scaling);
+    logDebugP("Today UVI: %f", today.uvi);
+    setValueCompare(KoIW_CHTodayUVI, (uint8_t)round(today.uvi), DPT_DecimalFactor);
+    logDebugP("Today clouds: %d", (int) today.clouds);
+    setValueCompare(KoIW_CHTodayClouds, today.clouds, DPT_Scaling);
+
+    logDebugP("Tomorrow description: %s", tomorrow .description);
+    setValueCompare(KoIW_CHTomorrowDescription, tomorrow .description, DPT_String_8859_1);
+    logDebugP("Tomorrow temperature morning: %f", tomorrow .temperatureMorning);
+    setValueCompare(KoIW_CHTomorrowTemparaturMorning, tomorrow .temperatureMorning, DPT_Value_Temp);
+    logDebugP("Tomorrow temperature day: %f", tomorrow .temperatureDay);
+    setValueCompare(KoIW_CHTomorrowTemparaturDay, tomorrow .temperatureDay, DPT_Value_Temp);
+    logDebugP("Tomorrow temperature evening: %f", tomorrow .temperatureEvening);
+    setValueCompare(KoIW_CHTomorrowTemparaturEvening, tomorrow .temperatureEvening, DPT_Value_Temp);
+    logDebugP("Tomorrow temperature night: %f", tomorrow .temperatureNight);
+    setValueCompare(KoIW_CHTomorrowTemparaturNight, tomorrow .temperatureNight, DPT_Value_Temp);
+    logDebugP("Tomorrow temperature min: %f", tomorrow .temperatureMin);
+    setValueCompare(KoIW_CHTomorrowTemparaturMin, tomorrow .temperatureMin, DPT_Value_Temp);
+    logDebugP("Tomorrow temperature max: %f", tomorrow .temperatureMax);
+    setValueCompare(KoIW_CHTomorrowTemparaturMax, tomorrow .temperatureMax, DPT_Value_Temp);
+    logDebugP("Tomorrow temperature morning feels like: %f", tomorrow .temperatureFeelsLikeMorning);
+    setValueCompare(KoIW_CHTomorrowTemparaturMorningFeelsLike, tomorrow .temperatureFeelsLikeEvening, DPT_Value_Temp);
+    logDebugP("Tomorrow temperature day feels like: %f", tomorrow .temperatureFeelsLikeDay);
+    setValueCompare(KoIW_CHTomorrowTemparaturDayFeelsLike, tomorrow .temperatureFeelsLikeDay, DPT_Value_Temp);
+    logDebugP("Tomorrow temperature evening feels like: %f", tomorrow .temperatureFeelsLikeEvening);
+    setValueCompare(KoIW_CHTomorrowTemparaturEveningFeelsLike, tomorrow .temperatureFeelsLikeEvening, DPT_Value_Temp);
+    logDebugP("Tomorrow temperature night feels like: %f", tomorrow .temperatureFeelsLikeNight);
+    setValueCompare(KoIW_CHTomorrowTemparaturNightFeelsLike, tomorrow .temperatureFeelsLikeNight, DPT_Value_Temp);
+    logDebugP("Tomorrow humidity: %f", tomorrow .humidity);
+    setValueCompare(KoIW_CHTomorrowHumidity, tomorrow .humidity, DPT_Value_Humidity);
+    logDebugP("Tomorrow pressure: %d", (int) tomorrow .pressure);
+    setValueCompare(KoIW_CHTomorrowPressure, tomorrow .pressure, DPT_Value_Pres);
+    logDebugP("Tomorrow wind speed: %f", tomorrow .windSpeed);
+    setValueCompare(KoIW_CHTomorrowWind, tomorrow .windSpeed, DPT_Value_Wsp_kmh);
+    logDebugP("Tomorrow wind gust: %f", tomorrow .windGust);
+    setValueCompare(KoIW_CHTomorrowWindGust, tomorrow .windGust, DPT_Value_Wsp_kmh);
+    logDebugP("Tomorrow wind direction: %d", (int) tomorrow .windDirection);
+    setValueCompare(KoIW_CHTomorrowWindDirection, tomorrow .windDirection, DPT_Angle);
+    logDebugP("Tomorrow rain: %f", tomorrow .rain);
+    setValueCompare(KoIW_CHTomorrowRain, tomorrow .rain, DPT_Rain_Amount);
+    logDebugP("Tomorrow snow: %f", tomorrow .snow);
+    setValueCompare(KoIW_CHTomorrowSnow, tomorrow .snow, DPT_Length_mm);
+    logDebugP("Tomorrow snow: %d", (int) tomorrow .probabilityOfPrecipitation);
+    setValueCompare(KoIW_CHTomorrowProbabilityOfPrecipitation, tomorrow .probabilityOfPrecipitation, DPT_Scaling);
+    logDebugP("Tomorrow UVI: %f", tomorrow .uvi);
+    setValueCompare(KoIW_CHTomorrowUVI, (uint8_t)round(tomorrow .uvi), DPT_DecimalFactor);
+    logDebugP("Tomorrow clouds: %d", (int) tomorrow .clouds);
+    setValueCompare(KoIW_CHTomorrowClouds, tomorrow .clouds, DPT_Scaling);
+
     updateSwitchableKos();
 }
 
-void BaseWheaterChannel::copy(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2)
+void BaseWheaterChannel::copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2)
 {
     auto koSource = select ? ko2 : ko1;
     bool intialized = koTarget.initialized();
@@ -149,26 +293,27 @@ void BaseWheaterChannel::copy(GroupObject& koTarget, bool select, GroupObject& k
 void BaseWheaterChannel::updateSwitchableKos()
 {
     auto select = (bool) KoIW_CHForecastSelection.value(DPT_Switch);
-    logDebugP("update switchabel KO's to %d", select);
-    copy(KoIW_CHForecastDescription, select, KoIW_CHTodayDescription, KoIW_CHTomorrowDescription);
-    copy(KoIW_CHForecastTemparaturDay, select, KoIW_CHTodayTemparaturDay, KoIW_CHTomorrowTemparaturDay);
-    copy(KoIW_CHForecastTemparaturNight, select, KoIW_CHTodayTemparaturNight, KoIW_CHTomorrowTemparaturNight);
-    copy(KoIW_CHForecastTemparaturEvening, select, KoIW_CHTodayTemparaturEvening, KoIW_CHTomorrowTemparaturEvening);
-    copy(KoIW_CHForecastTemparaturMorning, select, KoIW_CHTodayTemparaturMorning, KoIW_CHTomorrowTemparaturMorning);
-    copy(KoIW_CHForecastTemparaturMin, select, KoIW_CHTodayTemparaturMin, KoIW_CHTomorrowTemparaturMin);
-    copy(KoIW_CHForecastTemparaturMax, select, KoIW_CHTodayTemparaturMax, KoIW_CHTomorrowTemparaturMax);
-    copy(KoIW_CHForecastTemparaturDayFeelsLike, select, KoIW_CHTodayTemparaturDayFeelsLike, KoIW_CHTomorrowTemparaturDayFeelsLike);
-    copy(KoIW_CHForecastTemparaturNightFeelsLike, select, KoIW_CHTodayTemparaturNightFeelsLike, KoIW_CHTomorrowTemparaturNightFeelsLike);
-    copy(KoIW_CHForecastTemparaturEveningFeelsLike, select, KoIW_CHTodayTemparaturEveningFeelsLike, KoIW_CHTomorrowTemparaturEveningFeelsLike);
-    copy(KoIW_CHForecastTemparaturMorningFeelsLike, select, KoIW_CHTodayTemparaturMorningFeelsLike, KoIW_CHTomorrowTemparaturMorningFeelsLike);
-    copy(KoIW_CHForecastHumidity, select, KoIW_CHTodayHumidity, KoIW_CHTomorrowHumidity);
-    copy(KoIW_CHForecastPressure, select, KoIW_CHTodayPressure, KoIW_CHTomorrowPressure);
-    copy(KoIW_CHForecastWind, select, KoIW_CHTodayWind, KoIW_CHTomorrowWind);
-    copy(KoIW_CHForecastWindGust, select, KoIW_CHTodayWindGust, KoIW_CHTomorrowWindGust);
-    copy(KoIW_CHForecastWindDirection, select, KoIW_CHTodayWindDirection, KoIW_CHTomorrowWindDirection);
-    copy(KoIW_CHForecastRain, select, KoIW_CHTodayRain, KoIW_CHTomorrowRain);
-    copy(KoIW_CHForecastSnow, select, KoIW_CHTodaySnow, KoIW_CHTomorrowSnow);
-    copy(KoIW_CHForecastProbabilityOfPrecipitation, select, KoIW_CHTodayProbabilityOfPrecipitation, KoIW_CHTomorrowProbabilityOfPrecipitation);
-    copy(KoIW_CHForecastUVI, select, KoIW_CHTodayUVI, KoIW_CHTomorrowUVI);
-    copy(KoIW_CHForecastClouds, select, KoIW_CHTodayClouds, KoIW_CHTomorrowClouds);
+    logDebugP("update switchable KO's to %s", select ? "tomorrow" : "today");
+
+    copyGroupObject(KoIW_CHForecastDescription, select, KoIW_CHTodayDescription, KoIW_CHTomorrowDescription);
+    copyGroupObject(KoIW_CHForecastTemparaturDay, select, KoIW_CHTodayTemparaturDay, KoIW_CHTomorrowTemparaturDay);
+    copyGroupObject(KoIW_CHForecastTemparaturNight, select, KoIW_CHTodayTemparaturNight, KoIW_CHTomorrowTemparaturNight);
+    copyGroupObject(KoIW_CHForecastTemparaturEvening, select, KoIW_CHTodayTemparaturEvening, KoIW_CHTomorrowTemparaturEvening);
+    copyGroupObject(KoIW_CHForecastTemparaturMorning, select, KoIW_CHTodayTemparaturMorning, KoIW_CHTomorrowTemparaturMorning);
+    copyGroupObject(KoIW_CHForecastTemparaturMin, select, KoIW_CHTodayTemparaturMin, KoIW_CHTomorrowTemparaturMin);
+    copyGroupObject(KoIW_CHForecastTemparaturMax, select, KoIW_CHTodayTemparaturMax, KoIW_CHTomorrowTemparaturMax);
+    copyGroupObject(KoIW_CHForecastTemparaturDayFeelsLike, select, KoIW_CHTodayTemparaturDayFeelsLike, KoIW_CHTomorrowTemparaturDayFeelsLike);
+    copyGroupObject(KoIW_CHForecastTemparaturNightFeelsLike, select, KoIW_CHTodayTemparaturNightFeelsLike, KoIW_CHTomorrowTemparaturNightFeelsLike);
+    copyGroupObject(KoIW_CHForecastTemparaturEveningFeelsLike, select, KoIW_CHTodayTemparaturEveningFeelsLike, KoIW_CHTomorrowTemparaturEveningFeelsLike);
+    copyGroupObject(KoIW_CHForecastTemparaturMorningFeelsLike, select, KoIW_CHTodayTemparaturMorningFeelsLike, KoIW_CHTomorrowTemparaturMorningFeelsLike);
+    copyGroupObject(KoIW_CHForecastHumidity, select, KoIW_CHTodayHumidity, KoIW_CHTomorrowHumidity);
+    copyGroupObject(KoIW_CHForecastPressure, select, KoIW_CHTodayPressure, KoIW_CHTomorrowPressure);
+    copyGroupObject(KoIW_CHForecastWind, select, KoIW_CHTodayWind, KoIW_CHTomorrowWind);
+    copyGroupObject(KoIW_CHForecastWindGust, select, KoIW_CHTodayWindGust, KoIW_CHTomorrowWindGust);
+    copyGroupObject(KoIW_CHForecastWindDirection, select, KoIW_CHTodayWindDirection, KoIW_CHTomorrowWindDirection);
+    copyGroupObject(KoIW_CHForecastRain, select, KoIW_CHTodayRain, KoIW_CHTomorrowRain);
+    copyGroupObject(KoIW_CHForecastSnow, select, KoIW_CHTodaySnow, KoIW_CHTomorrowSnow);
+    copyGroupObject(KoIW_CHForecastProbabilityOfPrecipitation, select, KoIW_CHTodayProbabilityOfPrecipitation, KoIW_CHTomorrowProbabilityOfPrecipitation);
+    copyGroupObject(KoIW_CHForecastUVI, select, KoIW_CHTodayUVI, KoIW_CHTomorrowUVI);
+    copyGroupObject(KoIW_CHForecastClouds, select, KoIW_CHTodayClouds, KoIW_CHTomorrowClouds);
   }
