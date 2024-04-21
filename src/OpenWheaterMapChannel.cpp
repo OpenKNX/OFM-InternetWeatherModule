@@ -1,8 +1,8 @@
 #include "OpenWheaterMapChannel.h"
 #ifdef ARDUINO_ARCH_RP2040
-#define OpenWheaterMapUrl "http://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,hourly,alerts"
+#define OpenWheaterMapUrl "http://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,alerts"
 #else
-#define OpenWheaterMapUrl "https://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,hourly,alerts"
+#define OpenWheaterMapUrl "https://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,alerts"
 #endif
 
 OpenWheaterMapChannel::OpenWheaterMapChannel(uint8_t index)
@@ -15,7 +15,7 @@ const std::string OpenWheaterMapChannel::name()
     return "OpenWheaterMap";
 }
 
-int16_t OpenWheaterMapChannel::fillWheater(CurrentWheatherData& currentWheater, ForecastWheatherData& todayWheater, ForecastWheatherData& tomorrowWheater)
+int16_t OpenWheaterMapChannel::fillWheater(CurrentWheatherData& currentWheater, ForecastDayWheatherData& todayWheater, ForecastDayWheatherData& tomorrowWheater, ForecastHourWheatherData& hour1Wheater, ForecastHourWheatherData& hour2Wheater)
 {
     String url = OpenWheaterMapUrl;
     url += "&appid=";
@@ -37,29 +37,46 @@ int16_t OpenWheaterMapChannel::fillWheater(CurrentWheatherData& currentWheater, 
     deserializeJson(doc, http.getString());
 
     JsonObject current = doc["current"];
-    currentWheater.temperature = current["temp"];                  // 22.34
-    currentWheater.temperatureFeelsLike = current["feels_like"];   // 21.95
-    currentWheater.humidity = current["humidity"];                 // 69
-    currentWheater.pressure = current["pressure"];                 // 1006
-    currentWheater.windSpeed = 3.6 * (float)current["wind_speed"]; // 69
-    currentWheater.windGust = 3.6 * (float)current["wind_gust"];   // 69
-    currentWheater.windDirection = current["wind_deg"];            // 70
-    JsonObject rainObject = current["rain"];
-    currentWheater.rain = rainObject ? (float) rainObject["1h"] : (float)0; // 2.5
-    JsonObject snowObject = current["snow"];
-    currentWheater.snow = snowObject ? (float) snowObject["1h"] : (float)0; // 2.5
-    currentWheater.uvi = current["uvi"];                                 // 6.29
-    currentWheater.clouds = current["clouds"];                           // 40
-
+    fillForecast(current, currentWheater);
+  
     JsonArray daily = doc["daily"];
     JsonObject today = daily[0];
     fillForecast(today, todayWheater);
     JsonObject tomorrow = daily[1];
     fillForecast(tomorrow, tomorrowWheater);
+
+    JsonArray hourly = doc["hourly"];
+    JsonObject hour1 = hourly[0];
+    fillForecast(hour1, hour1Wheater);
+    JsonObject hour2 = hourly[1];
+    fillForecast(hour1, hour2Wheater);
     return httpStatus;
 }
 
-void OpenWheaterMapChannel::fillForecast(JsonObject& json, ForecastWheatherData& wheater)
+void OpenWheaterMapChannel::fillForecast(JsonObject& json, CurrentWheatherData& wheater)
+{
+    wheater.temperature = json["temp"];                  // 22.34
+    wheater.temperatureFeelsLike = json["feels_like"];   // 21.95
+    wheater.humidity = json["humidity"];                 // 69
+    wheater.pressure = json["pressure"];                 // 1006
+    wheater.windSpeed = 3.6 * (float)json["wind_speed"]; // 69
+    wheater.windGust = 3.6 * (float)json["wind_gust"];   // 69
+    wheater.windDirection = json["wind_deg"];            // 70
+    JsonObject rainObject = json["rain"];
+    wheater.rain = rainObject ? (float) rainObject["1h"] : (float)0; // 2.5
+    JsonObject snowObject = json["snow"];
+    wheater.snow = snowObject ? (float) snowObject["1h"] : (float)0; // 2.5
+    wheater.uvi = json["uvi"];                                 // 6.29
+    wheater.clouds = json["clouds"];                           // 40
+}
+
+void OpenWheaterMapChannel::fillForecast(JsonObject& json, ForecastHourWheatherData& wheater)
+{
+    fillForecast(json, (CurrentWheatherData&) wheater);
+    wheater.probabilityOfPrecipitation = json["pop"];    // 70
+}
+
+void OpenWheaterMapChannel::fillForecast(JsonObject& json, ForecastDayWheatherData& wheater)
 {
     JsonObject tempObject = json["temp"];
     wheater.temperatureDay = tempObject["day"];     // 21.95

@@ -17,6 +17,11 @@
               <Parameter Id="%AID%_P-%TT%%CC%003" Name="Channel%CC%Tomorrow" ParameterType="%AID%_PT-CheckBox" Text="Prognose Morgen" Value="0" />  
               <!-- Prognose Heute/Morgen Umschaltbar -->
               <Parameter Id="%AID%_P-%TT%%CC%004" Name="Channel%CC%Forecast" ParameterType="%AID%_PT-CheckBox" Text="Prognose Heute/Morgen Umschaltbar" Value="0" />  
+              <!-- Prognose Nächste Stunde -->
+              <Parameter Id="%AID%_P-%TT%%CC%005" Name="Channel%CC%Hour1" ParameterType="%AID%_PT-CheckBox" Text="Prognose nächste Stunde" Value="0" />  
+              <!-- Prognose Übernächste Stunde -->
+              <Parameter Id="%AID%_P-%TT%%CC%006" Name="Channel%CC%Hour2" ParameterType="%AID%_PT-CheckBox" Text="Prognose übernächste Stunde" Value="0" />  
+     
               <!-- Wheater channel type -->
               <Union SizeInBit="8">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
@@ -41,6 +46,10 @@
               <ParameterRef Id="%AID%_P-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_P-%TT%%CC%003" />
               <!-- Prognose Heute/Morgen Umschaltbar -->
               <ParameterRef Id="%AID%_P-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_P-%TT%%CC%004" />
+              <!-- Prognose nächste Stunde -->
+              <ParameterRef Id="%AID%_P-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_P-%TT%%CC%005" />
+              <!-- Prognose übernächste Stunde -->
+              <ParameterRef Id="%AID%_P-%TT%%CC%006_R-%TT%%CC%00601" RefId="%AID%_P-%TT%%CC%006" />
               <!-- WheaterChannelType -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00100" RefId="%AID%_UP-%TT%%CC%001" />
               <!-- Wheater location type -->
@@ -209,6 +218,61 @@
               <!-- Prognose Wolken -->
               <ComObject Id="%AID%_O-%TT%%CC%075" Number="%K75%" Name="CH%C%ForecastClouds" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
+
+              <!-- Prognose Stunde1 Beschreibung -->
+              <ComObject Id="%AID%_O-%TT%%CC%076" Number="%K76%" Name="CH%C%Hour1Description" Text="" ObjectSize="14 Bytes" DatapointType="DPST-16-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde1 Temperatur Tag -->
+              <ComObject Id="%AID%_O-%TT%%CC%077" Number="%K77%" Name="CH%C%Hour1Temparatur" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde1 Gefühlte Temperatur Tag -->
+              <ComObject Id="%AID%_O-%TT%%CC%078" Number="%K78%" Name="CH%C%Hour1TemparaturFeelsLike" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde1 Luftfeute -->
+              <ComObject Id="%AID%_O-%TT%%CC%079" Number="%K79%" Name="CH%C%Hour1Humidity" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-7" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde1 Luftdruck -->
+              <ComObject Id="%AID%_O-%TT%%CC%080" Number="%K80%" Name="CH%C%Hour1Pressure" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-6" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde1 Wind -->
+              <ComObject Id="%AID%_O-%TT%%CC%081" Number="%K81%" Name="CH%C%Hour1Wind" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-28" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde1 Wind Böen -->
+              <ComObject Id="%AID%_O-%TT%%CC%082" Number="%K82%" Name="CH%C%Hour1WindGust" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-28" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde1 Wind Richtung -->
+              <ComObject Id="%AID%_O-%TT%%CC%083" Number="%K83%" Name="CH%C%Hour1WindDirection" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-3" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde1 Regen -->
+              <ComObject Id="%AID%_O-%TT%%CC%084" Number="%K84%" Name="CH%C%Hour1Rain" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-26" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde1 Schnee -->
+              <ComObject Id="%AID%_O-%TT%%CC%085" Number="%K85%" Name="CH%C%Hour1Snow" Text="" ObjectSize="2 Bytes" DatapointType="DPST-7-11" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Niederschlagswahrscheinlichkeit -->
+              <ComObject Id="%AID%_O-%TT%%CC%086" Number="%K86%" Name="CH%C%Hour1ProbabilityOfPrecipitation" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde1 UV Index -->
+              <ComObject Id="%AID%_O-%TT%%CC%087" Number="%K87%" Name="CH%C%Hour1UVI" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-5" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde1 Wolken -->
+              <ComObject Id="%AID%_O-%TT%%CC%088" Number="%K88%" Name="CH%C%Hour1Clouds" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+ 
+              <!-- Prognose Stunde2 Beschreibung -->
+              <ComObject Id="%AID%_O-%TT%%CC%089" Number="%K89%" Name="CH%C%Hour2Description" Text="" ObjectSize="14 Bytes" DatapointType="DPST-16-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde2 Temperatur Tag -->
+              <ComObject Id="%AID%_O-%TT%%CC%090" Number="%K90%" Name="CH%C%Hour2Temparatur" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde2 Gefühlte Temperatur Tag -->
+              <ComObject Id="%AID%_O-%TT%%CC%091" Number="%K91%" Name="CH%C%Hour2TemparaturFeelsLike" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde2 Luftfeute -->
+              <ComObject Id="%AID%_O-%TT%%CC%092" Number="%K92%" Name="CH%C%Hour2Humidity" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-7" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde2 Luftdruck -->
+              <ComObject Id="%AID%_O-%TT%%CC%093" Number="%K93%" Name="CH%C%Hour2Pressure" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-6" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde2 Wind -->
+              <ComObject Id="%AID%_O-%TT%%CC%094" Number="%K94%" Name="CH%C%Hour2Wind" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-28" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde2 Wind Böen -->
+              <ComObject Id="%AID%_O-%TT%%CC%095" Number="%K95%" Name="CH%C%Hour2WindGust" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-28" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde2 Wind Richtung -->
+              <ComObject Id="%AID%_O-%TT%%CC%096" Number="%K96%" Name="CH%C%Hour2WindDirection" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-3" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde2 Regen -->
+              <ComObject Id="%AID%_O-%TT%%CC%097" Number="%K97%" Name="CH%C%Hour2Rain" Text="" ObjectSize="2 Bytes" DatapointType="DPST-9-26" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde2 Schnee -->
+              <ComObject Id="%AID%_O-%TT%%CC%098" Number="%K98%" Name="CH%C%Hour2Snow" Text="" ObjectSize="2 Bytes" DatapointType="DPST-7-11" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Niederschlagswahrscheinlichkeit -->
+              <ComObject Id="%AID%_O-%TT%%CC%099" Number="%K99%" Name="CH%C%Hour2ProbabilityOfPrecipitation" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde2 UV Index -->
+              <ComObject Id="%AID%_O-%TT%%CC%100" Number="%K100%" Name="CH%C%Hour2UVI" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-5" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Prognose Stunde2 Wolken -->
+              <ComObject Id="%AID%_O-%TT%%CC%101" Number="%K101%" Name="CH%C%Hour2Clouds" Text="" ObjectSize="1 Byte" DatapointType="DPST-5-1" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+ 
            </ComObjectTable>
             <ComObjectRefs>
               <!-- Diagnose HTTP Status -->
@@ -317,7 +381,7 @@
               <!-- Prognose Morgen Schnee -->
               <ComObjectRef Id="%AID%_O-%TT%%CC%050_R-%TT%%CC%05001" RefId="%AID%_O-%TT%%CC%050" Text="%C%: Prognose Morgen Schnee"  FunctionText="{{0:-}} Prognose Morgen Schnee"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
               <!-- Prognose Heute Niederschlagswahrscheinlichkeit -->
-              <ComObjectRef Id="%AID%_O-%TT%%CC%051_R-%TT%%CC%05101" RefId="%AID%_O-%TT%%CC%051" Text="%C%: Prognose Heute Niederschlagswahrscheinlichkeit"  FunctionText="{{0:-}} Prognose Heute Niederschlagswahrscheinlichkeit"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%051_R-%TT%%CC%05101" RefId="%AID%_O-%TT%%CC%051" Text="%C%: Prognose Morgen Niederschlagswahrscheinlichkeit"  FunctionText="{{0:-}} Prognose Morgen Niederschlagswahrscheinlichkeit"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
               <!-- Prognose Morgen UV Index -->
               <ComObjectRef Id="%AID%_O-%TT%%CC%052_R-%TT%%CC%05201" RefId="%AID%_O-%TT%%CC%052" Text="%C%: Prognose Morgen UV-Index"  FunctionText="{{0:-}} Prognose Morgen UV-Index"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
               <!-- Prognose Morgen Wolken -->
@@ -363,11 +427,69 @@
               <!-- Prognose Schnee -->
               <ComObjectRef Id="%AID%_O-%TT%%CC%072_R-%TT%%CC%07201" RefId="%AID%_O-%TT%%CC%072" Text="%C%: Prognose Schnee"  FunctionText="{{0:-}} Prognose Schnee"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
               <!-- Prognose Heute Niederschlagswahrscheinlichkeit -->
-              <ComObjectRef Id="%AID%_O-%TT%%CC%073_R-%TT%%CC%07301" RefId="%AID%_O-%TT%%CC%073" Text="%C%: Prognose Heute Niederschlagswahrscheinlichkeit"  FunctionText="{{0:-}} Prognose Heute Niederschlagswahrscheinlichkeit"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%073_R-%TT%%CC%07301" RefId="%AID%_O-%TT%%CC%073" Text="%C%: Prognose Niederschlagswahrscheinlichkeit"  FunctionText="{{0:-}} Prognose Niederschlagswahrscheinlichkeit"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
               <!-- Prognose UV Index -->
               <ComObjectRef Id="%AID%_O-%TT%%CC%074_R-%TT%%CC%07401" RefId="%AID%_O-%TT%%CC%074" Text="%C%: Prognose UV-Index"  FunctionText="{{0:-}} Prognose UV-Index"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
               <!-- Prognose Wolken -->
               <ComObjectRef Id="%AID%_O-%TT%%CC%075_R-%TT%%CC%07501" RefId="%AID%_O-%TT%%CC%075" Text="%C%: Prognose Wolken"  FunctionText="{{0:-}} Prognose Wolken"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+           
+                        
+              <!-- Prognose nächste Stunde Beschreibung -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%076_R-%TT%%CC%07601" RefId="%AID%_O-%TT%%CC%076" Text="%C%: Prognose nächste Stunde Beschreibung"  FunctionText="{{0:-}} Prognose nächste Stunde Beschreibung"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose nächste Stunde Temperatur -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%077_R-%TT%%CC%07701" RefId="%AID%_O-%TT%%CC%077" Text="%C%: Prognose nächste Stunde Tagestemperatur"  FunctionText="{{0:-}} Prognose nächste Stunde Tagestemperatur"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose nächste Stunde Gefühlte Temperatur -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%078_R-%TT%%CC%07801" RefId="%AID%_O-%TT%%CC%078" Text="%C%: Prognose nächste Stunde Gefühlte Tagestemperatur"  FunctionText="{{0:-}} Prognose nächste Stunde Gefühlte Tagestemperatur"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose nächste Stunde Luftfeute -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%079_R-%TT%%CC%07901" RefId="%AID%_O-%TT%%CC%079" Text="%C%: Prognose nächste Stunde Luftfeuchte"  FunctionText="{{0:-}} Prognose nächste Stunde Luftfeuchte"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose nächste Stunde Luftdruck -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%080_R-%TT%%CC%08001" RefId="%AID%_O-%TT%%CC%080" Text="%C%: Prognose nächste Stunde Luftdruck"  FunctionText="{{0:-}} Prognose nächste Stunde Luftdruck"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose nächste Stunde Wind -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%081_R-%TT%%CC%08101" RefId="%AID%_O-%TT%%CC%081" Text="%C%: Prognose nächste Stunde Wind"  FunctionText="{{0:-}} Prognose nächste Stunde Wind"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose nächste Stunde Wind Böen -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%082_R-%TT%%CC%08201" RefId="%AID%_O-%TT%%CC%082" Text="%C%: Prognose nächste Stunde Windböen"  FunctionText="{{0:-}} Prognose nächste Stunde Windböen"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose nächste Stunde Wind Richtung -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%083_R-%TT%%CC%08301" RefId="%AID%_O-%TT%%CC%083" Text="%C%: Prognose nächste Stunde Windrichtung"  FunctionText="{{0:-}} Prognose nächste Stunde Windrichtung"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose nächste Stunde Regen -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%084_R-%TT%%CC%08401" RefId="%AID%_O-%TT%%CC%084" Text="%C%: Prognose nächste Stunde Regen"  FunctionText="{{0:-}} Prognose nächste Stunde Regen"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose nächste Stunde Schnee -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%085_R-%TT%%CC%08501" RefId="%AID%_O-%TT%%CC%085" Text="%C%: Prognose nächste Stunde Schnee"  FunctionText="{{0:-}} Prognose nächste Stunde Schnee"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose Heute Niederschlagswahrscheinlichkeit -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%086_R-%TT%%CC%08601" RefId="%AID%_O-%TT%%CC%086" Text="%C%: Prognose nächste Stunde Niederschlagswahrscheinlichkeit"  FunctionText="{{0:-}} Prognose nächste Stunde Niederschlagswahrscheinlichkeit"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose nächste Stunde UV Index -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%087_R-%TT%%CC%08701" RefId="%AID%_O-%TT%%CC%087" Text="%C%: Prognose nächste Stunde UV-Index"  FunctionText="{{0:-}} Prognose nächste Stunde UV-Index"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose nächste Stunde Wolken -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%088_R-%TT%%CC%08801" RefId="%AID%_O-%TT%%CC%088" Text="%C%: Prognose nächste Stunde Wolken"  FunctionText="{{0:-}} Prognose nächste Stunde Wolken"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+     
+                      
+              <!-- Prognose übernächste Stunde Beschreibung -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%089_R-%TT%%CC%08901" RefId="%AID%_O-%TT%%CC%089" Text="%C%: Prognose übernächste Stunde Beschreibung"  FunctionText="{{0:-}} Prognose übernächste Stunde Beschreibung"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose übernächste Stunde Temperatur -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%090_R-%TT%%CC%09001" RefId="%AID%_O-%TT%%CC%090" Text="%C%: Prognose übernächste Stunde Tagestemperatur"  FunctionText="{{0:-}} Prognose übernächste Stunde Tagestemperatur"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose übernächste Stunde Gefühlte Temperatur -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%091_R-%TT%%CC%09101" RefId="%AID%_O-%TT%%CC%091" Text="%C%: Prognose übernächste Stunde Gefühlte Tagestemperatur"  FunctionText="{{0:-}} Prognose übernächste Stunde Gefühlte Tagestemperatur"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose übernächste Stunde Luftfeute -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%092_R-%TT%%CC%09201" RefId="%AID%_O-%TT%%CC%092" Text="%C%: Prognose übernächste Stunde Luftfeuchte"  FunctionText="{{0:-}} Prognose übernächste Stunde Luftfeuchte"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose übernächste Stunde Luftdruck -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%093_R-%TT%%CC%09301" RefId="%AID%_O-%TT%%CC%093" Text="%C%: Prognose übernächste Stunde Luftdruck"  FunctionText="{{0:-}} Prognose übernächste Stunde Luftdruck"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose übernächste Stunde Wind -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%094_R-%TT%%CC%09401" RefId="%AID%_O-%TT%%CC%094" Text="%C%: Prognose übernächste Stunde Wind"  FunctionText="{{0:-}} Prognose übernächste Stunde Wind"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose übernächste Stunde Wind Böen -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%095_R-%TT%%CC%09501" RefId="%AID%_O-%TT%%CC%095" Text="%C%: Prognose übernächste Stunde Windböen"  FunctionText="{{0:-}} Prognose übernächste Stunde Windböen"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose übernächste Stunde Wind Richtung -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%096_R-%TT%%CC%09601" RefId="%AID%_O-%TT%%CC%096" Text="%C%: Prognose übernächste Stunde Windrichtung"  FunctionText="{{0:-}} Prognose übernächste Stunde Windrichtung"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose übernächste Stunde Regen -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%097_R-%TT%%CC%09701" RefId="%AID%_O-%TT%%CC%097" Text="%C%: Prognose übernächste Stunde Regen"  FunctionText="{{0:-}} Prognose übernächste Stunde Regen"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose übernächste Stunde Schnee -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%098_R-%TT%%CC%09801" RefId="%AID%_O-%TT%%CC%098" Text="%C%: Prognose übernächste Stunde Schnee"  FunctionText="{{0:-}} Prognose übernächste Stunde Schnee"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose Heute Niederschlagswahrscheinlichkeit -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%099_R-%TT%%CC%09901" RefId="%AID%_O-%TT%%CC%099" Text="%C%: Prognose übernächste Stunde Niederschlagswahrscheinlichkeit"  FunctionText="{{0:-}} Prognose übernächste Stunde Niederschlagswahrscheinlichkeit"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose übernächste Stunde UV Index -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%100_R-%TT%%CC%10001" RefId="%AID%_O-%TT%%CC%100" Text="%C%: Prognose übernächste Stunde UV-Index"  FunctionText="{{0:-}} Prognose übernächste Stunde UV-Index"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <!-- Prognose übernächste Stunde Wolken -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%101_R-%TT%%CC%10101" RefId="%AID%_O-%TT%%CC%101" Text="%C%: Prognose übernächste Stunde Wolken"  FunctionText="{{0:-}} Prognose übernächste Stunde Wolken"    TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+     
+           
             </ComObjectRefs>
           </Static>
           <Dynamic>
@@ -397,6 +519,8 @@
                           </when>
                         </choose>
 
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Aktuelles Wetter" UIHint="Headline" />
+       
                         <!-- Aktuell -->
                         <ParameterRefRef RefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="IW-Current" />
                         <choose ParamRefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101">  <!-- Aktuell -->
@@ -426,6 +550,8 @@
                           </when>
                         </choose>
 
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Tagesprognose" UIHint="Headline" />
+       
                         <!-- Heute -->
                         <ParameterRefRef RefId="%AID%_P-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="IW-Today" />
                         <choose ParamRefId="%AID%_P-%TT%%CC%002_R-%TT%%CC%00201">  <!-- Heute -->
@@ -573,7 +699,75 @@
                             <!-- Prognose Wolken -->
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%075_R-%TT%%CC%07501" />
                           </when>
-                        </choose>           
+                        </choose>    
+
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Stundenprognose" UIHint="Headline" />
+
+                        <!-- Prognose nächste Stunde -->
+                        <ParameterRefRef RefId="%AID%_P-%TT%%CC%005_R-%TT%%CC%00501" HelpContext="IW-Hour1" />
+                        <choose ParamRefId="%AID%_P-%TT%%CC%005_R-%TT%%CC%00501">  <!-- Prognose nächste Stunde -->
+                          <when test="1" >  <!-- Ja -->
+                            <!-- Prognose Beschreibung -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%076_R-%TT%%CC%07601" />
+                            <!-- Prognose Temperatur -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%077_R-%TT%%CC%07701" />
+                            <!-- Prognose Gefühlte Temperatur -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%078_R-%TT%%CC%07801" />
+                            <!-- Prognose Luftfeute -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%079_R-%TT%%CC%07901" />
+                            <!-- Prognose Luftdruck -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%080_R-%TT%%CC%08001" />
+                            <!-- Prognose Wind -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%081_R-%TT%%CC%08101" />
+                            <!-- Prognose Wind Böen -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%082_R-%TT%%CC%08201" />
+                            <!-- Prognose Wind Richtung -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%083_R-%TT%%CC%08301" />
+                            <!-- Prognose Regen -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%084_R-%TT%%CC%08401" />
+                            <!-- Prognose Schnee -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%085_R-%TT%%CC%08501" />
+                            <!-- Prognose Heute Niederschlagswahrscheinlichkeit -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%086_R-%TT%%CC%08601" />
+                            <!-- Prognose UV Index -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%087_R-%TT%%CC%08701" />
+                            <!-- Prognose Wolken -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%088_R-%TT%%CC%08801" />
+                          </when>
+                        </choose>    
+       
+                        <!-- Prognose übernächste Stunde -->
+                        <ParameterRefRef RefId="%AID%_P-%TT%%CC%006_R-%TT%%CC%00601" HelpContext="IW-Hour2" />
+                        <choose ParamRefId="%AID%_P-%TT%%CC%006_R-%TT%%CC%00601">  <!-- Prognose übernächste Stunde -->
+                          <when test="1" >  <!-- Ja -->
+                            <!-- Prognose Beschreibung -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%089_R-%TT%%CC%08901" />
+                            <!-- Prognose Temperatur -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%090_R-%TT%%CC%09001" />
+                            <!-- Prognose Gefühlte Temperatur -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%091_R-%TT%%CC%09101" />
+                            <!-- Prognose Luftfeute -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%092_R-%TT%%CC%09201" />
+                            <!-- Prognose Luftdruck -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%093_R-%TT%%CC%09301" />
+                            <!-- Prognose Wind -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%094_R-%TT%%CC%09401" />
+                            <!-- Prognose Wind Böen -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%095_R-%TT%%CC%09501" />
+                            <!-- Prognose Wind Richtung -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%096_R-%TT%%CC%09601" />
+                            <!-- Prognose Regen -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%097_R-%TT%%CC%09701" />
+                            <!-- Prognose Schnee -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%098_R-%TT%%CC%09801" />
+                            <!-- Prognose Heute Niederschlagswahrscheinlichkeit -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%099_R-%TT%%CC%09901" />
+                            <!-- Prognose UV Index -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%100_R-%TT%%CC%10001" />
+                            <!-- Prognose Wolken -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%101_R-%TT%%CC%10101" />
+                          </when>
+                        </choose>    
                       </when>
                     </choose>
                   </ParameterBlock>

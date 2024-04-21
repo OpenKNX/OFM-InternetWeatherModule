@@ -49,14 +49,14 @@
 								<Parameter Id="%AID%_UP-%TT%00002" Name="WheaterRefreshInterval" ParameterType="%AID%_PT-WheaterRefreshInterval" Offset="0" BitOffset="0" Text="Automatische Aktualisierung" Value="3" />
 							</Union>
               <!-- Wheater Condition -->
-							<Union SizeInBit="424">
+							<Union SizeInBit="428">
 								<Memory CodeSegment="%MID%" Offset="42" BitOffset="0" />
 								<Parameter Id="%AID%_UP-%TT%00003" Name="WheaterConditionCurrentDayPrefix" ParameterType="%AID%_PT-WheaterConditionDayPrefix" Offset="0" BitOffset="0" Text="Aktueller Tag" Value="=" />
 								<Parameter Id="%AID%_UP-%TT%00004" Name="WheaterConditionNextDayPrefix" ParameterType="%AID%_PT-WheaterConditionDayPrefix" Offset="2" BitOffset="0" Text="Nächster Tag" Value=">" />
-								<Parameter Id="%AID%_UP-%TT%00005" Name="WheaterConditionSun" ParameterType="%AID%_PT-WheaterCondition" Offset="4" BitOffset="0" Text="Sonne" Value="Sonne" />
-								<Parameter Id="%AID%_UP-%TT%00006" Name="WheaterConditionClouds" ParameterType="%AID%_PT-WheaterCondition" Offset="109" BitOffset="0" Text="Wolken" Value="Wolken XXX%" />
-								<Parameter Id="%AID%_UP-%TT%00007" Name="WheaterConditionRain" ParameterType="%AID%_PT-WheaterCondition" Offset="214" BitOffset="0" Text="Regen" Value="Regen XXXmm" />
-								<Parameter Id="%AID%_UP-%TT%00008" Name="WheaterConditionSnow" ParameterType="%AID%_PT-WheaterCondition" Offset="319" BitOffset="0" Text="Schnee" Value="Schnee XXXmm" />
+								<Parameter Id="%AID%_UP-%TT%00005" Name="WheaterConditionSun" ParameterType="%AID%_PT-WheaterCondition" Offset="8" BitOffset="0" Text="Sonne" Value="Sonne" />
+								<Parameter Id="%AID%_UP-%TT%00006" Name="WheaterConditionClouds" ParameterType="%AID%_PT-WheaterCondition" Offset="113" BitOffset="0" Text="Wolken" Value="Wolken XXX%" />
+								<Parameter Id="%AID%_UP-%TT%00007" Name="WheaterConditionRain" ParameterType="%AID%_PT-WheaterCondition" Offset="218" BitOffset="0" Text="Regen" Value="Regen XXXmm" />
+								<Parameter Id="%AID%_UP-%TT%00008" Name="WheaterConditionSnow" ParameterType="%AID%_PT-WheaterCondition" Offset="323" BitOffset="0" Text="Schnee" Value="Schnee XXXmm" />
 							</Union>
             </Parameters>
             <ParameterRefs>
