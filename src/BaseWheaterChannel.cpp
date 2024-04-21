@@ -94,10 +94,10 @@ bool BaseWheaterChannel::processCommand(const std::string cmd, bool diagnoseKo)
     return false;
 }
 
-void BaseWheaterChannel::buildDescription(ForecastWheatherDataWithDescription& wheaterData, const char* prefix)
+void BaseWheaterChannel::buildDescription(char* description, float rain, float snow, uint8_t clouds, const char* prefix)
 {
-    memset(wheaterData.description, 0, 15) ; // Must be 0 terminated
-    char* buffer = wheaterData.description;
+    memset(description, 0, 15) ; // Must be 0 terminated
+    char* buffer = description;
     int bufferSize = 15;
     auto prefixLen = strlen(prefix);
     if (prefixLen > 0)
@@ -106,12 +106,9 @@ void BaseWheaterChannel::buildDescription(ForecastWheatherDataWithDescription& w
         bufferSize -= prefixLen;
         buffer += prefixLen;
     }
-    float rain = wheaterData.rain;
-    float snow = wheaterData.snow;
     auto all = rain + snow;
     if (all > 0.5)
     {
-
         std::string formatText;
         float value;
         if (snow > rain)
@@ -130,7 +127,7 @@ void BaseWheaterChannel::buildDescription(ForecastWheatherDataWithDescription& w
     }
     else
     {
-        if (wheaterData.clouds <= 5)
+        if (clouds <= 5)
         {
             snprintf(buffer, bufferSize, "%s", (const char*)ParamIW_WheaterConditionSun);
         }
@@ -139,7 +136,7 @@ void BaseWheaterChannel::buildDescription(ForecastWheatherDataWithDescription& w
             std::string formatText((const char*)ParamIW_WheaterConditionClouds);
             replaceAll(formatText, "%", "%%");
             replaceAll(formatText, "XXX", "%d");
-            snprintf(buffer, bufferSize, formatText.c_str(), wheaterData.clouds);
+            snprintf(buffer, bufferSize, formatText.c_str(), clouds);
         }
     }
 }
@@ -152,10 +149,12 @@ void BaseWheaterChannel::setValueCompare(GroupObject& groupObject, const KNXValu
 void BaseWheaterChannel::fetchData()
 {
     CurrentWheatherData current = CurrentWheatherData();
-    ForecastWheatherDataWithDescription today = ForecastWheatherDataWithDescription();
-    ForecastWheatherDataWithDescription tomorrow = ForecastWheatherDataWithDescription();
+    ForecastDayWheatherDataWithDescription today = ForecastDayWheatherDataWithDescription();
+    ForecastDayWheatherDataWithDescription tomorrow = ForecastDayWheatherDataWithDescription();
+    ForecastHourWheatherData hour1 = ForecastHourWheatherData();
+    ForecastHourWheatherData hour2 = ForecastHourWheatherData();
 
-    int16_t httpStatus = fillWheater(current, today, tomorrow);
+    int16_t httpStatus = fillWheater(current, today, tomorrow, hour1, hour2);
     KoIW_CHHTTPStatus.value(httpStatus, DPT_Value_2_Count);
     if (httpStatus != 200)
     {
@@ -166,8 +165,8 @@ void BaseWheaterChannel::fetchData()
     {
         logDebugP("Http result %d", httpStatus);
     } 
-    buildDescription(today, (const char*)ParamIW_WheaterConditionCurrentDayPrefix);
-    buildDescription(tomorrow, (const char*)ParamIW_WheaterConditionNextDayPrefix);
+    buildDescription(today.description, today.rain, today.snow, today.clouds, (const char*)ParamIW_WheaterConditionCurrentDayPrefix);
+    buildDescription(tomorrow.description, tomorrow.rain, tomorrow.snow, tomorrow.clouds, (const char*)ParamIW_WheaterConditionNextDayPrefix);
 
     logDebugP("Temperature: %f", current.temperature);
     setValueCompare(KoIW_CHCurrentTemparatur, current.temperature, DPT_Value_Temp);
@@ -279,6 +278,63 @@ void BaseWheaterChannel::fetchData()
     setValueCompare(KoIW_CHTomorrowClouds, tomorrow .clouds, DPT_Scaling);
 
     updateSwitchableKos();
+
+    char description[15];
+    buildDescription(description, hour1.rain, hour1.snow, hour1.clouds, "");
+    logDebugP("Hour + 1 Today description: %s", description);
+    setValueCompare(KoIW_CHHour1Description, description, DPT_String_8859_1);
+    logDebugP("Hour + 1 Temperature: %f", hour1.temperature);
+    setValueCompare(KoIW_CHHour1Temparatur, hour1.temperature, DPT_Value_Temp);
+    logDebugP("Hour + 1 Temperature feels like: %f", hour1.temperatureFeelsLike);
+    setValueCompare(KoIW_CHHour1TemparaturFeelsLike, hour1.temperatureFeelsLike, DPT_Value_Temp);
+    logDebugP("Hour + 1 Humidity: %f", hour1.humidity);
+    setValueCompare(KoIW_CHHour1Humidity, hour1.humidity, DPT_Value_Humidity);
+    logDebugP("Hour + 1 Pressure: %f", hour1.pressure);
+    setValueCompare(KoIW_CHHour1Pressure, hour1.pressure, DPT_Value_Pres);
+    logDebugP("Hour + 1 Wind speed: %f", hour1.windSpeed);
+    setValueCompare(KoIW_CHHour1Wind, hour1.windSpeed, DPT_Value_Wsp_kmh);
+    logDebugP("Hour + 1 Wind gust: %f", hour1.windGust);
+    setValueCompare(KoIW_CHHour1WindGust, hour1.windGust, DPT_Value_Wsp_kmh);
+    logDebugP("Hour + 1 Wind direction: %d", (int) hour1.windDirection);
+    setValueCompare(KoIW_CHHour1WindDirection, hour1.windDirection, DPT_Angle);
+    logDebugP("Hour + 1 Rain: %f", hour1.rain);
+    setValueCompare(KoIW_CHHour1Rain, hour1.rain, DPT_Rain_Amount);
+    logDebugP("Hour + 1 Snow: %f", hour1.rain);
+    setValueCompare(KoIW_CHHour1Snow, hour1.snow, DPT_Length_mm);
+    logDebugP("Hour + 1 snow: %d", (int) hour1.probabilityOfPrecipitation);
+    setValueCompare(KoIW_CHHour1ProbabilityOfPrecipitation, hour1.probabilityOfPrecipitation, DPT_Scaling);
+    logDebugP("Hour + 1 UVI: %f", hour1.uvi);
+    setValueCompare(KoIW_CHHour1UVI, (uint8_t)round(hour1.uvi), DPT_DecimalFactor);
+    logDebugP("Hour + 1 Clouds: %d", (int) hour1.clouds);
+    setValueCompare(KoIW_CHHour1Clouds, hour1.clouds, DPT_Scaling);
+
+    buildDescription(description, hour2.rain, hour2.snow, hour2.clouds, "");
+    logDebugP("Hour + 2 Today description: %s", description);
+    setValueCompare(KoIW_CHHour2Description, description, DPT_String_8859_1);
+    logDebugP("Hour + 2 Temperature: %f", hour2.temperature);
+    setValueCompare(KoIW_CHHour2Temparatur, hour2.temperature, DPT_Value_Temp);
+    logDebugP("Hour + 2 Temperature feels like: %f", hour2.temperatureFeelsLike);
+    setValueCompare(KoIW_CHHour2TemparaturFeelsLike, hour2.temperatureFeelsLike, DPT_Value_Temp);
+    logDebugP("Hour + 2 Humidity: %f", hour2.humidity);
+    setValueCompare(KoIW_CHHour2Humidity, hour2.humidity, DPT_Value_Humidity);
+    logDebugP("Hour + 2 Pressure: %f", hour2.pressure);
+    setValueCompare(KoIW_CHHour2Pressure, hour2.pressure, DPT_Value_Pres);
+    logDebugP("Hour + 2 Wind speed: %f", hour2.windSpeed);
+    setValueCompare(KoIW_CHHour2Wind, hour2.windSpeed, DPT_Value_Wsp_kmh);
+    logDebugP("Hour + 2 Wind gust: %f", hour2.windGust);
+    setValueCompare(KoIW_CHHour2WindGust, hour2.windGust, DPT_Value_Wsp_kmh);
+    logDebugP("Hour + 2 Wind direction: %d", (int) hour2.windDirection);
+    setValueCompare(KoIW_CHHour2WindDirection, hour2.windDirection, DPT_Angle);
+    logDebugP("Hour + 2 Rain: %f", hour2.rain);
+    setValueCompare(KoIW_CHHour2Rain, hour2.rain, DPT_Rain_Amount);
+    logDebugP("Hour + 2 Snow: %f", hour2.rain);
+    setValueCompare(KoIW_CHHour2Snow, hour2.snow, DPT_Length_mm);
+    logDebugP("Hour + 2 snow: %d", (int) hour2.probabilityOfPrecipitation);
+    setValueCompare(KoIW_CHHour2ProbabilityOfPrecipitation, hour2.probabilityOfPrecipitation, DPT_Scaling);
+    logDebugP("Hour + 2 UVI: %f", hour2.uvi);
+    setValueCompare(KoIW_CHHour2UVI, (uint8_t)round(hour2.uvi), DPT_DecimalFactor);
+    logDebugP("Hour + 2 Clouds: %d", (int) hour2.clouds);
+    setValueCompare(KoIW_CHHour2Clouds, hour2.clouds, DPT_Scaling);
 }
 
 void BaseWheaterChannel::copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2)

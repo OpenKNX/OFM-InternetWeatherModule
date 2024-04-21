@@ -24,7 +24,24 @@ struct CurrentWheatherData
     uint8_t clouds = 0;
 };
 
-struct ForecastWheatherData
+struct ForecastHourWheatherData
+{
+    float temperature = 0;
+    float temperatureFeelsLike = 0;
+    float humidity = 0;
+    uint16_t pressure = 0;
+    float windSpeed = 0;
+    float windGust = 0;
+    uint8_t windDirection = 0;
+    uint8_t probabilityOfPrecipitation = 0;
+    float rain = 0;
+    float snow = 0;
+    float uvi = 0;
+    uint8_t clouds = 0;
+};
+
+
+struct ForecastDayWheatherData
 {
     float temperatureMin = 0;
     float temperatureMax = 0;
@@ -50,7 +67,7 @@ struct ForecastWheatherData
     uint8_t clouds = 0;
 };
 
-struct ForecastWheatherDataWithDescription : ForecastWheatherData
+struct ForecastDayWheatherDataWithDescription : ForecastDayWheatherData
 {
     char description[15] = {0};
 };
@@ -61,12 +78,12 @@ class BaseWheaterChannel : public OpenKNX::Channel
   private:
     unsigned long _lastApiCall = 0;
     unsigned long _updateIntervalInMs = 0;
-    void buildDescription(ForecastWheatherDataWithDescription& wheaterData, const char* prefix);
+    void buildDescription(char* description, float rain, float snow, uint8_t clouds, const char* prefix);
     void updateSwitchableKos();
     void copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2);
   protected:
     BaseWheaterChannel(uint8_t index);
-    virtual int16_t fillWheater(CurrentWheatherData& currentWheater, ForecastWheatherData& todayWheater, ForecastWheatherData& tomorrowWheater) = 0;
+    virtual int16_t fillWheater(CurrentWheatherData& currentWheater, ForecastDayWheatherData& todayWheater, ForecastDayWheatherData& tomorrowWheater, ForecastHourWheatherData& hour1Wheater, ForecastHourWheatherData& hour2Wheater) = 0;
     void setValueCompare(GroupObject& groupObject, const KNXValue& value, const Dpt& type);
  public:
     void loop() override;
