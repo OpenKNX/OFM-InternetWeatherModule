@@ -46,10 +46,11 @@ int16_t OpenWheaterMapChannel::fillWheater(CurrentWheatherData& currentWheater, 
     fillForecast(tomorrow, tomorrowWheater);
 
     JsonArray hourly = doc["hourly"];
-    JsonObject hour1 = hourly[0];
+    JsonObject hour1 = hourly[1];
     fillForecast(hour1, hour1Wheater);
-    JsonObject hour2 = hourly[1];
-    fillForecast(hour1, hour2Wheater);
+    JsonObject hour2 = hourly[2];
+    fillForecast(hour2, hour2Wheater);
+
     return httpStatus;
 }
 
