@@ -281,7 +281,7 @@ void BaseWheaterChannel::fetchData()
 
     char description[15];
     buildDescription(description, hour1.rain, hour1.snow, hour1.clouds, "");
-    logDebugP("Hour + 1 Today description: %s", description);
+    logDebugP("Hour + 1 Description: %s", description);
     setValueCompare(KoIW_CHHour1Description, description, DPT_String_8859_1);
     logDebugP("Hour + 1 Temperature: %f", hour1.temperature);
     setValueCompare(KoIW_CHHour1Temparatur, hour1.temperature, DPT_Value_Temp);
@@ -309,7 +309,7 @@ void BaseWheaterChannel::fetchData()
     setValueCompare(KoIW_CHHour1Clouds, hour1.clouds, DPT_Scaling);
 
     buildDescription(description, hour2.rain, hour2.snow, hour2.clouds, "");
-    logDebugP("Hour + 2 Today description: %s", description);
+    logDebugP("Hour + 2 Description: %s", description);
     setValueCompare(KoIW_CHHour2Description, description, DPT_String_8859_1);
     logDebugP("Hour + 2 Temperature: %f", hour2.temperature);
     setValueCompare(KoIW_CHHour2Temparatur, hour2.temperature, DPT_Value_Temp);
