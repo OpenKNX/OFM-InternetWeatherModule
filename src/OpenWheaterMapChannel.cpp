@@ -1,6 +1,6 @@
 #include "OpenWheaterMapChannel.h"
 
-#define OpenWheaterMapUrl "https://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,hourly"
+#define OpenWheaterMapUrl "http://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,hourly"
 
 OpenWheaterMapChannel::OpenWheaterMapChannel(uint8_t index)
     : BaseWheaterChannel(index)
@@ -12,7 +12,7 @@ const std::string OpenWheaterMapChannel::name()
     return "OpenWheaterMap";
 }
 
-int OpenWheaterMapChannel::fillWheater(CurrentWheatherData& currentWheater, ForecastWheatherData& todayWheater, ForecastWheatherData& tomorrowWheater)
+int16_t OpenWheaterMapChannel::fillWheater(CurrentWheatherData& currentWheater, ForecastWheatherData& todayWheater, ForecastWheatherData& tomorrowWheater)
 {
     String url = OpenWheaterMapUrl;
     url += "&appid=";

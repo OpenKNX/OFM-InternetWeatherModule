@@ -82,13 +82,13 @@ bool BaseWheaterChannel::processCommand(const std::string cmd, bool diagnoseKo)
     if (cmd == "s0")
     {
         Serial.println();
-        KoIW_CHForecastSelection.value(0, DPT_Switch);
+        KoIW_CHForecastSelection.value(false, DPT_Switch);
         return true;
     }
     if (cmd == "s1")
     {
         Serial.println();
-        KoIW_CHForecastSelection.value(1, DPT_Switch);
+        KoIW_CHForecastSelection.value(true, DPT_Switch);
         return true;
     }
     return false;
@@ -155,7 +155,7 @@ void BaseWheaterChannel::fetchData()
     ForecastWheatherDataWithDescription today = ForecastWheatherDataWithDescription();
     ForecastWheatherDataWithDescription tomorrow = ForecastWheatherDataWithDescription();
 
-    int httpStatus = fillWheater(current, today, tomorrow);
+    int16_t httpStatus = fillWheater(current, today, tomorrow);
     KoIW_CHHTTPStatus.value(httpStatus, DPT_Value_2_Count);
     if (httpStatus != 200)
     {

@@ -66,7 +66,7 @@ class BaseWheaterChannel : public OpenKNX::Channel
     void copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2);
   protected:
     BaseWheaterChannel(uint8_t index);
-    virtual int fillWheater(CurrentWheatherData& currentWheater, ForecastWheatherData& todayWheater, ForecastWheatherData& tomorrowWheater) = 0;
+    virtual int16_t fillWheater(CurrentWheatherData& currentWheater, ForecastWheatherData& todayWheater, ForecastWheatherData& tomorrowWheater) = 0;
     void setValueCompare(GroupObject& groupObject, const KNXValue& value, const Dpt& type);
  public:
     void loop() override;
