@@ -1,9 +1,21 @@
 # OFM-InternetWheaterModule
 
 Dies ist ein Modul zur Integration von Internet Wetterdiensten.
-Es wird das [OFM-Network](https://github.com/OpenKNX/OFM-Network) oder OFM-WLAN benötigt.
-  
-Features
+Es wird das [OFM-Network](https://github.com/OpenKNX/OFM-Network) oder OFM-WLAN (Noch nicht öffentlich) benötigt.
+
+# Hardware Unterstützung
+
+|Prozessor | Status | Anmerkung                  |
+|----------|--------|----------------------------|
+|RP2040    | Beta   | Derzeit kein HTTPS Support |
+|ESP32     | Beta   |                            |
+
+Getestete Hardware:
+- [OpenKNX Reg1-ETH](https://github.com/OpenKNX/OpenKNX/wiki/REG1-Eth)
+- Adafruit ESP32 Feather V2
+
+# Features
+
 - Aktuelle Werte
 - Prognose Heute
 - Prognose Morgen
@@ -45,3 +57,7 @@ Bei der Subscription sollte das `Call per day limit` auf 1000 eingestellt werden
 ![Subscription](doc/IW-Subscription.png)
 
 Siehe https://openweathermap.org/price
+
+# Lizenz
+
+[GNU GPL v3](LICENSE)

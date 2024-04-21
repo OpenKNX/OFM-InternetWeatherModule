@@ -1,6 +1,9 @@
 #include "OpenWheaterMapChannel.h"
-
+#ifdef ARDUINO_ARCH_RP2040
 #define OpenWheaterMapUrl "http://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,hourly"
+#else
+#define OpenWheaterMapUrl "https://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,hourly"
+#endif
 
 OpenWheaterMapChannel::OpenWheaterMapChannel(uint8_t index)
     : BaseWheaterChannel(index)
