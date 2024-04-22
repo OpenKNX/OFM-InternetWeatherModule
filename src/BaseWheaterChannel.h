@@ -78,6 +78,8 @@ class BaseWheaterChannel : public OpenKNX::Channel
   private:
     unsigned long _lastApiCall = 0;
     unsigned long _updateIntervalInMs = 0;
+    std::string _descriptionToday = std::string();
+    std::string _descriptionTomorrow = std::string();
     void buildDescription(char* description, float rain, float snow, uint8_t clouds, const char* prefix);
     void updateSwitchableKos();
     void copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2);
@@ -91,5 +93,4 @@ class BaseWheaterChannel : public OpenKNX::Channel
     void fetchData();
     void processInputKo(GroupObject &ko) override;
     virtual bool processCommand(const std::string cmd, bool diagnoseKo);
-
  };

@@ -74,7 +74,7 @@ void OpenWheaterMapChannel::fillForecast(JsonObject& json, CurrentWheatherData& 
 void OpenWheaterMapChannel::fillForecast(JsonObject& json, ForecastHourWheatherData& wheater)
 {
     fillForecast(json, (CurrentWheatherData&) wheater);
-    wheater.probabilityOfPrecipitation = json["pop"];    // 70
+    wheater.probabilityOfPrecipitation = round(100. * (float) json["pop"]);    // 0.70
 }
 
 void OpenWheaterMapChannel::fillForecast(JsonObject& json, ForecastDayWheatherData& wheater)
@@ -98,7 +98,7 @@ void OpenWheaterMapChannel::fillForecast(JsonObject& json, ForecastDayWheatherDa
     wheater.windDirection = json["wind_deg"];            // 70
     wheater.rain = json["rain"];                         // 2.5
     wheater.snow = json["snow"];                         // 2.5
-    wheater.probabilityOfPrecipitation = json["pop"];    // 70
+    wheater.probabilityOfPrecipitation = round(100. * (float) json["pop"]);    // 0.70
     wheater.uvi = json["uvi"];                           // 6.29
     wheater.clouds = json["clouds"];                     // 40
 }

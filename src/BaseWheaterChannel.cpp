@@ -24,6 +24,7 @@ void BaseWheaterChannel::setup()
             break;
     }
     logDebugP("Update interval: %ldms", _updateIntervalInMs);
+    KoIW_CHForecastSelection.value(false, DPT_Switch);
 }
 
 void BaseWheaterChannel::processInputKo(GroupObject& ko)
@@ -166,7 +167,9 @@ void BaseWheaterChannel::fetchData()
         logDebugP("Http result %d", httpStatus);
     } 
     buildDescription(today.description, today.rain, today.snow, today.clouds, (const char*)ParamIW_WheaterConditionCurrentDayPrefix);
+    _descriptionToday = today.description;
     buildDescription(tomorrow.description, tomorrow.rain, tomorrow.snow, tomorrow.clouds, (const char*)ParamIW_WheaterConditionNextDayPrefix);
+    _descriptionTomorrow = tomorrow.description;
 
     logDebugP("Temperature: %f", current.temperature);
     setValueCompare(KoIW_CHCurrentTemparatur, current.temperature, DPT_Value_Temp);
@@ -227,7 +230,7 @@ void BaseWheaterChannel::fetchData()
     setValueCompare(KoIW_CHTodayRain, today.rain, DPT_Rain_Amount);
     logDebugP("Today snow: %f", today.snow);
     setValueCompare(KoIW_CHTodaySnow, today.snow, DPT_Length_mm);
-    logDebugP("Today snow: %d", (int) today.probabilityOfPrecipitation);
+    logDebugP("Today probability of precipitation: %d", (int) today.probabilityOfPrecipitation);
     setValueCompare(KoIW_CHTodayProbabilityOfPrecipitation, today.probabilityOfPrecipitation, DPT_Scaling);
     logDebugP("Today UVI: %f", today.uvi);
     setValueCompare(KoIW_CHTodayUVI, (uint8_t)round(today.uvi), DPT_DecimalFactor);
@@ -270,7 +273,7 @@ void BaseWheaterChannel::fetchData()
     setValueCompare(KoIW_CHTomorrowRain, tomorrow .rain, DPT_Rain_Amount);
     logDebugP("Tomorrow snow: %f", tomorrow .snow);
     setValueCompare(KoIW_CHTomorrowSnow, tomorrow .snow, DPT_Length_mm);
-    logDebugP("Tomorrow snow: %d", (int) tomorrow .probabilityOfPrecipitation);
+    logDebugP("Tomorrow probability of precipitation: %d", (int) tomorrow .probabilityOfPrecipitation);
     setValueCompare(KoIW_CHTomorrowProbabilityOfPrecipitation, tomorrow .probabilityOfPrecipitation, DPT_Scaling);
     logDebugP("Tomorrow UVI: %f", tomorrow .uvi);
     setValueCompare(KoIW_CHTomorrowUVI, (uint8_t)round(tomorrow .uvi), DPT_DecimalFactor);
@@ -301,7 +304,7 @@ void BaseWheaterChannel::fetchData()
     setValueCompare(KoIW_CHHour1Rain, hour1.rain, DPT_Rain_Amount);
     logDebugP("Hour + 1 Snow: %f", hour1.rain);
     setValueCompare(KoIW_CHHour1Snow, hour1.snow, DPT_Length_mm);
-    logDebugP("Hour + 1 snow: %d", (int) hour1.probabilityOfPrecipitation);
+    logDebugP("Hour + 1 Probability of precipitation: %d", (int) hour1.probabilityOfPrecipitation);
     setValueCompare(KoIW_CHHour1ProbabilityOfPrecipitation, hour1.probabilityOfPrecipitation, DPT_Scaling);
     logDebugP("Hour + 1 UVI: %f", hour1.uvi);
     setValueCompare(KoIW_CHHour1UVI, (uint8_t)round(hour1.uvi), DPT_DecimalFactor);
@@ -329,7 +332,7 @@ void BaseWheaterChannel::fetchData()
     setValueCompare(KoIW_CHHour2Rain, hour2.rain, DPT_Rain_Amount);
     logDebugP("Hour + 2 Snow: %f", hour2.rain);
     setValueCompare(KoIW_CHHour2Snow, hour2.snow, DPT_Length_mm);
-    logDebugP("Hour + 2 snow: %d", (int) hour2.probabilityOfPrecipitation);
+    logDebugP("Hour + 2 Probability of precipitation: %d", (int) hour2.probabilityOfPrecipitation);
     setValueCompare(KoIW_CHHour2ProbabilityOfPrecipitation, hour2.probabilityOfPrecipitation, DPT_Scaling);
     logDebugP("Hour + 2 UVI: %f", hour2.uvi);
     setValueCompare(KoIW_CHHour2UVI, (uint8_t)round(hour2.uvi), DPT_DecimalFactor);
@@ -346,12 +349,13 @@ void BaseWheaterChannel::copyGroupObject(GroupObject& koTarget, bool select, Gro
     memcpy(koTarget.valueRef(), koSource.valueRef(), koSource.valueSize());
     koTarget.objectWritten();
 }
+
 void BaseWheaterChannel::updateSwitchableKos()
 {
     auto select = (bool) KoIW_CHForecastSelection.value(DPT_Switch);
     logDebugP("update switchable KO's to %s", select ? "tomorrow" : "today");
-
-    copyGroupObject(KoIW_CHForecastDescription, select, KoIW_CHTodayDescription, KoIW_CHTomorrowDescription);
+    if (KoIW_CHForecastDescription.valueNoSendCompare(select ? _descriptionTomorrow.c_str() : _descriptionToday.c_str(), DPT_String_8859_1))
+        KoIW_CHForecastDescription.objectWritten();
     copyGroupObject(KoIW_CHForecastTemparaturDay, select, KoIW_CHTodayTemparaturDay, KoIW_CHTomorrowTemparaturDay);
     copyGroupObject(KoIW_CHForecastTemparaturNight, select, KoIW_CHTodayTemparaturNight, KoIW_CHTomorrowTemparaturNight);
     copyGroupObject(KoIW_CHForecastTemparaturEvening, select, KoIW_CHTodayTemparaturEvening, KoIW_CHTomorrowTemparaturEvening);
