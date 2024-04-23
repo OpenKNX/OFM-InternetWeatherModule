@@ -86,11 +86,15 @@ bool BaseWheaterChannel::processCommand(const std::string cmd, bool diagnoseKo)
         KoIW_CHForecastSelection.value(false, DPT_Switch);
         return true;
     }
-    if (cmd == "s1")
+    else if (cmd == "s1")
     {
         Serial.println();
         KoIW_CHForecastSelection.value(true, DPT_Switch);
         return true;
+    }
+    else if (cmd == "update")
+    {
+        fetchData();
     }
     return false;
 }

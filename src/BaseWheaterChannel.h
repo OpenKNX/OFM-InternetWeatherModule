@@ -83,6 +83,7 @@ class BaseWheaterChannel : public OpenKNX::Channel
     void buildDescription(char* description, float rain, float snow, uint8_t clouds, const char* prefix);
     void updateSwitchableKos();
     void copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2);
+    void fetchData();
   protected:
     BaseWheaterChannel(uint8_t index);
     virtual int16_t fillWheater(CurrentWheatherData& currentWheater, ForecastDayWheatherData& todayWheater, ForecastDayWheatherData& tomorrowWheater, ForecastHourWheatherData& hour1Wheater, ForecastHourWheatherData& hour2Wheater) = 0;
@@ -90,7 +91,6 @@ class BaseWheaterChannel : public OpenKNX::Channel
  public:
     void loop() override;
     void setup() override;
-    void fetchData();
     void processInputKo(GroupObject &ko) override;
     virtual bool processCommand(const std::string cmd, bool diagnoseKo);
  };
