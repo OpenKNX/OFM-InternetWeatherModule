@@ -14,8 +14,12 @@ const std::string InternetWheaterModule::name()
 
 const std::string InternetWheaterModule::version()
 {
+#ifdef MODULE_InternetWheaterModule_Version
+    return MODULE_InternetWheaterModule_Version;
+#else
     // hides the module in the version output on the console, because the firmware version is sufficient.
     return "";
+#endif
 }
 
 OpenKNX::Channel* InternetWheaterModule::createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */)
@@ -31,7 +35,7 @@ OpenKNX::Channel* InternetWheaterModule::createChannel(uint8_t _channelIndex /* 
 
 void InternetWheaterModule::showHelp()
 {
-   openknx.console.printHelpLine("iw<CC>", "Update wheater data of channel CC. i.e. iw01");
+   openknx.console.printHelpLine("iw<CC> update", "Update wheater data of channel CC. i.e. iw01");
    openknx.console.printHelpLine("iw<CC> s0", "Set forecast of channel CC to today. i.e. iw1 s0");
    openknx.console.printHelpLine("iw<CC> s1", "Set forecast of channel CC to tomorrow. i.e. iw1 s1");
 }
@@ -70,12 +74,7 @@ bool InternetWheaterModule::processCommand(const std::string cmd, bool diagnoseK
                 Serial.printf("Channel not %d activated\r\n", channel);
                 return true;
             }
-            if (channelCmd.length() == 0)
-            {
-                wheaterChannel->fetchData();
-                return true;
-            }
-            else
+            if (channelCmd.length() != 0)
             {
                 return wheaterChannel->processCommand(channelCmd, diagnoseKo);
             }
