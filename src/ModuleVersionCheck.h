@@ -1,12 +1,12 @@
 #include "versions.h"
 
 // additional check, because not every use the openproducer
-#if defined(IW_ModuleVersion) && defined(MODULE_InternetWheaterModule_ETS)
+#if defined(IW_ModuleVersion) && defined(MODULE_InternetWeatherModule_ETS)
 
     // Change the following 3 lines and adopt to your module names
-    #define ModuleVersion_ModuleName "InternetWheaterModule"
+    #define ModuleVersion_ModuleName "InternetWeatherModule"
     #define ModuleVersion_knxprod_h IW_ModuleVersion
-    #define ModuleVersion_version_h MODULE_InternetWheaterModule_ETS
+    #define ModuleVersion_version_h MODULE_InternetWeatherModule_ETS
 
     // ATTENTION: This file is evaluated during build, by OpenKNXproducer and some build scripts.
     // No changes needed behind this point

@@ -1,10 +1,10 @@
 {
-    "name": "OAM-InternetWheaterModule",
-    "version": "0.0.1",
+    "name": "OAM-InternetWeatherModule",
+    "version": "0.1.1",
     "dependencies": {
         "bblanchon/ArduinoJson": "^7.0.4"
     },
-    "description": "Internet Wheater Service",
+    "description": "Internet Weather Service",
     "homepage": "https://openknx.de",
     "authors": {
         "name": "OpenKNX",
@@ -14,6 +14,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/OpenKNX/OAM-InternetWheaterModule"
+        "url": "https://github.com/OpenKNX/OAM-InternetWeatherModule"
     }
 }

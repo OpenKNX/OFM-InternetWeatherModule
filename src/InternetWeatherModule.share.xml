@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../Organization/knxprod-support/knx_project_14/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+  <ManufacturerData>
+    <Manufacturer>
+      <ApplicationPrograms>
+        <ApplicationProgram>
+          <Static>
+            <ParameterTypes>
+              <ParameterType Id="%AID%_PT-APIKEY" Name="API Key">
+								<TypeText SizeInBit="320" /> <!-- 40 characters -->
+							</ParameterType>
+              <ParameterType Id="%AID%_PT-WeatherCondition" Name="Weather Condition">
+                <TypeText SizeInBit="104" /> <!-- 14 - 1 prefix =  13 characters -->
+              </ParameterType>  
+              <ParameterType Id="%AID%_PT-WeatherConditionDayPrefix" Name="Weather Condition Day Prefix">
+                <TypeText SizeInBit="8" /> <!-- 1 character --> 
+              </ParameterType>
+							<ParameterType Id="%AID%_PT-WeatherLocationType" Name="WeatherLocation">
+								<TypeRestriction Base="Value" SizeInBit="1">
+									<Enumeration Text="Gerätestandort aus Allgemein" Value="0" Id="%ENID%" />
+									<Enumeration Text="Anderer Ort" Value="1" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-WeatherRefreshInterval" Name="WeatherRefreshInterval">
+								<TypeRestriction Base="Value" SizeInBit="8">
+									<Enumeration Text="Keine" Value="0" Id="%ENID%" />
+									<Enumeration Text="10 Minuten" Value="1" Id="%ENID%" />
+									<Enumeration Text="30 Minuten" Value="2" Id="%ENID%" />
+									<Enumeration Text="Jede Stunde" Value="3" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-WeatherChannelType" Name="WeatherChannelType">
+								<TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
+									<Enumeration Text="OpenWeatherMap" Value="1" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+            </ParameterTypes>
+            <Parameters>       
+             <!-- OpenWeatherMap API Key -->
+							<Union SizeInBit="320">
+								<Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
+								<Parameter Id="%AID%_UP-%TT%00001" Name="APIKey" ParameterType="%AID%_PT-APIKEY" Offset="0" BitOffset="0" Text="API Key" Value="" />
+							</Union>
+							<!-- WeatherRefreshInterval -->
+							<Union SizeInBit="8">
+								<Memory CodeSegment="%MID%" Offset="41" BitOffset="0" />
+								<Parameter Id="%AID%_UP-%TT%00002" Name="WeatherRefreshInterval" ParameterType="%AID%_PT-WeatherRefreshInterval" Offset="0" BitOffset="0" Text="Automatische Aktualisierung" Value="3" />
+							</Union>
+              <!-- Weather Condition -->
+							<Union SizeInBit="428">
+								<Memory CodeSegment="%MID%" Offset="42" BitOffset="0" />
+								<Parameter Id="%AID%_UP-%TT%00003" Name="WeatherConditionCurrentDayPrefix" ParameterType="%AID%_PT-WeatherConditionDayPrefix" Offset="0" BitOffset="0" Text="Aktueller Tag" Value="=" />
+								<Parameter Id="%AID%_UP-%TT%00004" Name="WeatherConditionNextDayPrefix" ParameterType="%AID%_PT-WeatherConditionDayPrefix" Offset="2" BitOffset="0" Text="Nächster Tag" Value=">" />
+								<Parameter Id="%AID%_UP-%TT%00005" Name="WeatherConditionSun" ParameterType="%AID%_PT-WeatherCondition" Offset="8" BitOffset="0" Text="Sonne" Value="Sonne" />
+								<Parameter Id="%AID%_UP-%TT%00006" Name="WeatherConditionClouds" ParameterType="%AID%_PT-WeatherCondition" Offset="113" BitOffset="0" Text="Wolken" Value="Wolken XXX%" />
+								<Parameter Id="%AID%_UP-%TT%00007" Name="WeatherConditionRain" ParameterType="%AID%_PT-WeatherCondition" Offset="218" BitOffset="0" Text="Regen" Value="Regen XXXmm" />
+								<Parameter Id="%AID%_UP-%TT%00008" Name="WeatherConditionSnow" ParameterType="%AID%_PT-WeatherCondition" Offset="323" BitOffset="0" Text="Schnee" Value="Schnee XXXmm" />
+							</Union>
+            </Parameters>
+            <ParameterRefs>
+              <!-- OpenWeatherMap API Key -->
+				<ParameterRef Id="%AID%_UP-%TT%00001_R-%TT%0000100" RefId="%AID%_UP-%TT%00001" />
+				<!-- WeatherRefreshInterval -->
+				<ParameterRef Id="%AID%_UP-%TT%00002_R-%TT%0000200" RefId="%AID%_UP-%TT%00002" />
+				<!-- WeatherConditionCurrentDayPrefix -->
+				<ParameterRef Id="%AID%_UP-%TT%00003_R-%TT%0000300" RefId="%AID%_UP-%TT%00003" />
+				<!-- WeatherConditionNextDayPrefix -->
+				<ParameterRef Id="%AID%_UP-%TT%00004_R-%TT%0000400" RefId="%AID%_UP-%TT%00004" />
+				<!-- WeatherConditionSun -->
+				<ParameterRef Id="%AID%_UP-%TT%00005_R-%TT%0000500" RefId="%AID%_UP-%TT%00005" />
+				<!-- WeatherConditionClouds -->
+				<ParameterRef Id="%AID%_UP-%TT%00006_R-%TT%0000600" RefId="%AID%_UP-%TT%00006" />  
+				<!-- WeatherConditionRain -->
+				<ParameterRef Id="%AID%_UP-%TT%00007_R-%TT%0000700" RefId="%AID%_UP-%TT%00007" />
+				<!-- WeatherConditionSnow -->
+				<ParameterRef Id="%AID%_UP-%TT%00008_R-%TT%0000800" RefId="%AID%_UP-%TT%00008" />
+			</ParameterRefs>
+            <ComObjectTable>
+              <!-- Refresh Weather Data -->
+              <ComObject Id="%AID%_O-%TT%00001" Name="RefreshWeatherData" Text="Wetterdaten aktualisieren" Number="0" FunctionText="Wetterdaten aktualisieren" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+            </ComObjectTable>            
+            <ComObjectRefs>
+              <!-- Refresh Weather Data -->
+              <ComObjectRef Id="%AID%_O-%TT%00001_R-%TT%0000101" RefId="%AID%_O-%TT%00001" Name="RefreshWeatherData" Priority="Low" ObjectSize="1 Bit" DatapointType="DPST-1-17" />    
+            </ComObjectRefs>
+          </Static>
+          <Dynamic>
+            <Channel Name="MainChannel%TT%" Text="Wetter" Number="%TT%" Id="%AID%_CH-%TT%" Icon="tent">
+              <ParameterBlock Id="%AID%_PB-nnn" Name="WeatherSettings" Text="Basiseinstellungen" Icon="earth" HelpContext="Empty">
+				<ParameterSeparator Id="%AID%_PS-nnn" Text="OpenWeatherMap" UIHint="Headline" />
+				<!-- OpenWeatherMap API Key -->
+				<ParameterRefRef RefId="%AID%_UP-%TT%00001_R-%TT%0000100" IndentLevel="1" HelpContext="IW-OpenWeatherMapAPIKey" />
+
+
+				<ParameterSeparator Id="%AID%_PS-nnn" Text="Datenaktualisierung" UIHint="Headline" />
+				<!-- WeatherRefreshInterval -->
+				<ParameterRefRef RefId="%AID%_UP-%TT%00002_R-%TT%0000200" IndentLevel="1" HelpContext="IW-WeatherRefreshInterval" />
+
+				<ParameterSeparator Id="%AID%_PS-nnn" Text="Textbausteine für die Wetterbeschreibung" UIHint="Headline" />
+				<!-- WeatherConditionCurrentDayPrefix -->
+				<ParameterRefRef RefId="%AID%_UP-%TT%00003_R-%TT%0000300" HelpContext="IW-WeatherConditionCurrentDayPrefix" />
+				<!-- WeatherConditionNextDayPrefix -->
+				<ParameterRefRef RefId="%AID%_UP-%TT%00004_R-%TT%0000400" HelpContext="IW-WeatherConditionNextDayPrefix" />
+				<!-- WeatherConditionSun -->
+				<ParameterRefRef RefId="%AID%_UP-%TT%00005_R-%TT%0000500" HelpContext="IW-WeatherConditionSun" />
+				<!-- WeatherConditionClouds -->
+				<ParameterRefRef RefId="%AID%_UP-%TT%00006_R-%TT%0000600" HelpContext="IW-WeatherConditionClouds" />  
+				<!-- WeatherConditionRain -->
+				<ParameterRefRef RefId="%AID%_UP-%TT%00007_R-%TT%0000700" HelpContext="IW-WeatherConditionRain" />
+				<!-- WeatherConditionSnow -->
+				<ParameterRefRef RefId="%AID%_UP-%TT%00008_R-%TT%0000800" HelpContext="IW-WeatherConditionSnow" />
+
+				<!-- Refresh Weather Data -->
+				<ComObjectRefRef RefId="%AID%_O-%TT%00001_R-%TT%0000101" />
+              </ParameterBlock>    
+              <op:include href="InternetWeatherModule.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="IW" IsInner="true" />
+            </Channel>
+          </Dynamic>
+        </ApplicationProgram>
+      </ApplicationPrograms>
+      <Baggages>
+        <Baggage TargetPath="" Name="Help_de.zip" Id="%FILE-HELP-de%">
+          <FileInfo TimeInfo="%DATETIME%" />
+        </Baggage>
+        <!-- <Baggage TargetPath="" Name="Icons.zip" Id="%FILE-ICONS%">
+          <FileInfo TimeInfo="%DATETIME%" />
+        </Baggage> -->
+      </Baggages>
+    </Manufacturer>
+  </ManufacturerData>
+</KNX>

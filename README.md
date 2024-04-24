@@ -1,4 +1,4 @@
-# OFM-InternetWheaterModule
+# OFM-InternetWeatherModule
 
 Dies ist ein Modul zur Integration von Internet Wetterdiensten.
 Es wird das [OFM-Network](https://github.com/OpenKNX/OFM-Network) oder OFM-WLAN (Noch nicht öffentlich) benötigt.
@@ -48,7 +48,7 @@ Getestete Hardware:
 
 ## Einbindung in die Anwendung
 
-In das Anwendungs XML muss OFM-Network (oder OFM-WLAN) und das OFM-InternetWheaterModule aufgenommen werden:
+In das Anwendungs XML muss OFM-Network (oder OFM-WLAN) und das OFM-InternetWeatherModule aufgenommen werden:
 
 ```xml
   <op:define prefix="NET" ModuleType="11" 
@@ -57,41 +57,41 @@ In das Anwendungs XML muss OFM-Network (oder OFM-WLAN) und das OFM-InternetWheat
   </op:define>
 
   <op:define prefix="IW" ModuleType="21"
-    share=   "../lib/OFM-InternetWheaterModule/src/InternetWheaterModule.share.xml"
-    template="../lib/OFM-InternetWheaterModule/src/InternetWheaterModule.templ.xml"
+    share=   "../lib/OFM-InternetWeatherModule/src/InternetWeatherModule.share.xml"
+    template="../lib/OFM-InternetWeatherModule/src/InternetWeatherModule.templ.xml"
     NumChannels="5"
     KoSingleOffset="400"
     KoOffset="410">
-    <op:verify File="../lib/OFM-InternetWheaterModule/library.json" ModuleVersion="0" /> 
+    <op:verify File="../lib/OFM-InternetWeatherModule/library.json" ModuleVersion="0" /> 
   </op:define>
 ```
 
 **Hinweis:** Pro Kanal werden 102 KO's benötigt. Dies muss bei nachfolgenden Modulen bei KoOffset und KoSingleOffset entsprechend berücksichtigt werden.
 
-In main.cpp muss das ebenfalls das Network- (oder WLAN-) und InternetWheaterModule hinzugefügt werden:
+In main.cpp muss das ebenfalls das Network- (oder WLAN-) und InternetWeatherModule hinzugefügt werden:
 
 ```
 [...]
 #include "NetworkModule.h"
-#include "InternetWheaterModule.h"
+#include "InternetWeatherModule.h"
 [...]
 
 void setup()
 {
     [...]
     openknx.addModule(1, openknxNetwork);
-    openknx.addModule(3, openknxInternetWheaterModule);
+    openknx.addModule(3, openknxInternetWeatherModule);
     [...]
 }
 ```
 
 ## Wetterdienste
 
-Derzeit wird nur OpenWheaterMap als Wetteranbieter unterstützt. 
+Derzeit wird nur OpenWeatherMap als Wetteranbieter unterstützt. 
 Die SW-Architektur ist aber für weitere Dienste vorbereitet.
 Pull Requests für andere Dienste sind willkommen!
 
-### OpenWheaterMap [https://openweathermap.org](https://openweathermap.org)
+### OpenWeatherMap [https://openweathermap.org](https://openweathermap.org)
 
 Für die Anfragen wird ein API Key von openwheatermap.com benötigt.
 1000 Aufrufe pro Tag können gratis durchgeführt werden, jedoch muss auch dafür ein Account angelegt werden und die Subscription für das `One Call API 3.0` aktiviert werden. 

@@ -73,7 +73,7 @@ struct ForecastDayWheatherDataWithDescription : ForecastDayWheatherData
 };
 
 
-class BaseWheaterChannel : public OpenKNX::Channel
+class BaseWeatherChannel : public OpenKNX::Channel
 {
   private:
     unsigned long _lastApiCall = 0;
@@ -85,8 +85,8 @@ class BaseWheaterChannel : public OpenKNX::Channel
     void copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2);
     void fetchData();
   protected:
-    BaseWheaterChannel(uint8_t index);
-    virtual int16_t fillWheater(CurrentWheatherData& currentWheater, ForecastDayWheatherData& todayWheater, ForecastDayWheatherData& tomorrowWheater, ForecastHourWheatherData& hour1Wheater, ForecastHourWheatherData& hour2Wheater) = 0;
+    BaseWeatherChannel(uint8_t index);
+    virtual int16_t fillWeather(CurrentWheatherData& currentWeather, ForecastDayWheatherData& todayWeather, ForecastDayWheatherData& tomorrowWeather, ForecastHourWheatherData& hour1Weather, ForecastHourWheatherData& hour2Weather) = 0;
     void setValueCompare(GroupObject& groupObject, const KNXValue& value, const Dpt& type);
  public:
     void loop() override;

@@ -1,46 +1,46 @@
-#include "InternetWheaterModule.h"
-#include "OpenWheaterMapChannel.h"
+#include "InternetWeatherModule.h"
+#include "OpenWeatherMapChannel.h"
 
-InternetWheaterModule::InternetWheaterModule()
+InternetWeatherModule::InternetWeatherModule()
     : ChannelOwnerModule(IW_ChannelCount)
 {
 
 }
 
-const std::string InternetWheaterModule::name()
+const std::string InternetWeatherModule::name()
 {
-    return "InternetWheaterModule";
+    return "InternetWeatherModule";
 }
 
-const std::string InternetWheaterModule::version()
+const std::string InternetWeatherModule::version()
 {
-#ifdef MODULE_InternetWheaterModule_Version
-    return MODULE_InternetWheaterModule_Version;
+#ifdef MODULE_InternetWeatherModule_Version
+    return MODULE_InternetWeatherModule_Version;
 #else
     // hides the module in the version output on the console, because the firmware version is sufficient.
     return "";
 #endif
 }
 
-OpenKNX::Channel* InternetWheaterModule::createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */)
+OpenKNX::Channel* InternetWeatherModule::createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */)
 {
-    switch (ParamIW_CHWheaterChannelType)
+    switch (ParamIW_CHWeatherChannelType)
     {
         case 1:
-            return new OpenWheaterMapChannel(_channelIndex);
+            return new OpenWeatherMapChannel(_channelIndex);
          default:
             return nullptr;
     }
 }
 
-void InternetWheaterModule::showHelp()
+void InternetWeatherModule::showHelp()
 {
    openknx.console.printHelpLine("iw<CC> update", "Update wheater data of channel CC. i.e. iw01");
    openknx.console.printHelpLine("iw<CC> s0", "Set forecast of channel CC to today. i.e. iw1 s0");
    openknx.console.printHelpLine("iw<CC> s1", "Set forecast of channel CC to tomorrow. i.e. iw1 s1");
 }
 
-bool InternetWheaterModule::processCommand(const std::string cmd, bool diagnoseKo)
+bool InternetWeatherModule::processCommand(const std::string cmd, bool diagnoseKo)
 {
     if (cmd.rfind("iw", 0) == 0)
     {
@@ -67,7 +67,7 @@ bool InternetWheaterModule::processCommand(const std::string cmd, bool diagnoseK
                 Serial.printf("Channel %d not found\r\n", channel);
                 return true;
             }
-            auto wheaterChannel = (BaseWheaterChannel*) getChannel(channel - 1);
+            auto wheaterChannel = (BaseWeatherChannel*) getChannel(channel - 1);
             if (wheaterChannel == nullptr)
             {
                 Serial.println();
@@ -84,4 +84,4 @@ bool InternetWheaterModule::processCommand(const std::string cmd, bool diagnoseK
 }
  
 
-InternetWheaterModule openknxInternetWheaterModule;
+InternetWeatherModule openknxInternetWeatherModule;

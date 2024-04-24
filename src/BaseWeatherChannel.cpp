@@ -1,17 +1,17 @@
-#include "BaseWheaterChannel.h"
+#include "BaseWeatherChannel.h"
 
-BaseWheaterChannel::BaseWheaterChannel(uint8_t index)
+BaseWeatherChannel::BaseWeatherChannel(uint8_t index)
 {
     _channelIndex = index;
 }
 
-void BaseWheaterChannel::setup()
+void BaseWeatherChannel::setup()
 {
     // <Enumeration Text="Keine"        Value="0" Id="%ENID%" />
     // <Enumeration Text="10 Minuten"   Value="1" Id="%ENID%" />
     // <Enumeration Text="30 Minuten"   Value="2" Id="%ENID%" />
     // <Enumeration Text="Jede Stunde"  Value="3" Id="%ENID%" />
-    switch (ParamIW_WheaterRefreshInterval)
+    switch (ParamIW_WeatherRefreshInterval)
     {
         case 1:
             _updateIntervalInMs = 10 * 60 * 1000;
@@ -27,7 +27,7 @@ void BaseWheaterChannel::setup()
     KoIW_CHForecastSelection.value(false, DPT_Switch);
 }
 
-void BaseWheaterChannel::processInputKo(GroupObject& ko)
+void BaseWeatherChannel::processInputKo(GroupObject& ko)
 {
     // channel ko
     auto index = IW_KoCalcIndex(ko.asap());
@@ -40,14 +40,14 @@ void BaseWheaterChannel::processInputKo(GroupObject& ko)
     // module ko
     switch (ko.asap())
     {
-        case IW_KoRefreshWheaterData:
+        case IW_KoRefreshWeatherData:
             if (ko.value(DPT_Trigger))
                 fetchData();
             break;
     }
 }
 
-void BaseWheaterChannel::loop()
+void BaseWeatherChannel::loop()
 {
 #ifdef WLAN_WifiSSID
     if (openknxWLANModule.connected())
@@ -78,7 +78,7 @@ void replaceAll(std::string& str, const std::string& from, const std::string& to
     }
 }
 
-bool BaseWheaterChannel::processCommand(const std::string cmd, bool diagnoseKo)
+bool BaseWeatherChannel::processCommand(const std::string cmd, bool diagnoseKo)
 {  
     if (cmd == "s0")
     {
@@ -99,7 +99,7 @@ bool BaseWheaterChannel::processCommand(const std::string cmd, bool diagnoseKo)
     return false;
 }
 
-void BaseWheaterChannel::buildDescription(char* description, float rain, float snow, uint8_t clouds, const char* prefix)
+void BaseWeatherChannel::buildDescription(char* description, float rain, float snow, uint8_t clouds, const char* prefix)
 {
     memset(description, 0, 15) ; // Must be 0 terminated
     char* buffer = description;
@@ -118,12 +118,12 @@ void BaseWheaterChannel::buildDescription(char* description, float rain, float s
         float value;
         if (snow > rain)
         {
-            formatText = (const char*)ParamIW_WheaterConditionSnow;
+            formatText = (const char*)ParamIW_WeatherConditionSnow;
             value = snow;
         }
         else
         {
-            formatText = (const char*)ParamIW_WheaterConditionRain;
+            formatText = (const char*)ParamIW_WeatherConditionRain;
             value = rain;
         }
         replaceAll(formatText, "%", "%%");
@@ -134,11 +134,11 @@ void BaseWheaterChannel::buildDescription(char* description, float rain, float s
     {
         if (clouds <= 5)
         {
-            snprintf(buffer, bufferSize, "%s", (const char*)ParamIW_WheaterConditionSun);
+            snprintf(buffer, bufferSize, "%s", (const char*)ParamIW_WeatherConditionSun);
         }
         else
         {
-            std::string formatText((const char*)ParamIW_WheaterConditionClouds);
+            std::string formatText((const char*)ParamIW_WeatherConditionClouds);
             replaceAll(formatText, "%", "%%");
             replaceAll(formatText, "XXX", "%d");
             snprintf(buffer, bufferSize, formatText.c_str(), clouds);
@@ -146,12 +146,12 @@ void BaseWheaterChannel::buildDescription(char* description, float rain, float s
     }
 }
 
-void BaseWheaterChannel::setValueCompare(GroupObject& groupObject, const KNXValue& value, const Dpt& type)
+void BaseWeatherChannel::setValueCompare(GroupObject& groupObject, const KNXValue& value, const Dpt& type)
 {
     if (groupObject.valueNoSendCompare(value, type))
         groupObject.objectWritten();
 }
-void BaseWheaterChannel::fetchData()
+void BaseWeatherChannel::fetchData()
 {
     CurrentWheatherData current = CurrentWheatherData();
     ForecastDayWheatherDataWithDescription today = ForecastDayWheatherDataWithDescription();
@@ -159,7 +159,7 @@ void BaseWheaterChannel::fetchData()
     ForecastHourWheatherData hour1 = ForecastHourWheatherData();
     ForecastHourWheatherData hour2 = ForecastHourWheatherData();
 
-    int16_t httpStatus = fillWheater(current, today, tomorrow, hour1, hour2);
+    int16_t httpStatus = fillWeather(current, today, tomorrow, hour1, hour2);
     KoIW_CHHTTPStatus.value(httpStatus, DPT_Value_2_Count);
     if (httpStatus != 200)
     {
@@ -170,9 +170,9 @@ void BaseWheaterChannel::fetchData()
     {
         logDebugP("Http result %d", httpStatus);
     } 
-    buildDescription(today.description, today.rain, today.snow, today.clouds, (const char*)ParamIW_WheaterConditionCurrentDayPrefix);
+    buildDescription(today.description, today.rain, today.snow, today.clouds, (const char*)ParamIW_WeatherConditionCurrentDayPrefix);
     _descriptionToday = today.description;
-    buildDescription(tomorrow.description, tomorrow.rain, tomorrow.snow, tomorrow.clouds, (const char*)ParamIW_WheaterConditionNextDayPrefix);
+    buildDescription(tomorrow.description, tomorrow.rain, tomorrow.snow, tomorrow.clouds, (const char*)ParamIW_WeatherConditionNextDayPrefix);
     _descriptionTomorrow = tomorrow.description;
 
     logDebugP("Temperature: %f", current.temperature);
@@ -344,7 +344,7 @@ void BaseWheaterChannel::fetchData()
     setValueCompare(KoIW_CHHour2Clouds, hour2.clouds, DPT_Scaling);
 }
 
-void BaseWheaterChannel::copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2)
+void BaseWeatherChannel::copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2)
 {
     auto koSource = select ? ko2 : ko1;
     bool intialized = koTarget.initialized();
@@ -354,7 +354,7 @@ void BaseWheaterChannel::copyGroupObject(GroupObject& koTarget, bool select, Gro
     koTarget.objectWritten();
 }
 
-void BaseWheaterChannel::updateSwitchableKos()
+void BaseWeatherChannel::updateSwitchableKos()
 {
     auto select = (bool) KoIW_CHForecastSelection.value(DPT_Switch);
     logDebugP("update switchable KO's to %s", select ? "tomorrow" : "today");

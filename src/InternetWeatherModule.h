@@ -1,10 +1,10 @@
 #include "ChannelOwnerModule.h"
 #include "OpenKNX.h"
 
-class InternetWheaterModule : public ChannelOwnerModule
+class InternetWeatherModule : public ChannelOwnerModule
 {
   public:
-    InternetWheaterModule();
+    InternetWeatherModule();
     const std::string name() override;
     const std::string version() override;
     OpenKNX::Channel* createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */) override;
@@ -13,4 +13,4 @@ class InternetWheaterModule : public ChannelOwnerModule
  
 };
 
-extern InternetWheaterModule openknxInternetWheaterModule;
+extern InternetWeatherModule openknxInternetWeatherModule;

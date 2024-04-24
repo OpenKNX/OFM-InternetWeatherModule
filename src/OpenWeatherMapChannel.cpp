@@ -1,29 +1,29 @@
-#include "OpenWheaterMapChannel.h"
+#include "OpenWeatherMapChannel.h"
 #ifdef ARDUINO_ARCH_RP2040
-#define OpenWheaterMapUrl "http://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,alerts"
+#define OpenWeatherMapUrl "http://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,alerts"
 #else
-#define OpenWheaterMapUrl "https://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,alerts"
+#define OpenWeatherMapUrl "https://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,alerts"
 #endif
 
-OpenWheaterMapChannel::OpenWheaterMapChannel(uint8_t index)
-    : BaseWheaterChannel(index)
+OpenWeatherMapChannel::OpenWeatherMapChannel(uint8_t index)
+    : BaseWeatherChannel(index)
 {
 }
 
-const std::string OpenWheaterMapChannel::name()
+const std::string OpenWeatherMapChannel::name()
 {
-    return "OpenWheaterMap";
+    return "OpenWeatherMap";
 }
 
-int16_t OpenWheaterMapChannel::fillWheater(CurrentWheatherData& currentWheater, ForecastDayWheatherData& todayWheater, ForecastDayWheatherData& tomorrowWheater, ForecastHourWheatherData& hour1Wheater, ForecastHourWheatherData& hour2Wheater)
+int16_t OpenWeatherMapChannel::fillWeather(CurrentWheatherData& currentWeather, ForecastDayWheatherData& todayWeather, ForecastDayWheatherData& tomorrowWeather, ForecastHourWheatherData& hour1Weather, ForecastHourWheatherData& hour2Weather)
 {
-    String url = OpenWheaterMapUrl;
+    String url = OpenWeatherMapUrl;
     url += "&appid=";
     url += (const char*)ParamIW_APIKey;
     url += "&lat=";
-    url += ParamIW_CHWheaterLocationType == 0 ? ParamBASE_Latitude : ParamIW_CHLatitude;
+    url += ParamIW_CHWeatherLocationType == 0 ? ParamBASE_Latitude : ParamIW_CHLatitude;
     url += "&lon=";
-    url += ParamIW_CHWheaterLocationType == 0 ? ParamBASE_Longitude : ParamIW_CHLongitude;
+    url += ParamIW_CHWeatherLocationType == 0 ? ParamBASE_Longitude : ParamIW_CHLongitude;
     logDebugP("Call: %s", url.c_str());
     HTTPClient http;
     http.begin(url);
@@ -37,24 +37,24 @@ int16_t OpenWheaterMapChannel::fillWheater(CurrentWheatherData& currentWheater, 
     deserializeJson(doc, http.getString());
 
     JsonObject current = doc["current"];
-    fillForecast(current, currentWheater);
+    fillForecast(current, currentWeather);
   
     JsonArray daily = doc["daily"];
     JsonObject today = daily[0];
-    fillForecast(today, todayWheater);
+    fillForecast(today, todayWeather);
     JsonObject tomorrow = daily[1];
-    fillForecast(tomorrow, tomorrowWheater);
+    fillForecast(tomorrow, tomorrowWeather);
 
     JsonArray hourly = doc["hourly"];
     JsonObject hour1 = hourly[1];
-    fillForecast(hour1, hour1Wheater);
+    fillForecast(hour1, hour1Weather);
     JsonObject hour2 = hourly[2];
-    fillForecast(hour2, hour2Wheater);
+    fillForecast(hour2, hour2Weather);
 
     return httpStatus;
 }
 
-void OpenWheaterMapChannel::fillForecast(JsonObject& json, CurrentWheatherData& wheater)
+void OpenWeatherMapChannel::fillForecast(JsonObject& json, CurrentWheatherData& wheater)
 {
     wheater.temperature = json["temp"];                  // 22.34
     wheater.temperatureFeelsLike = json["feels_like"];   // 21.95
@@ -71,13 +71,13 @@ void OpenWheaterMapChannel::fillForecast(JsonObject& json, CurrentWheatherData& 
     wheater.clouds = json["clouds"];                           // 40
 }
 
-void OpenWheaterMapChannel::fillForecast(JsonObject& json, ForecastHourWheatherData& wheater)
+void OpenWeatherMapChannel::fillForecast(JsonObject& json, ForecastHourWheatherData& wheater)
 {
     fillForecast(json, (CurrentWheatherData&) wheater);
     wheater.probabilityOfPrecipitation = round(100. * (float) json["pop"]);    // 0.70
 }
 
-void OpenWheaterMapChannel::fillForecast(JsonObject& json, ForecastDayWheatherData& wheater)
+void OpenWeatherMapChannel::fillForecast(JsonObject& json, ForecastDayWheatherData& wheater)
 {
     JsonObject tempObject = json["temp"];
     wheater.temperatureDay = tempObject["day"];     // 21.95
