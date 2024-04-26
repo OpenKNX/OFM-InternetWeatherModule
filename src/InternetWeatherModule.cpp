@@ -63,15 +63,13 @@ bool InternetWeatherModule::processCommand(const std::string cmd, bool diagnoseK
             auto channel = atoi(channelNumberString.c_str());
             if (channel < 1 || channel > getNumberOfChannels())
             {
-                Serial.println();
-                Serial.printf("Channel %d not found\r\n", channel);
+                logInfoP("Channel %d not found", channel);
                 return true;
             }
             auto wheaterChannel = (BaseWeatherChannel*) getChannel(channel - 1);
             if (wheaterChannel == nullptr)
             {
-                Serial.println();
-                Serial.printf("Channel not %d activated\r\n", channel);
+                logInfoP("Channel not %d activated", channel);
                 return true;
             }
             if (channelCmd.length() != 0)

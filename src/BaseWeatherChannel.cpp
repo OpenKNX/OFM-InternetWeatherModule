@@ -82,13 +82,11 @@ bool BaseWeatherChannel::processCommand(const std::string cmd, bool diagnoseKo)
 {  
     if (cmd == "s0")
     {
-        Serial.println();
         KoIW_CHForecastSelection.value(false, DPT_Switch);
         return true;
     }
     else if (cmd == "s1")
     {
-        Serial.println();
         KoIW_CHForecastSelection.value(true, DPT_Switch);
         return true;
     }
