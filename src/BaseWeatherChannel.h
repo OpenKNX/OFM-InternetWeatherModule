@@ -1,10 +1,6 @@
 #pragma once
 #include "OpenKNX.h"
-#ifdef WLAN_WifiSSID
-#include "WLANModule.h"
-#else
-#include "NetworkModule.h"
-#endif
+
 #include "ArduinoJson.h"
 #include "HTTPClient.h"
 

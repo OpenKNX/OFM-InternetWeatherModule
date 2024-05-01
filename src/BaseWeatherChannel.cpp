@@ -1,4 +1,6 @@
 #include "BaseWeatherChannel.h"
+#include "WLANModule.h"
+#include "NetworkModule.h"
 
 BaseWeatherChannel::BaseWeatherChannel(uint8_t index)
 {
