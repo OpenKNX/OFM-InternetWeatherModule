@@ -513,9 +513,9 @@
                         <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00200">  <!-- Weather location type -->
                           <when test="1" >  <!-- Anderer Ort -->
                             <!-- Latitude -->
-                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00200" HelpContext="IW-Latitude" />
+                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00300" HelpContext="IW-Latitude" />
                             <!-- Longitude -->
-                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00300" HelpContext="IW-Longitude" />
+                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00400" HelpContext="IW-Longitude" />
                           </when>
                         </choose>
 
