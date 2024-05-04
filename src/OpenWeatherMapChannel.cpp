@@ -1,9 +1,5 @@
 #include "OpenWeatherMapChannel.h"
-#ifdef ARDUINO_ARCH_RP2040
-#define OpenWeatherMapUrl "http://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,alerts"
-#else
 #define OpenWeatherMapUrl "https://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,alerts"
-#endif
 
 OpenWeatherMapChannel::OpenWeatherMapChannel(uint8_t index)
     : BaseWeatherChannel(index)
@@ -26,6 +22,9 @@ int16_t OpenWeatherMapChannel::fillWeather(CurrentWheatherData& currentWeather, 
     url += ParamIW_CHWeatherLocationType == 0 ? ParamBASE_Longitude : ParamIW_CHLongitude;
     logDebugP("Call: %s", url.c_str());
     HTTPClient http;
+#ifdef ARDUINO_ARCH_RP2040   
+    http.setInsecure();
+#endif
     http.begin(url);
 
     // Send HTTP GET request
