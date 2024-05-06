@@ -1,7 +1,10 @@
 # OFM-InternetWeatherModule
 
 Dies ist ein Modul zur Integration von Internet Wetterdiensten.
-Es wird das [OFM-Network](https://github.com/OpenKNX/OFM-Network) oder OFM-WLAN (Noch nicht öffentlich) benötigt.
+
+## Abhängigkeiten
+
+Das Modul setzt [OFM-Network](https://github.com/OpenKNX/OFM-Network) oder [OFM-WLAN](https://github.com/mgeramb/OFM-WLANModule) voraus.
 
 ## Features
 

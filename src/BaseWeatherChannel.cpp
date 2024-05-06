@@ -1,7 +1,9 @@
 #include "BaseWeatherChannel.h"
-#include "WLANModule.h"
+#ifdef WLAN_WifiSSID
+#include "WiFi.h"
+#else
 #include "NetworkModule.h"
-
+#endif
 BaseWeatherChannel::BaseWeatherChannel(uint8_t index)
 {
     _channelIndex = index;
@@ -52,9 +54,9 @@ void BaseWeatherChannel::processInputKo(GroupObject& ko)
 void BaseWeatherChannel::loop()
 {
 #ifdef WLAN_WifiSSID
-    if (openknxWLANModule.connected())
+    if (WiFi.isConnected())
 #else
-    if (openknxNetwork.connected())
+    if (openknxNetwork.established())
 #endif
     {
         auto now = millis();
