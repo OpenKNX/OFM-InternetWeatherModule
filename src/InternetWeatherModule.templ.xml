@@ -8,19 +8,19 @@
           <Static>
             <Parameters>
               <!-- Kanal Name -->
-              <Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%CC%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />   
+              <Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />   
               <!-- Aktuell -->
-              <Parameter Id="%AID%_P-%TT%%CC%001" Name="Channel%CC%Current" ParameterType="%AID%_PT-CheckBox" Text="Aktuelles Wetter" Value="1" />           
+              <Parameter Id="%AID%_P-%TT%%CC%001" Name="Channel%C%Current" ParameterType="%AID%_PT-CheckBox" Text="Aktuelles Wetter" Value="1" />           
               <!-- Prognose Heute -->
-              <Parameter Id="%AID%_P-%TT%%CC%002" Name="Channel%CC%Today" ParameterType="%AID%_PT-CheckBox" Text="Prognose Heute" Value="0" />           
+              <Parameter Id="%AID%_P-%TT%%CC%002" Name="Channel%C%Today" ParameterType="%AID%_PT-CheckBox" Text="Prognose Heute" Value="0" />           
               <!-- Prognose Morgen -->
-              <Parameter Id="%AID%_P-%TT%%CC%003" Name="Channel%CC%Tomorrow" ParameterType="%AID%_PT-CheckBox" Text="Prognose Morgen" Value="0" />  
+              <Parameter Id="%AID%_P-%TT%%CC%003" Name="Channel%C%Tomorrow" ParameterType="%AID%_PT-CheckBox" Text="Prognose Morgen" Value="0" />  
               <!-- Prognose Heute/Morgen Umschaltbar -->
-              <Parameter Id="%AID%_P-%TT%%CC%004" Name="Channel%CC%Forecast" ParameterType="%AID%_PT-CheckBox" Text="Prognose Heute/Morgen Umschaltbar" Value="0" />  
+              <Parameter Id="%AID%_P-%TT%%CC%004" Name="Channel%C%Forecast" ParameterType="%AID%_PT-CheckBox" Text="Prognose Heute/Morgen Umschaltbar" Value="0" />  
               <!-- Prognose Nächste Stunde -->
-              <Parameter Id="%AID%_P-%TT%%CC%005" Name="Channel%CC%Hour1" ParameterType="%AID%_PT-CheckBox" Text="Prognose nächste Stunde" Value="0" />  
+              <Parameter Id="%AID%_P-%TT%%CC%005" Name="Channel%C%Hour1" ParameterType="%AID%_PT-CheckBox" Text="Prognose nächste Stunde" Value="0" />  
               <!-- Prognose Übernächste Stunde -->
-              <Parameter Id="%AID%_P-%TT%%CC%006" Name="Channel%CC%Hour2" ParameterType="%AID%_PT-CheckBox" Text="Prognose übernächste Stunde" Value="0" />  
+              <Parameter Id="%AID%_P-%TT%%CC%006" Name="Channel%C%Hour2" ParameterType="%AID%_PT-CheckBox" Text="Prognose übernächste Stunde" Value="0" />  
      
               <!-- Weather channel type -->
               <Union SizeInBit="8">
