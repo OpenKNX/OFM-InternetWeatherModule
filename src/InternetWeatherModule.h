@@ -1,7 +1,8 @@
-#include "ChannelOwnerModule.h"
+#pragma once
 #include "OpenKNX.h"
+#include "ChannelOwnerModule.h"
 
-class InternetWeatherModule : public ChannelOwnerModule
+class InternetWeatherModule : public IWChannelOwnerModule
 {
   public:
     InternetWeatherModule();

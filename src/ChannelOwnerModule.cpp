@@ -1,6 +1,6 @@
 #include "ChannelOwnerModule.h"
 
-ChannelOwnerModule::ChannelOwnerModule(uint8_t numberOfChannels)
+IWChannelOwnerModule::IWChannelOwnerModule(uint8_t numberOfChannels)
     : _numberOfChannels(numberOfChannels)
 {
     if (_numberOfChannels > 0)
@@ -9,7 +9,7 @@ ChannelOwnerModule::ChannelOwnerModule(uint8_t numberOfChannels)
     }
 }
 
-ChannelOwnerModule::~ChannelOwnerModule()
+IWChannelOwnerModule::~IWChannelOwnerModule()
 {
     if (_pChannels != nullptr)
     {
@@ -22,17 +22,17 @@ ChannelOwnerModule::~ChannelOwnerModule()
     * Called during startup after initialization of all modules is completed.
     * Useful for init interrupts on core0
     */
-void ChannelOwnerModule::setup(bool configured)
+void IWChannelOwnerModule::setup(bool configured)
 {
     OpenKNX::Module::setup(configured);
 }
 
-OpenKNX::Channel* ChannelOwnerModule::createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */)
+OpenKNX::Channel* IWChannelOwnerModule::createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */)
 {
     return nullptr;
 }
 
-void ChannelOwnerModule::setup()
+void IWChannelOwnerModule::setup()
 {
     OpenKNX::Module::setup();
     if (_pChannels != nullptr)
@@ -73,7 +73,7 @@ void ChannelOwnerModule::setup()
 /*
     * Module logic for core0
     */
-void ChannelOwnerModule::loop(bool configured)
+void IWChannelOwnerModule::loop(bool configured)
 {
     OpenKNX::Module::loop(configured);
     if (_pChannels != nullptr)
@@ -91,17 +91,17 @@ void ChannelOwnerModule::loop(bool configured)
     }
 }
 
-OpenKNX::Channel* ChannelOwnerModule::getChannel(uint8_t channelIndex)
+OpenKNX::Channel* IWChannelOwnerModule::getChannel(uint8_t channelIndex)
 {
     return _pChannels != nullptr ? _pChannels[channelIndex] : nullptr;
 }
 
-uint8_t ChannelOwnerModule::getNumberOfChannels()
+uint8_t IWChannelOwnerModule::getNumberOfChannels()
 {
     return _numberOfChannels;
 }
 
-uint8_t ChannelOwnerModule::getNumberOfUsedChannels()
+uint8_t IWChannelOwnerModule::getNumberOfUsedChannels()
 {
     uint8_t activeChannels = 0;
     if (_pChannels != nullptr)
@@ -116,7 +116,7 @@ uint8_t ChannelOwnerModule::getNumberOfUsedChannels()
     return activeChannels;
 }
 
-void ChannelOwnerModule::loop()
+void IWChannelOwnerModule::loop()
 {
     OpenKNX::Module::loop();
     if (_pChannels != nullptr)
@@ -135,7 +135,7 @@ void ChannelOwnerModule::loop()
     * Called during startup after setup() completed
     * Useful for init interrupts on core1
     */
-void ChannelOwnerModule::ChannelOwnerModule::setup1(bool configured)
+void IWChannelOwnerModule::IWChannelOwnerModule::setup1(bool configured)
 {
     OpenKNX::Module::setup1(configured);
     if (_pChannels != nullptr)
@@ -150,7 +150,7 @@ void ChannelOwnerModule::ChannelOwnerModule::setup1(bool configured)
         }
     }
 }
-void ChannelOwnerModule::ChannelOwnerModule::setup1()
+void IWChannelOwnerModule::IWChannelOwnerModule::setup1()
 {
     OpenKNX::Module::setup1();
     if (_pChannels != nullptr)
@@ -168,7 +168,7 @@ void ChannelOwnerModule::ChannelOwnerModule::setup1()
 /*
     * Module logic for core1
     */
-void ChannelOwnerModule::loop1(bool configured)
+void IWChannelOwnerModule::loop1(bool configured)
 {
     OpenKNX::Module::loop1(configured);
     if (_pChannels != nullptr)
@@ -183,7 +183,7 @@ void ChannelOwnerModule::loop1(bool configured)
         }
     }
 }
-void ChannelOwnerModule::loop1()
+void IWChannelOwnerModule::loop1()
 {
     OpenKNX::Module::loop1();
     if (_pChannels != nullptr)
@@ -205,7 +205,7 @@ void ChannelOwnerModule::loop1()
     * Called on incoming/changing GroupObject
     * @param GroupObject
     */
-void ChannelOwnerModule::processInputKo(GroupObject &ko)
+void IWChannelOwnerModule::processInputKo(GroupObject &ko)
 {
     OpenKNX::Module::processInputKo(ko);
     if (_pChannels != nullptr)

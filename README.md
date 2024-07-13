@@ -42,7 +42,7 @@ KO's für
 
 |Prozessor | Status | Anmerkung                  |
 |----------|--------|----------------------------|
-|RP2040    | Beta   | Derzeit kein HTTPS Support |
+|RP2040    | Beta   |                            |
 |ESP32     | Beta   |                            |
 
 Getestete Hardware:
@@ -65,7 +65,7 @@ In das Anwendungs XML muss OFM-Network (oder OFM-WLAN) und das OFM-InternetWeath
     NumChannels="5"
     KoSingleOffset="400"
     KoOffset="410">
-    <op:verify File="../lib/OFM-InternetWeatherModule/library.json" ModuleVersion="0" /> 
+    <op:verify File="../lib/OFM-InternetWeatherModule/library.json" ModuleVersion="0.1" /> 
   </op:define>
 ```
 

@@ -1,15 +1,15 @@
 #pragma once
 #include "OpenKNX.h"
 
-class ChannelOwnerModule : public OpenKNX::Module
+class IWChannelOwnerModule : public OpenKNX::Module
 {
 private: 
     uint8_t _numberOfChannels;
     uint8_t _currentChannel = 0;
     OpenKNX::Channel** _pChannels = nullptr;
 public:
-    ChannelOwnerModule(uint8_t numberOfChannels = 0);
-    ~ChannelOwnerModule();
+    IWChannelOwnerModule(uint8_t numberOfChannels = 0);
+    ~IWChannelOwnerModule();
 
     virtual OpenKNX::Channel* createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */); 
 

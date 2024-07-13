@@ -2,7 +2,7 @@
 #include "OpenWeatherMapChannel.h"
 
 InternetWeatherModule::InternetWeatherModule()
-    : ChannelOwnerModule(IW_ChannelCount)
+    : IWChannelOwnerModule(IW_ChannelCount)
 {
 
 }
