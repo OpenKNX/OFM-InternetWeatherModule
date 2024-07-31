@@ -1,5 +1,6 @@
 #include "InternetWeatherModule.h"
 #include "OpenWeatherMapChannel.h"
+#include "OpenMeteoChannel.h"
 
 InternetWeatherModule::InternetWeatherModule()
     : IWChannelOwnerModule(IW_ChannelCount)
@@ -28,6 +29,8 @@ OpenKNX::Channel* InternetWeatherModule::createChannel(uint8_t _channelIndex /* 
     {
         case 1:
             return new OpenWeatherMapChannel(_channelIndex);
+        case 2:
+            return new OpenMeteoChannel(_channelIndex);
          default:
             return nullptr;
     }
