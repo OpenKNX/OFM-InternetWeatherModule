@@ -75,10 +75,10 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, CurrentWheatherData& wheat
     wheater.windSpeed = 50;                              // 3.6 * (float)json["wind_speed"]; // 69
     wheater.windGust = 50;                               // 3.6 * (float)json["wind_gust"];   // 69
     wheater.windDirection = 180;                         // 70
-    wheater.rain = json["rain"]                          // 2.5
+    wheater.rain = json["rain"];                         // 2.5
     wheater.snow = 0.0;                                  // 2.5
-    wheater.uvi = 0.0                                    // 6.29
-    wheater.clouds = 50                                  // 40
+    wheater.uvi = 0.0;                                   // 6.29
+    wheater.clouds = 50;                                 // 40
 }
 
 void OpenMeteoChannel::fillForecast(JsonObject& json, ForecastHourWheatherData& wheater)
