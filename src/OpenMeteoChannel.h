@@ -5,9 +5,9 @@
 class OpenMeteoChannel : public BaseWeatherChannel
 {
   private:
-    void fillForecast(JsonObject& json, ForecastDayWheatherData& wheater);
+    void fillForecast(JsonObject& json, int vi, ForecastDayWheatherData& wheater);
     void fillForecast(JsonObject& json, CurrentWheatherData& wheater);
-    void fillForecast(JsonObject& json, ForecastHourWheatherData& wheater);
+    void fillForecast(JsonObject& json, int vi, ForecastHourWheatherData& wheater);
   protected:
     int16_t fillWeather(CurrentWheatherData& currentWeather, ForecastDayWheatherData& todayWeather, ForecastDayWheatherData& tomorrowWeather, ForecastHourWheatherData& hour1Weather, ForecastHourWheatherData& hour2Weather) override;
   
