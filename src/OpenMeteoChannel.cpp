@@ -28,7 +28,7 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     url += ParamIW_CHWeatherLocationType == 0 ? ParamBASE_Longitude : ParamIW_CHLongitude;
     url += "&current=";
     // TODO select based on configuration?
-    url += "temperature_2m,rain";
+    url += "temperature_2m,apparent_temperature,relative_humidity_2m,surface_pressure,wind_speed_10m,wind_gusts_10m,wind_direction_10m,rain,snowfall,cloud_cover";
 
     logDebugP("Call: %s", url.c_str());
     HTTPClient http;
@@ -67,18 +67,23 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
 
 void OpenMeteoChannel::fillForecast(JsonObject& json, CurrentWheatherData& wheater)
 {
-    // TODO fill with data from OpenMeteo
-    wheater.temperature = json["temperature_2m"];        // 22.34
-    wheater.temperatureFeelsLike = 20.0;                 // 21.95
-    wheater.humidity = 70.0;                             // 69
-    wheater.pressure = 1000.0;                           // 1006
-    wheater.windSpeed = 50;                              // 3.6 * (float)json["wind_speed"]; // 69
-    wheater.windGust = 50;                               // 3.6 * (float)json["wind_gust"];   // 69
-    wheater.windDirection = 180;                         // 70
-    wheater.rain = json["rain"];                         // 2.5
-    wheater.snow = 0.0;                                  // 2.5
-    wheater.uvi = 0.0;                                   // 6.29
-    wheater.clouds = 50;                                 // 40
+    wheater.temperature = json["temperature_2m"];
+    wheater.temperatureFeelsLike = json["apparent_temperature"];
+    wheater.humidity = json["relative_humidity_2m"];
+    wheater.pressure = json["surface_pressure"];         // possible alternative: `pressure_msl` (at sealevel)
+    wheater.windSpeed = json["wind_speed_10m"];          // TODO check required conversion and handling of units // 3.6 * (float)json["wind_speed"];
+    wheater.windGust = json["wind_gusts_10m"];           // TODO check required conversion and handling of units // 3.6 * (float)json["wind_gust"];
+    wheater.windDirection = json["wind_direction_10m"];  // TODO check representation and required conversion
+    wheater.rain = json["rain"];
+    wheater.snow = json["snowfall"];
+    wheater.uvi = 0.0;                                   // TODO value not included in Open-Meteo Current Values
+    wheater.clouds = json["cloud_cover"];
+
+    // TODO check integraten of additional fields from Open-Meteo:
+    // * Is Day or Night [0/1] - not planned, as day-calc is available in LOG 
+    // * Precipitation   [mm] Gesamtniederschlagsmenge, also womöglich "nur" die Summe aller Arten ?
+    // * Showers         [mm] ?
+    // * Weather Code    [0..100] - see end of https://open-meteo.com/en/docs
 }
 
 void OpenMeteoChannel::fillForecast(JsonObject& json, ForecastHourWheatherData& wheater)
