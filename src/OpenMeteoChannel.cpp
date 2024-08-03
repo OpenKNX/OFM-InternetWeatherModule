@@ -29,6 +29,8 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     url += "&current=";
     // TODO select based on configuration?
     url += "temperature_2m,apparent_temperature,relative_humidity_2m,surface_pressure,wind_speed_10m,wind_gusts_10m,wind_direction_10m,rain,snowfall,cloud_cover";
+    // "Every weather variable available in hourly data, is available as current condition as well." [Open-Meteo API-Doc]
+    url += ",uv_index";
 
     logDebugP("Call: %s", url.c_str());
     HTTPClient http;
@@ -76,7 +78,7 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, CurrentWheatherData& wheat
     wheater.windDirection = json["wind_direction_10m"];  // TODO check representation and required conversion
     wheater.rain = json["rain"];
     wheater.snow = json["snowfall"];
-    wheater.uvi = 0.0;                                   // TODO value not included in Open-Meteo Current Values
+    wheater.uvi = json["uv_index"];
     wheater.clouds = json["cloud_cover"];
 
     // TODO check integraten of additional fields from Open-Meteo:
