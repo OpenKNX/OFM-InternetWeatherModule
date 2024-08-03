@@ -41,6 +41,7 @@
 								<TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
 									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
 									<Enumeration Text="OpenWeatherMap" Value="1" Id="%ENID%" />
+									<Enumeration Text="Open-Meteo"     Value="2" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 						</ParameterTypes>
@@ -120,6 +121,12 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="OpenWeatherMap" UIHint="Headline" />
 								<!-- OpenWeatherMap API Key -->
 								<ParameterRefRef RefId="%AID%_UP-%TT%00001_R-%TT%0000100" IndentLevel="1" HelpContext="IW-OpenWeatherMapAPIKey" />
+
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Open-Meteo" UIHint="Headline" />
+								<!-- Open-Meteo API Key not supported yet -->
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="  Ohne API-Key ausschließlich NICHT-kommerzielle Nutzung mit limitier Aufruf-Frequenz!" />
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="  Die Nutzung eines API-Keys wird bislang nicht unterstützt" />
+
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Datenaktualisierung" UIHint="Headline" />
 								<!-- WeatherRefreshInterval -->
 								<ParameterRefRef RefId="%AID%_UP-%TT%00002_R-%TT%0000200" IndentLevel="1" HelpContext="IW-WeatherRefreshInterval" />
