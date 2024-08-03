@@ -123,9 +123,9 @@
 								<ParameterRefRef RefId="%AID%_UP-%TT%00001_R-%TT%0000100" IndentLevel="1" HelpContext="IW-OpenWeatherMapAPIKey" />
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Open-Meteo" UIHint="Headline" />
-								<!-- OpenWeatherMap API Key -->
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="  Ohne API-Key ausschließlich NICHT-kommerzielle Nutzung!" />
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="  Maximal 10000 API-Aufrufe pro Tag, 5000 pro Stunde und 600 pro Minute." />
+								<!-- Open-Meteo API Key not supported yet -->
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="  Ohne API-Key ausschließlich NICHT-kommerzielle Nutzung mit limitier Aufruf-Frequenz!" />
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="  Die Nutzung eines API-Keys wird bislang nicht unterstützt" />
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Datenaktualisierung" UIHint="Headline" />
 								<!-- WeatherRefreshInterval -->
