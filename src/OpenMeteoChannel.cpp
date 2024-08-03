@@ -87,16 +87,10 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
         ]
     }
     */
-    /*
-    JsonArray daily = doc["daily"];
-    JsonObject today = daily[0];
-    fillForecast(today, todayWeather);
-    JsonObject tomorrow = daily[1];
-    fillForecast(tomorrow, tomorrowWeather);
-    */
     JsonObject daily = doc["daily"];
-    fillForecast(daily, 0, todayWeather);
-    fillForecast(daily, 1, tomorrowWeather);
+    JsonObject hourly = doc["hourly"];
+    fillForecast(daily, hourly, 0, todayWeather);
+    fillForecast(daily, hourly, 1, tomorrowWeather);
 
     /*
     "hourly_units": {
@@ -117,14 +111,6 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     },
     */
 
-    /*
-    JsonArray hourly = doc["hourly"];
-    JsonObject hour1 = hourly[1];
-    fillForecast(hour1, hour1Weather);
-    JsonObject hour2 = hourly[2];
-    fillForecast(hour2, hour2Weather);
-    */
-    JsonObject hourly = doc["hourly"];
     int hour = 17; // TODO FIXME calc based on current time, or response.current.time &timeformat=unixtime to next hour1 and hour2
     fillForecast(hourly, hour + 0, hour1Weather);
     fillForecast(hourly, hour + 1, hour2Weather);
@@ -178,33 +164,31 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, int vi, ForecastHourWheath
     wheater.probabilityOfPrecipitation = json["precipitation_probability"][vi]; //  = round(100. * (float) json["pop"]);    // 0.70
 }
 
-void OpenMeteoChannel::fillForecast(JsonObject& json, int vi, ForecastDayWheatherData& wheater)
+void OpenMeteoChannel::fillForecast(JsonObject& json, JsonObject& jsonHourly, int vi, ForecastDayWheatherData& wheater)
 {
-    // TODO fill with data from OpenMeteo
-
-    // TODO check replacement of day-time temperatures by hourly values at 12:00, 00:00, 18:00, 6:00; 
-    //      index calculated by `24 * vi + hour`
     // TODO check calculation of humidity, pressure and coulds by AVG of hourly values?
 
+    const int vih = 24 * vi;
+    const int vihDay = vih + 12;
+    const int vihNight = vih + 0;
+    const int vihEve = vih + 18;
+    const int vihMorn = vih + 06;
+
+    JsonArray temperature = jsonHourly["temperature_2m"];
+    wheater.temperatureDay = temperature[vihDay];
+    wheater.temperatureNight = temperature[vihNight];
+    wheater.temperatureEvening = temperature[vihEve];
+    wheater.temperatureMorning = temperature[vihMorn];
+    wheater.temperatureMin = json["temperature_2m_min"][vi];
+    wheater.temperatureMax = json["temperature_2m_max"][vi];
+
+    JsonArray apparentTemperature = jsonHourly["apparent_temperature"];
+    wheater.temperatureFeelsLikeDay = apparentTemperature[vihDay];
+    wheater.temperatureFeelsLikeNight = apparentTemperature[vihNight];
+    wheater.temperatureFeelsLikeEvening = apparentTemperature[vihEve];
+    wheater.temperatureFeelsLikeMorning = apparentTemperature[vihMorn];
+
     /*
-    JsonObject tempObject;
-
-    tempObject = json["temp"];
-    wheater.temperatureDay = tempObject["day"];     // 21.95
-    wheater.temperatureNight = tempObject["night"]; // 21.95
-    wheater.temperatureEvening = tempObject["eve"]; // 21.95
-    wheater.temperatureMorning = tempObject["morn"]; // 21.95
-    */
-    wheater.temperatureMin = json["temperature_2m_min"][vi];      // 21.95
-    wheater.temperatureMax = json["temperature_2m_max"][vi];      // 21.95
-
-    /*
-    tempObject = json["feels_like"];
-    wheater.temperatureFeelsLikeDay = tempObject["day"];     // 21.95
-    wheater.temperatureFeelsLikeNight = tempObject["night"]; // 21.95
-    wheater.temperatureFeelsLikeEvening = tempObject["eve"]; // 21.95
-    wheater.temperatureFeelsLikeMorning = tempObject["morn"]; // 21.95
-
     wheater.humidity = json["humidity"];                 // 69
     wheater.pressure = json["pressure"];                 // 1006
     */

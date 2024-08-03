@@ -5,7 +5,7 @@
 class OpenMeteoChannel : public BaseWeatherChannel
 {
   private:
-    void fillForecast(JsonObject& json, int vi, ForecastDayWheatherData& wheater);
+    void fillForecast(JsonObject& json, JsonObject& jsonHourly, int vi, ForecastDayWheatherData& wheater);
     void fillForecast(JsonObject& json, CurrentWheatherData& wheater);
     void fillForecast(JsonObject& json, int vi, ForecastHourWheatherData& wheater);
   protected:
