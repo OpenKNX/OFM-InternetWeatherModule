@@ -164,10 +164,18 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, int vi, ForecastHourWheath
     wheater.probabilityOfPrecipitation = json["precipitation_probability"][vi]; //  = round(100. * (float) json["pop"]);    // 0.70
 }
 
+float OpenMeteoChannel::avg(JsonArray& arr, int begin, int n)
+{
+    float sum = 0.0;
+    for (size_t i = 0; i < n; i++)
+    {
+        sum += (float)arr[begin + i];
+    }
+    return sum / n;
+}
+
 void OpenMeteoChannel::fillForecast(JsonObject& json, JsonObject& jsonHourly, int vi, ForecastDayWheatherData& wheater)
 {
-    // TODO check calculation of humidity, pressure and coulds by AVG of hourly values?
-
     const int vih = 24 * vi;
     const int vihDay = vih + 12;
     const int vihNight = vih + 0;
@@ -188,10 +196,11 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, JsonObject& jsonHourly, in
     wheater.temperatureFeelsLikeEvening = apparentTemperature[vihEve];
     wheater.temperatureFeelsLikeMorning = apparentTemperature[vihMorn];
 
-    /*
-    wheater.humidity = json["humidity"];                 // 69
-    wheater.pressure = json["pressure"];                 // 1006
-    */
+    JsonArray hourlyHumidity = jsonHourly["relative_humidity_2m"];
+    wheater.humidity = avg(hourlyHumidity, vih, 24);
+    JsonArray hourlyPressure = jsonHourly["surface_pressure"];
+    wheater.pressure = avg(hourlyPressure, vih, 24);
+
     wheater.windSpeed = json["wind_speed_10m_max"][vi];      // 3.6 * (float)json["wind_speed"]; // 69
     wheater.windGust = json["wind_gusts_10m_max"][vi];      // 3.6 * (float)json["wind_gust"];   // 69
     wheater.windDirection = json["wind_direction_10m_dominant"][vi];
@@ -200,7 +209,6 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, JsonObject& jsonHourly, in
     wheater.snow = json["snowfall_sum"][vi];
     wheater.probabilityOfPrecipitation = json["precipitation_probability_max"][vi]; // round(100. * (float) json["pop"]);    // 0.70
     wheater.uvi = json["uv_index_max"][vi];
-    /*
-    wheater.clouds = json["clouds"];                     // 40
-    */
+    JsonArray hourlyCloud = jsonHourly["cloud_cover"];
+    wheater.clouds = avg(hourlyCloud, vih, 24);
 }
