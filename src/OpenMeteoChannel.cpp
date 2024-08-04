@@ -52,7 +52,14 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     // depends on forecast length, current day is included in day count
     url += "&forecast_days=2";
 
-    logDebugP("Call: %s", url.c_str());
+#ifdef OPENKNX_DEBUG
+    const size_t urlLen = url.length();
+    const size_t lineLen = 100;
+    for (size_t i = 0; i < urlLen; i += lineLen) {
+        logDebugP("Call URL: %s", url.substring(i, std::min(i + lineLen, urlLen)).c_str());
+    }
+#endif
+
     HTTPClient http;
 #ifdef ARDUINO_ARCH_RP2040
     http.setInsecure();
