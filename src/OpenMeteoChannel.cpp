@@ -49,6 +49,9 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     // allow easy finding of hour for forcast
     url += "&timeformat=unixtime";
 
+    // depends on forecast length, current day is included in day count
+    url += "&forecast_days=2";
+
     logDebugP("Call: %s", url.c_str());
     HTTPClient http;
 #ifdef ARDUINO_ARCH_RP2040
