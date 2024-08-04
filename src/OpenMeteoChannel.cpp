@@ -13,7 +13,6 @@ const std::string OpenMeteoChannel::name()
 
 int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, ForecastDayWheatherData& todayWeather, ForecastDayWheatherData& tomorrowWeather, ForecastHourWheatherData& hour1Weather, ForecastHourWheatherData& hour2Weather)
 {
-    // TODO check using unixtimestamp format
     // TODO check using csv-result
 
     String url = OpenMeteoUrl;
@@ -46,6 +45,8 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
 
     url += "&daily=";
     url += "temperature_2m_min,temperature_2m_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant,rain_sum,snowfall_sum,precipitation_probability_max,uv_index_max";
+
+    // allow easy finding of hour for forcast
     url += "&timeformat=unixtime";
 
     logDebugP("Call: %s", url.c_str());
@@ -68,14 +69,14 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
 
     /*
     "daily_units": {
-        "time": "iso8601",
+        "time": "unixtime",
         "temperature_2m_max": "°C",
         "temperature_2m_min": "°C"
     },
     "daily": {
         "time": [
-            "2024-08-03",
-            "2024-08-04"
+            1722722400,
+            1722808800
         ],
         "temperature_2m_max": [
             28.1,
@@ -94,14 +95,14 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
 
     /*
     "hourly_units": {
-        "time": "iso8601",
+        "time": "unixtime",
         "temperature_2m": "°C"
     },
     "hourly": {
         "time": [
-            "2024-08-03T00:00",
+            1722722400,
             ..
-            "2024-08-04T23:00"
+            1722891600
         ],
         "temperature_2m": [
             20.7,
@@ -111,7 +112,15 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     },
     */
 
-    int hour = 17; // TODO FIXME calc based on current time, or response.current.time &timeformat=unixtime to next hour1 and hour2
+    // find the index of the following hour
+    const uint32_t curTimestamp = current["time"];
+    JsonArray hourlyTimes = hourly["time"];
+    int hour = 0;
+    while (hour < 24 && hourlyTimes[hour] < curTimestamp)
+    {
+        hour++;
+    }
+    
     fillForecast(hourly, hour + 0, hour1Weather);
     fillForecast(hourly, hour + 1, hour2Weather);
 
