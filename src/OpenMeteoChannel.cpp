@@ -50,7 +50,7 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
 
     logDebugP("Call: %s", url.c_str());
     HTTPClient http;
-#ifdef ARDUINO_ARCH_RP2040   
+#ifdef ARDUINO_ARCH_RP2040
     http.setInsecure();
 #endif
     http.begin(url);
@@ -133,7 +133,7 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, CurrentWheatherData& wheat
     wheater.clouds = json["cloud_cover"];
 
     // TODO check integraten of additional fields from Open-Meteo:
-    // * Is Day or Night [0/1] - not planned, as day-calc is available in LOG 
+    // * Is Day or Night [0/1] - not planned, as day-calc is available in LOG
     // * Precipitation   [mm] Gesamtniederschlagsmenge, also womöglich "nur" die Summe aller Arten ?
     // * Showers         [mm] ?
     // * Weather Code    [0..100] - see end of https://open-meteo.com/en/docs
