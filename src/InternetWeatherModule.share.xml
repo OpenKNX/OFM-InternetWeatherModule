@@ -53,9 +53,10 @@
 								<Parameter Id="%AID%_UP-%TT%00000" Offset="0" BitOffset="0" Name="IWNumChannels" ParameterType="%AID%_PT-IWNumChannels" Text="Verfügbare Kanäle" Value="%IW_NumChannelsDefault%" SuffixText=" von %N%" />
 							</Union>
 							<!-- OpenWeatherMap API Key -->
-							<Union SizeInBit="320">
+							<Union SizeInBit="328">
 								<Memory CodeSegment="%MID%" Offset="1" BitOffset="0" />
 								<Parameter Id="%AID%_UP-%TT%00001" Name="APIKey" ParameterType="%AID%_PT-APIKEY" Offset="0" BitOffset="0" Text="API Key" Value="" />
+								<!-- 1Byte Empty Byte after String -->
 							</Union>
 							<!-- WeatherRefreshInterval -->
 							<Union SizeInBit="8">
