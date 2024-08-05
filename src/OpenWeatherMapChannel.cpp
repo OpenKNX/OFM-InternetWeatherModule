@@ -19,7 +19,7 @@ int16_t OpenWeatherMapChannel::fillWeather(CurrentWheatherData& currentWeather, 
 {
     String url = OpenWeatherMapUrl;
     url += "&appid=";
-    url += (const char*)ParamIW_APIKey;
+    url += (const char*)ParamIW_OpenWeatherMap_APIKey;
     url += "&lat=";
     url += ParamIW_CHWeatherLocationType == 0 ? ParamBASE_Latitude : ParamIW_CHLatitude;
     url += "&lon=";
