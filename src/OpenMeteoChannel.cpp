@@ -59,7 +59,8 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
 #ifdef OPENKNX_DEBUG
     const size_t urlLen = url.length();
     const size_t lineLen = 100;
-    for (size_t i = 0; i < urlLen; i += lineLen) {
+    for (size_t i = 0; i < urlLen; i += lineLen)
+    {
         logDebugP("Call URL: %s", url.substring(i, std::min(i + lineLen, urlLen)).c_str());
     }
 #endif
@@ -131,7 +132,7 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     const uint32_t curTimestamp = current["time"];
     JsonArray hourlyTimes = hourly["time"];
     int hour = 0;
-    for (JsonVariant t: hourlyTimes)
+    for (JsonVariant t : hourlyTimes)
     {
         if (t > curTimestamp)
         {
@@ -139,7 +140,7 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
         }
         hour++;
     }
-    
+
     fillForecast(hourly, hour + 0, hour1Weather);
     fillForecast(hourly, hour + 1, hour2Weather);
 
