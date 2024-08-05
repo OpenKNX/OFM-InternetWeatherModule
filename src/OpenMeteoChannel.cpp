@@ -126,8 +126,12 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     const uint32_t curTimestamp = current["time"];
     JsonArray hourlyTimes = hourly["time"];
     int hour = 0;
-    while (hour < 24 && hourlyTimes[hour] < curTimestamp)
+    for (JsonVariant t: hourlyTimes)
     {
+        if (t > curTimestamp)
+        {
+            break;
+        }
         hour++;
     }
     
