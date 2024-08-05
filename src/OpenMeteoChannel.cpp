@@ -1,5 +1,9 @@
 #include "OpenMeteoChannel.h"
+#ifdef ARDUINO_ARCH_RP2040
+#define OpenMeteoUrl "http://api.open-meteo.com/v1/forecast"
+#else
 #define OpenMeteoUrl "https://api.open-meteo.com/v1/forecast"
+#endif
 
 OpenMeteoChannel::OpenMeteoChannel(uint8_t index)
     : BaseWeatherChannel(index)
@@ -62,7 +66,8 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
 
     HTTPClient http;
 #ifdef ARDUINO_ARCH_RP2040
-    http.setInsecure();
+    if (url.startsWith("https://"))
+        http.setInsecure();
 #endif
     http.begin(url);
 
