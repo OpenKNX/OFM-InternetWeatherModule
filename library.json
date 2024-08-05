@@ -1,6 +1,6 @@
 {
     "name": "OFM-InternetWeatherModule",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "dependencies": {
         "bblanchon/ArduinoJson": "^7.0.4"
     },
