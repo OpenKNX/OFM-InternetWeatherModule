@@ -15,6 +15,11 @@
 								<TypeText SizeInBit="320" />
 								<!-- 40 characters -->
 							</ParameterType>
+							<ParameterType Id="%AID%_PT-ServerUrl" Name="ServerUrl">
+								<TypeText SizeInBit="640" Pattern="^$|^https?://.+$"  />
+								<!-- 80 characters -->
+								<!-- TODO check improving RegEx for validation; MUST support ALL Valid host and path definitions -->
+							</ParameterType>
 							<ParameterType Id="%AID%_PT-WeatherCondition" Name="WeatherCondition">
 								<TypeText SizeInBit="104" />
 								<!-- 14 - 1 prefix =  13 characters -->
@@ -44,6 +49,16 @@
 									<Enumeration Text="Open-Meteo"     Value="2" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-OpenMeteoUsage" Name="OpenMeteoUsage">
+								<TypeRestriction Base="Value" SizeInBit="2" >
+									<Enumeration Text="Bitte wählen..."                  Value="0" Id="%ENID%" />
+									<Enumeration Text="Nicht kommerziell ('Free API')"   Value="1" Id="%ENID%" />
+									<Enumeration Text="API Subscription"                 Value="2" Id="%ENID%" />
+									<Enumeration Text="Selbst gehostet"                  Value="3" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
 						</ParameterTypes>
 						<Parameters>
 							<!-- Base Settings -->
@@ -52,20 +67,33 @@
 								<!-- Number of channels -->
 								<Parameter Id="%AID%_UP-%TT%00000" Name="VisibleChannels" ParameterType="%AID%_PT-IWNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%IW_NumChannelsDefault%" SuffixText=" von %N%" />
 							</Union>
+
 							<!-- OpenWeatherMap API Key -->
 							<Union SizeInBit="328">
 								<Memory CodeSegment="%MID%" Offset="1" BitOffset="0" />
 								<Parameter Id="%AID%_UP-%TT%00001" Name="OpenWeatherMap_APIKey" ParameterType="%AID%_PT-APIKEY" Offset="0" BitOffset="0" Text="API Key" Value="" />
 								<!-- 1Byte Empty Byte after String -->
 							</Union>
+
+							<!-- Open-Meteo -->
+							<Union SizeInBit="984">
+								<Memory CodeSegment="%MID%" Offset="42" BitOffset="0" />
+								<Parameter Id="%AID%_UP-%TT%00020" Name="OpenMeteo_UsageLicense"    ParameterType="%AID%_PT-OpenMeteoUsage" Offset="0" BitOffset="0" Text="Nutzung/Lizenz"       Value="0" />
+
+								<Parameter Id="%AID%_UP-%TT%00022" Name="OpenMeteo_ServerURL"       ParameterType="%AID%_PT-ServerUrl"      Offset="1" BitOffset="0" Text="Server-Basis-URL"      Value="" />
+								<!-- 1Byte Empty Byte after String -->
+								<Parameter Id="%AID%_UP-%TT%00021" Name="OpenMeteo_APIKey"          ParameterType="%AID%_PT-APIKEY"         Offset="82" BitOffset="0" Text="API Key"              Value="" />
+								<!-- 1Byte Empty Byte after String -->
+							</Union>
+
 							<!-- WeatherRefreshInterval -->
 							<Union SizeInBit="8">
-								<Memory CodeSegment="%MID%" Offset="42" BitOffset="0" />
+								<Memory CodeSegment="%MID%" Offset="165" BitOffset="0" />
 								<Parameter Id="%AID%_UP-%TT%00002" Name="WeatherRefreshInterval" ParameterType="%AID%_PT-WeatherRefreshInterval" Offset="0" BitOffset="0" Text="Automatische Aktualisierung" Value="3" />
 							</Union>
 							<!-- Weather Condition -->
 							<Union SizeInBit="512">
-								<Memory CodeSegment="%MID%" Offset="43" BitOffset="0" />
+								<Memory CodeSegment="%MID%" Offset="166" BitOffset="0" />
 								<Parameter Id="%AID%_UP-%TT%00003" Name="TextPrefixDayCurrent"  ParameterType="%AID%_PT-WeatherConditionDayPrefix" Offset="0"  BitOffset="0" Text="Aktueller Tag" Value="="            />
 								<!-- 1 byte empty after string -                                                                                   Offset="1"                                                         -->
 								<Parameter Id="%AID%_UP-%TT%00004" Name="TextPrefixDayNext"     ParameterType="%AID%_PT-WeatherConditionDayPrefix" Offset="2"  BitOffset="0" Text="Nächster Tag"  Value=">"            />
@@ -103,6 +131,11 @@
 							<ParameterRef Id="%AID%_UP-%TT%00007_R-%TT%0000701" RefId="%AID%_UP-%TT%00007" />
 							<!-- WeatherConditionSnow -->
 							<ParameterRef Id="%AID%_UP-%TT%00008_R-%TT%0000801" RefId="%AID%_UP-%TT%00008" />
+
+							<!-- Open-Meteo -->
+							<ParameterRef Id="%AID%_UP-%TT%00020_R-%TT%0002001" RefId="%AID%_UP-%TT%00020" />
+							<ParameterRef Id="%AID%_UP-%TT%00021_R-%TT%0002101" RefId="%AID%_UP-%TT%00021" />
+							<ParameterRef Id="%AID%_UP-%TT%00022_R-%TT%0002201" RefId="%AID%_UP-%TT%00022" />
 						</ParameterRefs>
 						<ComObjectTable>
 							<!-- Refresh Weather Data -->
@@ -134,9 +167,30 @@
 								<ParameterRefRef RefId="%AID%_UP-%TT%00001_R-%TT%0000101" IndentLevel="1" HelpContext="IW-OpenWeatherMapAPIKey" />
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Open-Meteo" UIHint="Headline" />
-								<!-- Open-Meteo API Key not supported yet -->
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="  Ohne API-Key ausschließlich NICHT-kommerzielle Nutzung mit limitierter Aufruf-Frequenz!" />
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="  Die Nutzung eines API-Keys wird bislang nicht unterstützt" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00020_R-%TT%0002001" HelpContext="IW-OpenMeteoUsage" />
+								<choose ParamRefId="%AID%_UP-%TT%00020_R-%TT%0002001">
+									<!-- <when test="0">keine Nutzung/Lizenz gewählt </when> -->
+									<when test="1">
+										<ParameterSeparator Id="%AID%_PS-nnn" Text="Ohne API-Key ausschließlich NICHT-kommerzielle Nutzung mit limitierter Aufruf-Frequenz! Nutzungsbedingungen von Open-Meteo beachten!" UIHint="Information" />
+									</when>
+									<when test="2">
+										<!--
+										<ParameterRefRef RefId="%AID%_UP-%TT%00022_R-%TT%0002201" IndentLevel="1" />
+										<ParameterSeparator Id="%AID%_PS-nnn" Text="  (Pfadangabe vor &quot;/v1/forecast&quot;, z.B. &quot;https://customer-api.open-meteo.com&quot;)" />
+										-->
+										<ParameterRefRef RefId="%AID%_UP-%TT%00021_R-%TT%0002101" IndentLevel="1" HelpContext="IW-OpenMeteoAPIKey" />
+									</when>
+									<when test="3">
+										<!--
+										<ParameterRefRef RefId="%AID%_UP-%TT%00022_R-%TT%0002201" IndentLevel="1" />
+										<ParameterSeparator Id="%AID%_PS-nnn" Text="  (Pfadangabe vor &quot;/v1/forecast&quot;, z.B. &quot;https://my-server.tld&quot;)" />
+										-->
+									</when>
+									<when test="2 3">
+										<!-- Server URL -->
+										<ParameterRefRef RefId="%AID%_UP-%TT%00022_R-%TT%0002201" IndentLevel="1" HelpContext="IW-OpenMeteoServerBaseUrl" />
+									</when>
+								</choose>
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
