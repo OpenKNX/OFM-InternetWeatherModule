@@ -15,11 +15,11 @@
 								<TypeText SizeInBit="320" />
 								<!-- 40 characters -->
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-WeatherCondition" Name="Weather Condition">
+							<ParameterType Id="%AID%_PT-WeatherCondition" Name="WeatherCondition">
 								<TypeText SizeInBit="104" />
 								<!-- 14 - 1 prefix =  13 characters -->
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-WeatherConditionDayPrefix" Name="Weather Condition Day Prefix">
+							<ParameterType Id="%AID%_PT-WeatherConditionDayPrefix" Name="WeatherConditionDayPrefix">
 								<TypeText SizeInBit="8" />
 								<!-- 1 character -->
 							</ParameterType>
