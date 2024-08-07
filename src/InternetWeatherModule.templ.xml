@@ -508,7 +508,14 @@
                         <!-- WeatherChannelType -->
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00100" HelpContext="IW-WeatherLocationType" />
                         <choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00100">                          <!-- WeatherChannelType -->
-                          <when test="1">                            <!-- OpenWeather Map -->
+                          <!-- Open-Meteo -->
+                          <when test="2">         
+                            <!-- 2024-08-01: Maximal 10000 API-Aufrufe pro Tag, 5000 pro Stunde und 600 pro Minute. -->
+                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Maximal insgesamt erlaubte API-Aufrufe beachten!" UIHint="Information" />
+                          </when>
+
+                          <!-- ALL Services (OpenWeather Map + OpenMeteo) -->
+                          <when test="1 2">
 
                             <!-- Diagnose HTTP Status -->
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
