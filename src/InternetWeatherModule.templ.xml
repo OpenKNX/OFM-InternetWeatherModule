@@ -52,13 +52,13 @@
               <!-- Prognose übernächste Stunde -->
               <ParameterRef Id="%AID%_P-%TT%%CC%006_R-%TT%%CC%00601" RefId="%AID%_P-%TT%%CC%006" />
               <!-- WeatherChannelType -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00100" RefId="%AID%_UP-%TT%%CC%001" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_UP-%TT%%CC%001" />
               <!-- Weather location type -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00200" RefId="%AID%_UP-%TT%%CC%002" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_UP-%TT%%CC%002" />
               <!-- Latitude -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00300" RefId="%AID%_UP-%TT%%CC%003" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_UP-%TT%%CC%003" />
               <!-- Longitude -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00400" RefId="%AID%_UP-%TT%%CC%004" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_UP-%TT%%CC%004" />
             </ParameterRefs>
             <ComObjectTable>
               <!-- Diagnose HTTP Status -->
@@ -496,7 +496,7 @@
           <Dynamic>
             <ChannelIndependentBlock>
               <!-- Anzahl der Kanäle -->
-              <choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000000">
+              <choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
                 <when test="&gt;=%C%">
 
                   <ParameterBlock Id="%AID%_PB-%C%1" Name="IW%C%Page" Text="Ort %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="map-marker-radius-outline" HelpContext="IW-Service">
@@ -506,8 +506,8 @@
                         <!-- Kanal Name -->
                         <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="IW-ChannelName" />
                         <!-- WeatherChannelType -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00100" HelpContext="IW-WeatherLocationType" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00100">                          <!-- WeatherChannelType -->
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="IW-WeatherLocationType" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">                          <!-- WeatherChannelType -->
                           <!-- Open-Meteo -->
                           <when test="2">         
                             <!-- 2024-08-01: Maximal 10000 API-Aufrufe pro Tag, 5000 pro Stunde und 600 pro Minute. -->
@@ -521,13 +521,13 @@
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
 
                             <!-- Weather location type -->
-                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00200" HelpContext="IW-WeatherLocationType" />
-                            <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00200">                              <!-- Weather location type -->
+                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="IW-WeatherLocationType" />
+                            <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">                              <!-- Weather location type -->
                               <when test="1">                                <!-- Anderer Ort -->
                                 <!-- Latitude -->
-                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00300" HelpContext="IW-Latitude" />
+                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" HelpContext="IW-Latitude" />
                                 <!-- Longitude -->
-                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00400" HelpContext="IW-Longitude" />
+                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" HelpContext="IW-Longitude" />
                               </when>
                             </choose>
 
