@@ -498,10 +498,7 @@
               <!-- Anzahl der Kanäle -->
               <choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
                 <when test="&gt;=%C%">
-
-                  <ParameterBlock Id="%AID%_PB-%C%1" Name="IW%C%Page" Text="Ort %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="map-marker-radius-outline" HelpContext="IW-Service">
-                    <Channel Id="%AID%_CH-IW%CC%" Name="f%CC%IW" Number="IW%CC%" Text="Ort %CC%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001">
-                      <ParameterBlock Id="%AID%_PB-%TT%%CC%01" Name="IW%C%Wrapper" Inline="true">
+                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW"   Text="Ort %C%: {{0: ...}}"   TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="map-marker-radius-outline" HelpContext="IW-Service" ShowInComObjectTree="true">
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Standort" UIHint="Headline" />
                         <!-- Kanal Name -->
                         <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="IW-ChannelName" />
@@ -782,8 +779,6 @@
                             </choose>
                           </when>
                         </choose>
-                      </ParameterBlock>
-                    </Channel>
                   </ParameterBlock>
                 </when>
               </choose>
