@@ -499,41 +499,42 @@
               <choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
                 <when test="&gt;=%C%">
                   <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW"   Text="Ort %C%: {{0: ...}}"   TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="map-marker-radius-outline" HelpContext="IW-Service" ShowInComObjectTree="true">
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Standort" UIHint="Headline" />
-                        <!-- Kanal Name -->
-                        <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="IW-ChannelName" />
-                        <!-- WeatherChannelType -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="IW-WeatherLocationType" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">                          <!-- WeatherChannelType -->
-                          <!-- Open-Meteo -->
-                          <when test="2">         
-                            <!-- 2024-08-01: Maximal 10000 API-Aufrufe pro Tag, 5000 pro Stunde und 600 pro Minute. -->
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Maximal insgesamt erlaubte API-Aufrufe beachten!" UIHint="Information" />
+                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Standort" UIHint="Headline" />
+                    <!-- Kanal Name -->
+                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="IW-ChannelName" />
+                    <!-- WeatherChannelType -->
+                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="IW-WeatherLocationType" />
+                    <choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">                          <!-- WeatherChannelType -->
+                      <!-- Open-Meteo -->
+                      <when test="2">         
+                        <!-- 2024-08-01: Maximal 10000 API-Aufrufe pro Tag, 5000 pro Stunde und 600 pro Minute. -->
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Maximal insgesamt erlaubte API-Aufrufe beachten!" UIHint="Information" />
+                      </when>
+
+                      <!-- ALL Services (OpenWeather Map + OpenMeteo) -->
+                      <when test="1 2">
+
+                        <!-- Diagnose HTTP Status -->
+                        <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
+
+                        <!-- Weather location type -->
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="IW-WeatherLocationType" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">                              <!-- Weather location type -->
+                          <when test="1">                                <!-- Anderer Ort -->
+                            <!-- Latitude -->
+                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" HelpContext="IW-Latitude" />
+                            <!-- Longitude -->
+                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" HelpContext="IW-Longitude" />
                           </when>
+                        </choose>
 
-                          <!-- ALL Services (OpenWeather Map + OpenMeteo) -->
-                          <when test="1 2">
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Aktuelles Wetter" UIHint="Headline" />
 
-                            <!-- Diagnose HTTP Status -->
-                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
-
-                            <!-- Weather location type -->
-                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="IW-WeatherLocationType" />
-                            <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">                              <!-- Weather location type -->
-                              <when test="1">                                <!-- Anderer Ort -->
-                                <!-- Latitude -->
-                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" HelpContext="IW-Latitude" />
-                                <!-- Longitude -->
-                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" HelpContext="IW-Longitude" />
-                              </when>
-                            </choose>
-
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Aktuelles Wetter" UIHint="Headline" />
-
-                            <!-- Aktuell -->
-                            <ParameterRefRef RefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="IW-Current" />
-                            <choose ParamRefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101">                              <!-- Aktuell -->
-                              <when test="1">                                <!-- Ja -->
+                        <!-- Aktuell -->
+                        <ParameterRefRef RefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="IW-Current" />
+                        <choose ParamRefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101">                              <!-- Aktuell -->
+                          <when test="1">                                <!-- Ja -->
+                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW_Current"   Text="Aktuelles Wetter"   Inline="true" ShowInComObjectTree="true">
                                 <!-- Aktuelle Temperatur -->
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101" />
                                 <!-- Aktuelle Gefühlte Temperatur -->
@@ -556,15 +557,17 @@
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001" />
                                 <!-- Aktuelle Wolken -->
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" />
-                              </when>
-                            </choose>
+                            </ParameterBlock>
+                          </when>
+                        </choose>
 
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Tagesprognose" UIHint="Headline" />
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Tagesprognose" UIHint="Headline" />
 
-                            <!-- Heute -->
-                            <ParameterRefRef RefId="%AID%_P-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="IW-Today" />
-                            <choose ParamRefId="%AID%_P-%TT%%CC%002_R-%TT%%CC%00201">                              <!-- Heute -->
-                              <when test="1">                                <!-- Ja -->
+                        <!-- Heute -->
+                        <ParameterRefRef RefId="%AID%_P-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="IW-Today" />
+                        <choose ParamRefId="%AID%_P-%TT%%CC%002_R-%TT%%CC%00201">                              <!-- Heute -->
+                          <when test="1">                                <!-- Ja -->
+                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW_Today"   Text="Prognose Heute"   Inline="true" ShowInComObjectTree="true">
                                 <!-- Prognose Heute Beschreibung -->
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" />
                                 <!-- Prognose Heute Temperatur Tag -->
@@ -607,13 +610,15 @@
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%031_R-%TT%%CC%03101" />
                                 <!-- Prognose Heute Wolken -->
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%032_R-%TT%%CC%03201" />
-                              </when>
-                            </choose>
+                            </ParameterBlock>
+                          </when>
+                        </choose>
 
-                            <!-- Morgen -->
-                            <ParameterRefRef RefId="%AID%_P-%TT%%CC%003_R-%TT%%CC%00301" HelpContext="IW-Tomorrow" />
-                            <choose ParamRefId="%AID%_P-%TT%%CC%003_R-%TT%%CC%00301">                              <!-- Morgen -->
-                              <when test="1">                                <!-- Ja -->
+                        <!-- Morgen -->
+                        <ParameterRefRef RefId="%AID%_P-%TT%%CC%003_R-%TT%%CC%00301" HelpContext="IW-Tomorrow" />
+                        <choose ParamRefId="%AID%_P-%TT%%CC%003_R-%TT%%CC%00301">                              <!-- Morgen -->
+                          <when test="1">                                <!-- Ja -->
+                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW_Tomorrow"   Text="Prognose Morgen"   Inline="true" ShowInComObjectTree="true">
                                 <!-- Prognose Morgen Beschreibung -->
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%033_R-%TT%%CC%03301" />
                                 <!-- Prognose Morgen Temperatur Tag -->
@@ -656,13 +661,15 @@
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%052_R-%TT%%CC%05201" />
                                 <!-- Prognose Morgen Wolken -->
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%053_R-%TT%%CC%05301" />
-                              </when>
-                            </choose>
+                            </ParameterBlock>
+                          </when>
+                        </choose>
 
-                            <!-- Prognose Heute/Morgen Umschaltbar -->
-                            <ParameterRefRef RefId="%AID%_P-%TT%%CC%004_R-%TT%%CC%00401" HelpContext="IW-ForecastSelectable" />
-                            <choose ParamRefId="%AID%_P-%TT%%CC%004_R-%TT%%CC%00401">                              <!-- Prognose Heute/Morgen Umschaltbar  -->
-                              <when test="1">                                <!-- Ja -->
+                        <!-- Prognose Heute/Morgen Umschaltbar -->
+                        <ParameterRefRef RefId="%AID%_P-%TT%%CC%004_R-%TT%%CC%00401" HelpContext="IW-ForecastSelectable" />
+                        <choose ParamRefId="%AID%_P-%TT%%CC%004_R-%TT%%CC%00401">                              <!-- Prognose Heute/Morgen Umschaltbar  -->
+                          <when test="1">                                <!-- Ja -->
+                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW_ForecastSelectable"   Text="Prognose Heute/Morgen Umschaltbar"   Inline="true" ShowInComObjectTree="true">
                                 <!-- Prognose Auswahl -->
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%054_R-%TT%%CC%05401" />
                                 <!-- Prognose Beschreibung -->
@@ -707,15 +714,17 @@
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%074_R-%TT%%CC%07401" />
                                 <!-- Prognose Wolken -->
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%075_R-%TT%%CC%07501" />
-                              </when>
-                            </choose>
+                            </ParameterBlock>
+                          </when>
+                        </choose>
 
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Stundenprognose" UIHint="Headline" />
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Stundenprognose" UIHint="Headline" />
 
-                            <!-- Prognose nächste Stunde -->
-                            <ParameterRefRef RefId="%AID%_P-%TT%%CC%005_R-%TT%%CC%00501" HelpContext="IW-Hour1" />
-                            <choose ParamRefId="%AID%_P-%TT%%CC%005_R-%TT%%CC%00501">                              <!-- Prognose nächste Stunde -->
-                              <when test="1">                                <!-- Ja -->
+                        <!-- Prognose nächste Stunde -->
+                        <ParameterRefRef RefId="%AID%_P-%TT%%CC%005_R-%TT%%CC%00501" HelpContext="IW-Hour1" />
+                        <choose ParamRefId="%AID%_P-%TT%%CC%005_R-%TT%%CC%00501">                              <!-- Prognose nächste Stunde -->
+                          <when test="1">                                <!-- Ja -->
+                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW_Hour1"   Text="Prognose nächste Stunde"   Inline="true" ShowInComObjectTree="true">
                                 <!-- Prognose Beschreibung -->
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%076_R-%TT%%CC%07601" />
                                 <!-- Prognose Temperatur -->
@@ -742,13 +751,15 @@
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%087_R-%TT%%CC%08701" />
                                 <!-- Prognose Wolken -->
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%088_R-%TT%%CC%08801" />
-                              </when>
-                            </choose>
+                            </ParameterBlock>
+                          </when>
+                        </choose>
 
-                            <!-- Prognose übernächste Stunde -->
-                            <ParameterRefRef RefId="%AID%_P-%TT%%CC%006_R-%TT%%CC%00601" HelpContext="IW-Hour2" />
-                            <choose ParamRefId="%AID%_P-%TT%%CC%006_R-%TT%%CC%00601">                              <!-- Prognose übernächste Stunde -->
-                              <when test="1">                                <!-- Ja -->
+                        <!-- Prognose übernächste Stunde -->
+                        <ParameterRefRef RefId="%AID%_P-%TT%%CC%006_R-%TT%%CC%00601" HelpContext="IW-Hour2" />
+                        <choose ParamRefId="%AID%_P-%TT%%CC%006_R-%TT%%CC%00601">                              <!-- Prognose übernächste Stunde -->
+                          <when test="1">                                <!-- Ja -->
+                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW_Hour2"   Text="Prognose übernächste Stunde"   Inline="true" ShowInComObjectTree="true">
                                 <!-- Prognose Beschreibung -->
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%089_R-%TT%%CC%08901" />
                                 <!-- Prognose Temperatur -->
@@ -775,10 +786,11 @@
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%100_R-%TT%%CC%10001" />
                                 <!-- Prognose Wolken -->
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%101_R-%TT%%CC%10101" />
-                              </when>
-                            </choose>
+                            </ParameterBlock>
                           </when>
                         </choose>
+                      </when>
+                    </choose>
                   </ParameterBlock>
                 </when>
               </choose>
