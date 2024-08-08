@@ -141,19 +141,24 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Datenaktualisierung" UIHint="Headline" />
 								<!-- WeatherRefreshInterval -->
 								<ParameterRefRef RefId="%AID%_UP-%TT%00002_R-%TT%0000201" IndentLevel="1" HelpContext="IW-WeatherRefreshInterval" />
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="Textbausteine für die Wetterbeschreibung" UIHint="Headline" />
+
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Wetterbeschreibung als Text" UIHint="Headline" />
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Präfix-Symbol für Zeitraum:" />
 								<!-- WeatherConditionCurrentDayPrefix -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00003_R-%TT%0000301" HelpContext="IW-WeatherConditionCurrentDayPrefix" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00003_R-%TT%0000301" HelpContext="IW-WeatherConditionCurrentDayPrefix" IndentLevel="1" />
 								<!-- WeatherConditionNextDayPrefix -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00004_R-%TT%0000401" HelpContext="IW-WeatherConditionNextDayPrefix" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00004_R-%TT%0000401" HelpContext="IW-WeatherConditionNextDayPrefix"    IndentLevel="1" />
+
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Text-Vorlagen für lokale Wetterlagen:" />
 								<!-- WeatherConditionSun -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00005_R-%TT%0000501" HelpContext="IW-WeatherConditionSun" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00005_R-%TT%0000501" HelpContext="IW-WeatherConditionSun"              IndentLevel="1" />
 								<!-- WeatherConditionClouds -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00006_R-%TT%0000601" HelpContext="IW-WeatherConditionClouds" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00006_R-%TT%0000601" HelpContext="IW-WeatherConditionClouds"           IndentLevel="1" />
 								<!-- WeatherConditionRain -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00007_R-%TT%0000701" HelpContext="IW-WeatherConditionRain" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00007_R-%TT%0000701" HelpContext="IW-WeatherConditionRain"             IndentLevel="1" />
 								<!-- WeatherConditionSnow -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00008_R-%TT%0000801" HelpContext="IW-WeatherConditionSnow" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00008_R-%TT%0000801" HelpContext="IW-WeatherConditionSnow"             IndentLevel="1" />
+
 								<!-- Refresh Weather Data -->
 								<ComObjectRefRef RefId="%AID%_O-%TT%00001_R-%TT%0000101" />
 							</ParameterBlock>
