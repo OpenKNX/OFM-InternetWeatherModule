@@ -50,7 +50,7 @@
 							<Union SizeInBit="8">
 								<Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
 								<!-- Number of channels -->
-								<Parameter Id="%AID%_UP-%TT%00000" Offset="0" BitOffset="0" Name="IWNumChannels" ParameterType="%AID%_PT-IWNumChannels" Text="Verfügbare Kanäle" Value="%IW_NumChannelsDefault%" SuffixText=" von %N%" />
+								<Parameter Id="%AID%_UP-%TT%00000" Name="VisibleChannels" ParameterType="%AID%_PT-IWNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%IW_NumChannelsDefault%" SuffixText=" von %N%" />
 							</Union>
 							<!-- OpenWeatherMap API Key -->
 							<Union SizeInBit="328">
@@ -66,12 +66,22 @@
 							<!-- Weather Condition -->
 							<Union SizeInBit="512">
 								<Memory CodeSegment="%MID%" Offset="43" BitOffset="0" />
-								<Parameter Id="%AID%_UP-%TT%00003" Name="WeatherConditionCurrentDayPrefix" ParameterType="%AID%_PT-WeatherConditionDayPrefix" Offset="0" BitOffset="0" Text="Aktueller Tag" Value="=" />
-								<Parameter Id="%AID%_UP-%TT%00004" Name="WeatherConditionNextDayPrefix" ParameterType="%AID%_PT-WeatherConditionDayPrefix" Offset="2" BitOffset="0" Text="Nächster Tag" Value=">" />
-								<Parameter Id="%AID%_UP-%TT%00005" Name="WeatherConditionSun" ParameterType="%AID%_PT-WeatherCondition" Offset="4" BitOffset="0" Text="Sonne" Value="Sonne" />
-								<Parameter Id="%AID%_UP-%TT%00006" Name="WeatherConditionClouds" ParameterType="%AID%_PT-WeatherCondition" Offset="19" BitOffset="0" Text="Wolken" Value="Wolken XXX%" />
-								<Parameter Id="%AID%_UP-%TT%00007" Name="WeatherConditionRain" ParameterType="%AID%_PT-WeatherCondition" Offset="34" BitOffset="0" Text="Regen" Value="Regen XXXmm" />
-								<Parameter Id="%AID%_UP-%TT%00008" Name="WeatherConditionSnow" ParameterType="%AID%_PT-WeatherCondition" Offset="49" BitOffset="0" Text="Schnee" Value="Schnee XXXmm" />
+								<Parameter Id="%AID%_UP-%TT%00003" Name="TextPrefixDayCurrent"  ParameterType="%AID%_PT-WeatherConditionDayPrefix" Offset="0"  BitOffset="0" Text="Aktueller Tag" Value="="            />
+								<!-- 1 byte empty after string -                                                                                   Offset="1"                                                         -->
+								<Parameter Id="%AID%_UP-%TT%00004" Name="TextPrefixDayNext"     ParameterType="%AID%_PT-WeatherConditionDayPrefix" Offset="2"  BitOffset="0" Text="Nächster Tag"  Value=">"            />
+								<!-- 1 byte empty after string -                                                                                   Offset="3"                                                         -->
+								<Parameter Id="%AID%_UP-%TT%00005" Name="TextSun"               ParameterType="%AID%_PT-WeatherCondition"          Offset="4"  BitOffset="0" Text="Sonne"         Value="Sonne"        />
+								<!-- 1 byte empty after string -                                                                                   Offset="17"                                                        -->
+								<!-- 1 byte empty after string -                                                                                   Offset="18"                                                        -->
+								<Parameter Id="%AID%_UP-%TT%00006" Name="TextClouds"            ParameterType="%AID%_PT-WeatherCondition"          Offset="19" BitOffset="0" Text="Wolken"        Value="Wolken XXX%"  />
+								<!-- 1 byte empty after string -                                                                                   Offset="32"                                                        -->
+								<!-- 1 byte empty after string -                                                                                   Offset="33"                                                        -->
+								<Parameter Id="%AID%_UP-%TT%00007" Name="TextRain"              ParameterType="%AID%_PT-WeatherCondition"          Offset="34" BitOffset="0" Text="Regen"         Value="Regen XXXmm"  />
+								<!-- 1 byte empty after string -                                                                                   Offset="47"                                                        -->
+								<!-- 1 byte empty after string -                                                                                   Offset="48"                                                        -->
+								<Parameter Id="%AID%_UP-%TT%00008" Name="TextSnow"              ParameterType="%AID%_PT-WeatherCondition"          Offset="49" BitOffset="0" Text="Schnee"        Value="Schnee XXXmm" />
+								<!-- 1 byte empty after string -                                                                                   Offset="62"                                                        -->
+								<!-- 1 byte empty after string -                                                                                   Offset="63"                                                        -->
 							</Union>
 						</Parameters>
 						<ParameterRefs>

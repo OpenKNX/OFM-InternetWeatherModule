@@ -120,12 +120,12 @@ void BaseWeatherChannel::buildDescription(char* description, float rain, float s
         float value;
         if (snow > rain)
         {
-            formatText = (const char*)ParamIW_WeatherConditionSnow;
+            formatText = (const char*)ParamIW_TextSnow;
             value = snow;
         }
         else
         {
-            formatText = (const char*)ParamIW_WeatherConditionRain;
+            formatText = (const char*)ParamIW_TextRain;
             value = rain;
         }
         replaceAll(formatText, "%", "%%");
@@ -136,11 +136,11 @@ void BaseWeatherChannel::buildDescription(char* description, float rain, float s
     {
         if (clouds <= 5)
         {
-            snprintf(buffer, bufferSize, "%s", (const char*)ParamIW_WeatherConditionSun);
+            snprintf(buffer, bufferSize, "%s", (const char*)ParamIW_TextSun);
         }
         else
         {
-            std::string formatText((const char*)ParamIW_WeatherConditionClouds);
+            std::string formatText((const char*)ParamIW_TextClouds);
             replaceAll(formatText, "%", "%%");
             replaceAll(formatText, "XXX", "%d");
             snprintf(buffer, bufferSize, formatText.c_str(), clouds);
@@ -172,9 +172,9 @@ void BaseWeatherChannel::fetchData()
     {
         logDebugP("Http result %d", httpStatus);
     } 
-    buildDescription(today.description, today.rain, today.snow, today.clouds, (const char*)ParamIW_WeatherConditionCurrentDayPrefix);
+    buildDescription(today.description, today.rain, today.snow, today.clouds, (const char*)ParamIW_TextPrefixDayCurrent);
     _descriptionToday = today.description;
-    buildDescription(tomorrow.description, tomorrow.rain, tomorrow.snow, tomorrow.clouds, (const char*)ParamIW_WeatherConditionNextDayPrefix);
+    buildDescription(tomorrow.description, tomorrow.rain, tomorrow.snow, tomorrow.clouds, (const char*)ParamIW_TextPrefixDayNext);
     _descriptionTomorrow = tomorrow.description;
 
     logDebugP("Temperature: %f", current.temperature);
