@@ -140,6 +140,7 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     {
         if (t > curTimestamp)
         {
+            // found first hour after current hour
             break;
         }
         hour++;
