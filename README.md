@@ -90,19 +90,32 @@ void setup()
 
 ## Wetterdienste
 
-Derzeit wird nur OpenWeatherMap als Wetteranbieter unterstützt. 
-Die SW-Architektur ist aber für weitere Dienste vorbereitet.
-Pull Requests für andere Dienste sind willkommen!
+Die Architektur dieses Moduls erlaubt die Nutzung verschiedener Wetter-Dienste.
 
-### OpenWeatherMap [https://openweathermap.org](https://openweathermap.org)
+Derzeit sind folgende Wetteranbieter integriert:
 
-Für die Anfragen wird ein API Key von openwheatermap.com benötigt.
+* [OpenWeatherMap](#openweathermap)
+* [Open-Meteo](#open-meteo)
+
+Pull Requests für weitere Dienste sind willkommen!
+
+### OpenWeatherMap
+
+Für die Anfragen wird ein API Key von [https://openweathermap.org](https://openweathermap.org) benötigt.
 1000 Aufrufe pro Tag können gratis durchgeführt werden, jedoch muss auch dafür ein Account angelegt werden und die Subscription für das `One Call API 3.0` aktiviert werden. 
 Bei der Subscription sollte das `Call per day limit` auf 1000 eingestellt werden, damit keine Kosten anfallen können.
 
 ![Subscription](doc/IW-Subscription.png)
 
 Siehe https://openweathermap.org/price
+
+### Open-Meteo
+
+[Open-Meteo](https://open-meteo.com/) ist eine "Open-Source-Wetter-API" und bietet für nicht-kommerzielle Nutzung einen Zugang ohne API-Key.
+Dieser ist auf maximal 10.000 Aufrufe pro Tag beschränkt (Stand 2024-08-11), 
+Nutzungsbedingungen siehe https://open-meteo.com/en/terms (nur englisch).
+
+
 
 ## Lizenz
 
