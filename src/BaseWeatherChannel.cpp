@@ -153,6 +153,13 @@ void BaseWeatherChannel::setValueCompare(GroupObject& groupObject, const KNXValu
     if (groupObject.valueNoSendCompare(value, type))
         groupObject.objectWritten();
 }
+
+void BaseWeatherChannel::updateUviKo(GroupObject& groupObject, float uviFloatValue)
+{
+    logDebugP("UVI: %f", uviFloatValue);
+    setValueCompare(groupObject, (uint8_t)(max(0, min(round(uviFloatValue), 255))), DPT_DecimalFactor);
+}
+
 void BaseWeatherChannel::fetchData()
 {
     CurrentWheatherData current = CurrentWheatherData();
@@ -199,8 +206,7 @@ void BaseWeatherChannel::fetchData()
         setValueCompare(KoIW_CHCurrentRain, current.rain, DPT_Rain_Amount);
         logDebugP("Snow: %f", current.rain);
         setValueCompare(KoIW_CHCurrentSnow, current.snow, DPT_Length_mm);
-        logDebugP("UVI: %f", current.uvi);
-        setValueCompare(KoIW_CHCurrentUVI, (uint8_t)round(current.uvi), DPT_DecimalFactor);
+        updateUviKo(KoIW_CHCurrentUVI, current.uvi);
         logDebugP("Clouds: %d", (int) current.clouds);
         setValueCompare(KoIW_CHCurrentClouds, current.clouds, DPT_Scaling);
         logIndentDown();
@@ -248,8 +254,7 @@ void BaseWeatherChannel::fetchData()
         setValueCompare(KoIW_CHTodaySnow, today.snow, DPT_Length_mm);
         logDebugP("probability of precipitation: %d", (int) today.probabilityOfPrecipitation);
         setValueCompare(KoIW_CHTodayProbabilityOfPrecipitation, today.probabilityOfPrecipitation, DPT_Scaling);
-        logDebugP("UVI: %f", today.uvi);
-        setValueCompare(KoIW_CHTodayUVI, (uint8_t)round(today.uvi), DPT_DecimalFactor);
+        updateUviKo(KoIW_CHTodayUVI, today.uvi);
         logDebugP("clouds: %d", (int) today.clouds);
         setValueCompare(KoIW_CHTodayClouds, today.clouds, DPT_Scaling);
         logIndentDown();
@@ -297,8 +302,7 @@ void BaseWeatherChannel::fetchData()
         setValueCompare(KoIW_CHTomorrowSnow, tomorrow.snow, DPT_Length_mm);
         logDebugP("probability of precipitation: %d", (int) tomorrow.probabilityOfPrecipitation);
         setValueCompare(KoIW_CHTomorrowProbabilityOfPrecipitation, tomorrow.probabilityOfPrecipitation, DPT_Scaling);
-        logDebugP("UVI: %f", tomorrow.uvi);
-        setValueCompare(KoIW_CHTomorrowUVI, (uint8_t)round(tomorrow.uvi), DPT_DecimalFactor);
+        updateUviKo(KoIW_CHTomorrowUVI, tomorrow.uvi);
         logDebugP("clouds: %d", (int) tomorrow.clouds);
         setValueCompare(KoIW_CHTomorrowClouds, tomorrow.clouds, DPT_Scaling);
         logIndentDown();
@@ -337,8 +341,7 @@ void BaseWeatherChannel::fetchData()
         setValueCompare(KoIW_CHHour1Snow, hour1.snow, DPT_Length_mm);
         logDebugP("Probability of precipitation: %d", (int) hour1.probabilityOfPrecipitation);
         setValueCompare(KoIW_CHHour1ProbabilityOfPrecipitation, hour1.probabilityOfPrecipitation, DPT_Scaling);
-        logDebugP("UVI: %f", hour1.uvi);
-        setValueCompare(KoIW_CHHour1UVI, (uint8_t)round(hour1.uvi), DPT_DecimalFactor);
+        updateUviKo(KoIW_CHHour1UVI, hour1.uvi);
         logDebugP("Clouds: %d", (int) hour1.clouds);
         setValueCompare(KoIW_CHHour1Clouds, hour1.clouds, DPT_Scaling);
         logIndentDown();
@@ -370,8 +373,7 @@ void BaseWeatherChannel::fetchData()
         setValueCompare(KoIW_CHHour2Snow, hour2.snow, DPT_Length_mm);
         logDebugP("Probability of precipitation: %d", (int) hour2.probabilityOfPrecipitation);
         setValueCompare(KoIW_CHHour2ProbabilityOfPrecipitation, hour2.probabilityOfPrecipitation, DPT_Scaling);
-        logDebugP("UVI: %f", hour2.uvi);
-        setValueCompare(KoIW_CHHour2UVI, (uint8_t)round(hour2.uvi), DPT_DecimalFactor);
+        updateUviKo(KoIW_CHHour2UVI, hour2.uvi);
         logDebugP("Clouds: %d", (int) hour2.clouds);
         setValueCompare(KoIW_CHHour2Clouds, hour2.clouds, DPT_Scaling);
         logIndentDown();

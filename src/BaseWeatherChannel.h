@@ -78,6 +78,7 @@ class BaseWeatherChannel : public OpenKNX::Channel
     std::string _descriptionTomorrow = std::string();
     void buildDescription(char* description, float rain, float snow, uint8_t clouds, const char* prefix);
     void updateSwitchableKos();
+    void updateUviKo(GroupObject& groupObject, float uviFloatValue);
     void copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2);
     void fetchData();
 
