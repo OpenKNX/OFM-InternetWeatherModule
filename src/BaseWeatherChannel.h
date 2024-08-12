@@ -80,13 +80,15 @@ class BaseWeatherChannel : public OpenKNX::Channel
     void updateSwitchableKos();
     void copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2);
     void fetchData();
+
   protected:
     BaseWeatherChannel(uint8_t index);
     virtual int16_t fillWeather(CurrentWheatherData& currentWeather, ForecastDayWheatherData& todayWeather, ForecastDayWheatherData& tomorrowWeather, ForecastHourWheatherData& hour1Weather, ForecastHourWheatherData& hour2Weather) = 0;
     void setValueCompare(GroupObject& groupObject, const KNXValue& value, const Dpt& type);
- public:
+
+  public:
     void loop() override;
     void setup() override;
-    void processInputKo(GroupObject &ko) override;
+    void processInputKo(GroupObject& ko) override;
     virtual bool processCommand(const std::string cmd, bool diagnoseKo);
- };
+};
