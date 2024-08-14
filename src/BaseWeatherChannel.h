@@ -86,6 +86,7 @@ class BaseWeatherChannel : public OpenKNX::Channel
     BaseWeatherChannel(uint8_t index);
     virtual int16_t fillWeather(CurrentWheatherData& currentWeather, ForecastDayWheatherData& todayWeather, ForecastDayWheatherData& tomorrowWeather, ForecastHourWheatherData& hour1Weather, ForecastHourWheatherData& hour2Weather) = 0;
     void setValueCompare(GroupObject& groupObject, const KNXValue& value, const Dpt& type);
+    void setValueCompare(uint goNumber, const KNXValue& value, const Dpt& type);
 
   public:
     void loop() override;

@@ -154,6 +154,12 @@ void BaseWeatherChannel::setValueCompare(GroupObject& groupObject, const KNXValu
         groupObject.objectWritten();
 }
 
+void BaseWeatherChannel::setValueCompare(uint goNumber, const KNXValue& value, const Dpt& type)
+{
+    GroupObject& groupObject = (knx.getGroupObject(IW_KoCalcNumber(goNumber)));
+    setValueCompare(groupObject, value, type);
+}
+
 void BaseWeatherChannel::updateUviKo(GroupObject& groupObject, float uviFloatValue)
 {
     logDebugP("UVI: %f", uviFloatValue);
@@ -218,46 +224,47 @@ void BaseWeatherChannel::fetchData()
         logDebugP("Today:");
         logIndentUp();
         logDebugP("description: %s", fd.description);
-        setValueCompare(KoIW_CHTodayDescription, fd.description, DPT_String_8859_1);
+        setValueCompare(IW_KoCHTodayDescription, fd.description, DPT_String_8859_1);
         logDebugP("temperature morning: %f", fd.temperatureMorning);
-        setValueCompare(KoIW_CHTodayTemparaturMorning, fd.temperatureMorning, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTodayTemparaturMorning, fd.temperatureMorning, DPT_Value_Temp);
         logDebugP("temperature day: %f", fd.temperatureDay);
-        setValueCompare(KoIW_CHTodayTemparaturDay, fd.temperatureDay, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTodayTemparaturDay, fd.temperatureDay, DPT_Value_Temp);
         logDebugP("temperature evening: %f", fd.temperatureEvening);
-        setValueCompare(KoIW_CHTodayTemparaturEvening, fd.temperatureEvening, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTodayTemparaturEvening, fd.temperatureEvening, DPT_Value_Temp);
         logDebugP("temperature night: %f", fd.temperatureNight);
-        setValueCompare(KoIW_CHTodayTemparaturNight, fd.temperatureNight, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTodayTemparaturNight, fd.temperatureNight, DPT_Value_Temp);
         logDebugP("temperature min: %f", fd.temperatureMin);
-        setValueCompare(KoIW_CHTodayTemparaturMin, fd.temperatureMin, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTodayTemparaturMin, fd.temperatureMin, DPT_Value_Temp);
         logDebugP("temperature max: %f", fd.temperatureMax);
-        setValueCompare(KoIW_CHTodayTemparaturMax, fd.temperatureMax, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTodayTemparaturMax, fd.temperatureMax, DPT_Value_Temp);
         logDebugP("temperature morning feels like: %f", fd.temperatureFeelsLikeMorning);
-        setValueCompare(KoIW_CHTodayTemparaturMorningFeelsLike, fd.temperatureFeelsLikeEvening, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTodayTemparaturMorningFeelsLike, fd.temperatureFeelsLikeEvening, DPT_Value_Temp);
         logDebugP("temperature day feels like: %f", fd.temperatureFeelsLikeDay);
-        setValueCompare(KoIW_CHTodayTemparaturDayFeelsLike, fd.temperatureFeelsLikeDay, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTodayTemparaturDayFeelsLike, fd.temperatureFeelsLikeDay, DPT_Value_Temp);
         logDebugP("temperature evening feels like: %f", fd.temperatureFeelsLikeEvening);
-        setValueCompare(KoIW_CHTodayTemparaturEveningFeelsLike, fd.temperatureFeelsLikeEvening, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTodayTemparaturEveningFeelsLike, fd.temperatureFeelsLikeEvening, DPT_Value_Temp);
         logDebugP("temperature night feels like: %f", fd.temperatureFeelsLikeNight);
-        setValueCompare(KoIW_CHTodayTemparaturNightFeelsLike, fd.temperatureFeelsLikeNight, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTodayTemparaturNightFeelsLike, fd.temperatureFeelsLikeNight, DPT_Value_Temp);
         logDebugP("humidity: %f", fd.humidity);
-        setValueCompare(KoIW_CHTodayHumidity, fd.humidity, DPT_Value_Humidity);
+        setValueCompare(IW_KoCHTodayHumidity, fd.humidity, DPT_Value_Humidity);
         logDebugP("pressure: %d", (int) fd.pressure);
-        setValueCompare(KoIW_CHTodayPressure, fd.pressure, DPT_Value_Pres);
+        setValueCompare(IW_KoCHTodayPressure, fd.pressure, DPT_Value_Pres);
         logDebugP("wind speed: %f", fd.windSpeed);
-        setValueCompare(KoIW_CHTodayWind, fd.windSpeed, DPT_Value_Wsp_kmh);
+        setValueCompare(IW_KoCHTodayWind, fd.windSpeed, DPT_Value_Wsp_kmh);
         logDebugP("wind gust: %f", fd.windGust);
-        setValueCompare(KoIW_CHTodayWindGust, fd.windGust, DPT_Value_Wsp_kmh);
+        setValueCompare(IW_KoCHTodayWindGust, fd.windGust, DPT_Value_Wsp_kmh);
         logDebugP("wind direction: %d", (int) fd.windDirection);
-        setValueCompare(KoIW_CHTodayWindDirection, fd.windDirection, DPT_Angle);
+        setValueCompare(IW_KoCHTodayWindDirection, fd.windDirection, DPT_Angle);
         logDebugP("rain: %f", fd.rain);
-        setValueCompare(KoIW_CHTodayRain, fd.rain, DPT_Rain_Amount);
+        setValueCompare(IW_KoCHTodayRain, fd.rain, DPT_Rain_Amount);
         logDebugP("snow: %f", fd.snow);
-        setValueCompare(KoIW_CHTodaySnow, fd.snow, DPT_Length_mm);
+        setValueCompare(IW_KoCHTodaySnow, fd.snow, DPT_Length_mm);
         logDebugP("probability of precipitation: %d", (int) fd.probabilityOfPrecipitation);
-        setValueCompare(KoIW_CHTodayProbabilityOfPrecipitation, fd.probabilityOfPrecipitation, DPT_Scaling);
+        setValueCompare(IW_KoCHTodayProbabilityOfPrecipitation, fd.probabilityOfPrecipitation, DPT_Scaling);
+        // TODO use index!
         updateUviKo(KoIW_CHTodayUVI, fd.uvi);
         logDebugP("clouds: %d", (int) fd.clouds);
-        setValueCompare(KoIW_CHTodayClouds, fd.clouds, DPT_Scaling);
+        setValueCompare(IW_KoCHTodayClouds, fd.clouds, DPT_Scaling);
         logIndentDown();
     }
 
@@ -267,46 +274,47 @@ void BaseWeatherChannel::fetchData()
         logDebugP("Tomorrow:");
         logIndentUp();
         logDebugP("description: %s", fd.description);
-        setValueCompare(KoIW_CHTomorrowDescription, fd.description, DPT_String_8859_1);
+        setValueCompare(IW_KoCHTomorrowDescription, fd.description, DPT_String_8859_1);
         logDebugP("temperature morning: %f", fd.temperatureMorning);
-        setValueCompare(KoIW_CHTomorrowTemparaturMorning, fd.temperatureMorning, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTomorrowTemparaturMorning, fd.temperatureMorning, DPT_Value_Temp);
         logDebugP("temperature day: %f", fd.temperatureDay);
-        setValueCompare(KoIW_CHTomorrowTemparaturDay, fd.temperatureDay, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTomorrowTemparaturDay, fd.temperatureDay, DPT_Value_Temp);
         logDebugP("temperature evening: %f", fd.temperatureEvening);
-        setValueCompare(KoIW_CHTomorrowTemparaturEvening, fd.temperatureEvening, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTomorrowTemparaturEvening, fd.temperatureEvening, DPT_Value_Temp);
         logDebugP("temperature night: %f", fd.temperatureNight);
-        setValueCompare(KoIW_CHTomorrowTemparaturNight, fd.temperatureNight, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTomorrowTemparaturNight, fd.temperatureNight, DPT_Value_Temp);
         logDebugP("temperature min: %f", fd.temperatureMin);
-        setValueCompare(KoIW_CHTomorrowTemparaturMin, fd.temperatureMin, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTomorrowTemparaturMin, fd.temperatureMin, DPT_Value_Temp);
         logDebugP("temperature max: %f", fd.temperatureMax);
-        setValueCompare(KoIW_CHTomorrowTemparaturMax, fd.temperatureMax, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTomorrowTemparaturMax, fd.temperatureMax, DPT_Value_Temp);
         logDebugP("temperature morning feels like: %f", fd.temperatureFeelsLikeMorning);
-        setValueCompare(KoIW_CHTomorrowTemparaturMorningFeelsLike, fd.temperatureFeelsLikeEvening, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTomorrowTemparaturMorningFeelsLike, fd.temperatureFeelsLikeEvening, DPT_Value_Temp);
         logDebugP("temperature day feels like: %f", fd.temperatureFeelsLikeDay);
-        setValueCompare(KoIW_CHTomorrowTemparaturDayFeelsLike, fd.temperatureFeelsLikeDay, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTomorrowTemparaturDayFeelsLike, fd.temperatureFeelsLikeDay, DPT_Value_Temp);
         logDebugP("temperature evening feels like: %f", fd.temperatureFeelsLikeEvening);
-        setValueCompare(KoIW_CHTomorrowTemparaturEveningFeelsLike, fd.temperatureFeelsLikeEvening, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTomorrowTemparaturEveningFeelsLike, fd.temperatureFeelsLikeEvening, DPT_Value_Temp);
         logDebugP("temperature night feels like: %f", fd.temperatureFeelsLikeNight);
-        setValueCompare(KoIW_CHTomorrowTemparaturNightFeelsLike, fd.temperatureFeelsLikeNight, DPT_Value_Temp);
+        setValueCompare(IW_KoCHTomorrowTemparaturNightFeelsLike, fd.temperatureFeelsLikeNight, DPT_Value_Temp);
         logDebugP("humidity: %f", fd.humidity);
-        setValueCompare(KoIW_CHTomorrowHumidity, fd.humidity, DPT_Value_Humidity);
+        setValueCompare(IW_KoCHTomorrowHumidity, fd.humidity, DPT_Value_Humidity);
         logDebugP("pressure: %d", (int) fd.pressure);
-        setValueCompare(KoIW_CHTomorrowPressure, fd.pressure, DPT_Value_Pres);
+        setValueCompare(IW_KoCHTomorrowPressure, fd.pressure, DPT_Value_Pres);
         logDebugP("wind speed: %f", fd.windSpeed);
-        setValueCompare(KoIW_CHTomorrowWind, fd.windSpeed, DPT_Value_Wsp_kmh);
+        setValueCompare(IW_KoCHTomorrowWind, fd.windSpeed, DPT_Value_Wsp_kmh);
         logDebugP("wind gust: %f", fd.windGust);
-        setValueCompare(KoIW_CHTomorrowWindGust, fd.windGust, DPT_Value_Wsp_kmh);
+        setValueCompare(IW_KoCHTomorrowWindGust, fd.windGust, DPT_Value_Wsp_kmh);
         logDebugP("wind direction: %d", (int) fd.windDirection);
-        setValueCompare(KoIW_CHTomorrowWindDirection, fd.windDirection, DPT_Angle);
+        setValueCompare(IW_KoCHTomorrowWindDirection, fd.windDirection, DPT_Angle);
         logDebugP("rain: %f", fd.rain);
-        setValueCompare(KoIW_CHTomorrowRain, fd.rain, DPT_Rain_Amount);
+        setValueCompare(IW_KoCHTomorrowRain, fd.rain, DPT_Rain_Amount);
         logDebugP("snow: %f", fd.snow);
-        setValueCompare(KoIW_CHTomorrowSnow, fd.snow, DPT_Length_mm);
+        setValueCompare(IW_KoCHTomorrowSnow, fd.snow, DPT_Length_mm);
         logDebugP("probability of precipitation: %d", (int) fd.probabilityOfPrecipitation);
-        setValueCompare(KoIW_CHTomorrowProbabilityOfPrecipitation, fd.probabilityOfPrecipitation, DPT_Scaling);
+        setValueCompare(IW_KoCHTomorrowProbabilityOfPrecipitation, fd.probabilityOfPrecipitation, DPT_Scaling);
+        // TODO use index!
         updateUviKo(KoIW_CHTomorrowUVI, fd.uvi);
         logDebugP("clouds: %d", (int) fd.clouds);
-        setValueCompare(KoIW_CHTomorrowClouds, fd.clouds, DPT_Scaling);
+        setValueCompare(IW_KoCHTomorrowClouds, fd.clouds, DPT_Scaling);
         logIndentDown();
     }
 
