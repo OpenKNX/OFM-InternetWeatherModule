@@ -382,7 +382,7 @@ void BaseWeatherChannel::fetchData()
 
 void BaseWeatherChannel::copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2)
 {
-    auto koSource = select ? ko2 : ko1;
+    auto& koSource = select ? ko2 : ko1;
     bool intialized = koTarget.initialized();
     if (intialized && memcmp(koTarget.valueRef(),  koSource.valueRef(), koTarget.valueSize()) == 0)
         return;
