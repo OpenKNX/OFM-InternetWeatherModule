@@ -10,7 +10,7 @@ InternetWeatherModule::InternetWeatherModule()
 
 const std::string InternetWeatherModule::name()
 {
-    return "InternetWeatherModule";
+    return "InternetWeather";
 }
 
 const std::string InternetWeatherModule::version()
