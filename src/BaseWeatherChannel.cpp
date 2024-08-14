@@ -382,7 +382,7 @@ void BaseWeatherChannel::fetchData()
 
 void BaseWeatherChannel::copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2)
 {
-    auto& koSource = select ? ko2 : ko1;
+    GroupObject& koSource = select ? ko2 : ko1;
     bool intialized = koTarget.initialized();
     if (intialized && memcmp(koTarget.valueRef(),  koSource.valueRef(), koTarget.valueSize()) == 0)
         return;
@@ -392,7 +392,7 @@ void BaseWeatherChannel::copyGroupObject(GroupObject& koTarget, bool select, Gro
 
 void BaseWeatherChannel::updateSwitchableKos()
 {
-    auto select = (bool) KoIW_CHForecastSelection.value(DPT_Switch);
+    bool select = (bool) KoIW_CHForecastSelection.value(DPT_Switch);
     logDebugP("update switchable KO's to %s", select ? "tomorrow" : "today");
     if (KoIW_CHForecastDescription.valueNoSendCompare(select ? _descriptionTomorrow.c_str() : _descriptionToday.c_str(), DPT_String_8859_1))
         KoIW_CHForecastDescription.objectWritten();
