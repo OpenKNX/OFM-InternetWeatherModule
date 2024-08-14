@@ -74,13 +74,13 @@ class BaseWeatherChannel : public OpenKNX::Channel
   private:
     unsigned long _lastApiCall = 0;
     unsigned long _updateIntervalInMs = 0;
-    std::string _descriptionToday = std::string();
-    std::string _descriptionTomorrow = std::string();
+    bool _available = false;
+    // TODO rename with prefix _
+    ForecastDayWheatherDataWithDescription today = ForecastDayWheatherDataWithDescription();
+    ForecastDayWheatherDataWithDescription tomorrow = ForecastDayWheatherDataWithDescription();
     void buildDescription(char* description, float rain, float snow, uint8_t clouds, const char* prefix);
-    void updateSwitchableKos();
     void updateUviKo(GroupObject& groupObject, float uviFloatValue);
     void updateDayForecastKo(ForecastDayWheatherDataWithDescription today, int koOffset);
-    void copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2);
     void fetchData();
 
   protected:

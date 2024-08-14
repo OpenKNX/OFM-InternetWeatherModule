@@ -38,7 +38,15 @@ void BaseWeatherChannel::processInputKo(GroupObject& ko)
     switch (index)
     {
         case IW_KoCHForecastSelection:
-            updateSwitchableKos();
+            if (_available)
+            {
+                bool select = (bool) KoIW_CHForecastSelection.value(DPT_Switch);
+                logDebugP("changed switchable KO's to %s", select ? "tomorrow" : "today");
+
+                // TODO ensure constant distance of Tomorrow and Today KOs by compile-time-check!
+                int offsetSwitchable = IW_KoCHForecastDescription - IW_KoCHTodayDescription;
+                updateDayForecastKo(select ? tomorrow : today, offsetSwitchable);
+            }
             break;
     }
     // module ko
@@ -169,8 +177,10 @@ void BaseWeatherChannel::updateUviKo(GroupObject& groupObject, float uviFloatVal
 void BaseWeatherChannel::fetchData()
 {
     CurrentWheatherData current = CurrentWheatherData();
+    /*
     ForecastDayWheatherDataWithDescription today = ForecastDayWheatherDataWithDescription();
     ForecastDayWheatherDataWithDescription tomorrow = ForecastDayWheatherDataWithDescription();
+    */
     ForecastHourWheatherData hour1 = ForecastHourWheatherData();
     ForecastHourWheatherData hour2 = ForecastHourWheatherData();
 
@@ -178,17 +188,18 @@ void BaseWeatherChannel::fetchData()
     KoIW_CHHTTPStatus.value(httpStatus, DPT_Value_2_Count);
     if (httpStatus != 200)
     {
+        _available = false;
         logErrorP("Http result %d", httpStatus);
         return;
     }
     else
     {
+        // set _available to true after description is 
         logDebugP("Http result %d", httpStatus);
     } 
     buildDescription(today.description, today.rain, today.snow, today.clouds, (const char*)ParamIW_TextPrefixDayCurrent);
-    _descriptionToday = today.description;
     buildDescription(tomorrow.description, tomorrow.rain, tomorrow.snow, tomorrow.clouds, (const char*)ParamIW_TextPrefixDayNext);
-    _descriptionTomorrow = tomorrow.description;
+    _available = true;
 
     if (ParamIW_CHOutCurrent)
     {
@@ -360,41 +371,3 @@ void BaseWeatherChannel::updateDayForecastKo(ForecastDayWheatherDataWithDescript
     setValueCompare(koOffset + IW_KoCHTodayClouds, fd.clouds, DPT_Scaling);
     logIndentDown();
 }
-
-void BaseWeatherChannel::copyGroupObject(GroupObject& koTarget, bool select, GroupObject& ko1, GroupObject& ko2)
-{
-    GroupObject& koSource = select ? ko2 : ko1;
-    bool intialized = koTarget.initialized();
-    if (intialized && memcmp(koTarget.valueRef(),  koSource.valueRef(), koTarget.valueSize()) == 0)
-        return;
-    memcpy(koTarget.valueRef(), koSource.valueRef(), koSource.valueSize());
-    koTarget.objectWritten();
-}
-
-void BaseWeatherChannel::updateSwitchableKos()
-{
-    bool select = (bool) KoIW_CHForecastSelection.value(DPT_Switch);
-    logDebugP("update switchable KO's to %s", select ? "tomorrow" : "today");
-    if (KoIW_CHForecastDescription.valueNoSendCompare(select ? _descriptionTomorrow.c_str() : _descriptionToday.c_str(), DPT_String_8859_1))
-        KoIW_CHForecastDescription.objectWritten();
-    copyGroupObject(KoIW_CHForecastTemparaturDay, select, KoIW_CHTodayTemparaturDay, KoIW_CHTomorrowTemparaturDay);
-    copyGroupObject(KoIW_CHForecastTemparaturNight, select, KoIW_CHTodayTemparaturNight, KoIW_CHTomorrowTemparaturNight);
-    copyGroupObject(KoIW_CHForecastTemparaturEvening, select, KoIW_CHTodayTemparaturEvening, KoIW_CHTomorrowTemparaturEvening);
-    copyGroupObject(KoIW_CHForecastTemparaturMorning, select, KoIW_CHTodayTemparaturMorning, KoIW_CHTomorrowTemparaturMorning);
-    copyGroupObject(KoIW_CHForecastTemparaturMin, select, KoIW_CHTodayTemparaturMin, KoIW_CHTomorrowTemparaturMin);
-    copyGroupObject(KoIW_CHForecastTemparaturMax, select, KoIW_CHTodayTemparaturMax, KoIW_CHTomorrowTemparaturMax);
-    copyGroupObject(KoIW_CHForecastTemparaturDayFeelsLike, select, KoIW_CHTodayTemparaturDayFeelsLike, KoIW_CHTomorrowTemparaturDayFeelsLike);
-    copyGroupObject(KoIW_CHForecastTemparaturNightFeelsLike, select, KoIW_CHTodayTemparaturNightFeelsLike, KoIW_CHTomorrowTemparaturNightFeelsLike);
-    copyGroupObject(KoIW_CHForecastTemparaturEveningFeelsLike, select, KoIW_CHTodayTemparaturEveningFeelsLike, KoIW_CHTomorrowTemparaturEveningFeelsLike);
-    copyGroupObject(KoIW_CHForecastTemparaturMorningFeelsLike, select, KoIW_CHTodayTemparaturMorningFeelsLike, KoIW_CHTomorrowTemparaturMorningFeelsLike);
-    copyGroupObject(KoIW_CHForecastHumidity, select, KoIW_CHTodayHumidity, KoIW_CHTomorrowHumidity);
-    copyGroupObject(KoIW_CHForecastPressure, select, KoIW_CHTodayPressure, KoIW_CHTomorrowPressure);
-    copyGroupObject(KoIW_CHForecastWind, select, KoIW_CHTodayWind, KoIW_CHTomorrowWind);
-    copyGroupObject(KoIW_CHForecastWindGust, select, KoIW_CHTodayWindGust, KoIW_CHTomorrowWindGust);
-    copyGroupObject(KoIW_CHForecastWindDirection, select, KoIW_CHTodayWindDirection, KoIW_CHTomorrowWindDirection);
-    copyGroupObject(KoIW_CHForecastRain, select, KoIW_CHTodayRain, KoIW_CHTomorrowRain);
-    copyGroupObject(KoIW_CHForecastSnow, select, KoIW_CHTodaySnow, KoIW_CHTomorrowSnow);
-    copyGroupObject(KoIW_CHForecastProbabilityOfPrecipitation, select, KoIW_CHTodayProbabilityOfPrecipitation, KoIW_CHTomorrowProbabilityOfPrecipitation);
-    copyGroupObject(KoIW_CHForecastUVI, select, KoIW_CHTodayUVI, KoIW_CHTomorrowUVI);
-    copyGroupObject(KoIW_CHForecastClouds, select, KoIW_CHTodayClouds, KoIW_CHTomorrowClouds);
-  }
