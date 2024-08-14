@@ -184,7 +184,7 @@ void BaseWeatherChannel::fetchData()
     buildDescription(tomorrow.description, tomorrow.rain, tomorrow.snow, tomorrow.clouds, (const char*)ParamIW_TextPrefixDayNext);
     _descriptionTomorrow = tomorrow.description;
 
-  //  if (ParamIW_CHOutCurrent)
+    if (ParamIW_CHOutCurrent)
     {
         logDebugP("Current:");
         logIndentUp();
@@ -212,7 +212,7 @@ void BaseWeatherChannel::fetchData()
         logIndentDown();
     }
 
-   // if (ParamIW_CHOutToday)
+    if (ParamIW_CHOutToday)
     {
         logDebugP("Today:");
         logIndentUp();
@@ -260,7 +260,7 @@ void BaseWeatherChannel::fetchData()
         logIndentDown();
     }
 
-   // if (ParamIW_CHOutTomorrow)
+    if (ParamIW_CHOutTomorrow)
     {
         logDebugP("Tomorrow:");
         logIndentUp();
@@ -308,13 +308,13 @@ void BaseWeatherChannel::fetchData()
         logIndentDown();
     }
 
-   // if (ParamIW_CHOutForecast)
+    if (ParamIW_CHOutForecast)
     {
         updateSwitchableKos();
     }
 
     char description[15];
-  //  if (ParamIW_CHOutHour1)
+    if (ParamIW_CHOutHour1)
     {
         logDebugP("Hour + 1:");
         logIndentUp();
@@ -346,7 +346,7 @@ void BaseWeatherChannel::fetchData()
         setValueCompare(KoIW_CHHour1Clouds, hour1.clouds, DPT_Scaling);
         logIndentDown();
     }
-   // if (ParamIW_CHOutHour2)
+    if (ParamIW_CHOutHour2)
     {
         logDebugP("Hour + 2:");
         logIndentUp();
