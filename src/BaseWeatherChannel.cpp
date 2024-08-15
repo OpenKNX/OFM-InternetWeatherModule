@@ -191,11 +191,11 @@ void BaseWeatherChannel::fetchData()
     }
     else
     {
-        // set _available to true after description is 
+        // set _available to true after description is
         logDebugP("Http result %d", httpStatus);
     } 
-    buildDescription(today.description, today.rain, today.snow, today.clouds, (const char*)ParamIW_TextPrefixDayCurrent);
-    buildDescription(tomorrow.description, tomorrow.rain, tomorrow.snow, tomorrow.clouds, (const char*)ParamIW_TextPrefixDayNext);
+    buildDescription(today.description, today.rain, today.snow_mm, today.clouds, (const char*)ParamIW_TextPrefixDayCurrent);
+    buildDescription(tomorrow.description, tomorrow.rain, tomorrow.snow_mm, tomorrow.clouds, (const char*)ParamIW_TextPrefixDayNext);
     _available = true;
 
     if (ParamIW_CHOutCurrent)
@@ -219,7 +219,7 @@ void BaseWeatherChannel::fetchData()
         logDebugP("Rain: %f", current.rain);
         setValueCompare(KoIW_CHCurrentRain, current.rain, DPT_Rain_Amount);
         logDebugP("Snow: %f", current.rain);
-        setValueCompare(KoIW_CHCurrentSnow, current.snow, DPT_Length_mm);
+        setValueCompare(KoIW_CHCurrentSnow, current.snow_mm, DPT_Length_mm);
         updateUviKo(KoIW_CHCurrentUVI, current.uvi);
         logDebugP("Clouds: %d", (int) current.clouds);
         setValueCompare(KoIW_CHCurrentClouds, current.clouds, DPT_Scaling);
@@ -250,7 +250,7 @@ void BaseWeatherChannel::fetchData()
     {
         logDebugP("Hour + 1:");
         logIndentUp();
-        buildDescription(description, hour1.rain, hour1.snow, hour1.clouds, "");
+        buildDescription(description, hour1.rain, hour1.snow_mm, hour1.clouds, "");
         logDebugP("Description: %s", description);
         setValueCompare(KoIW_CHHour1Description, description, DPT_String_8859_1);
         logDebugP("Temperature: %f", hour1.temperature);
@@ -270,7 +270,7 @@ void BaseWeatherChannel::fetchData()
         logDebugP("Rain: %f", hour1.rain);
         setValueCompare(KoIW_CHHour1Rain, hour1.rain, DPT_Rain_Amount);
         logDebugP("Snow: %f", hour1.rain);
-        setValueCompare(KoIW_CHHour1Snow, hour1.snow, DPT_Length_mm);
+        setValueCompare(KoIW_CHHour1Snow, hour1.snow_mm, DPT_Length_mm);
         logDebugP("Probability of precipitation: %d", (int) hour1.probabilityOfPrecipitation);
         setValueCompare(KoIW_CHHour1ProbabilityOfPrecipitation, hour1.probabilityOfPrecipitation, DPT_Scaling);
         updateUviKo(KoIW_CHHour1UVI, hour1.uvi);
@@ -282,7 +282,7 @@ void BaseWeatherChannel::fetchData()
     {
         logDebugP("Hour + 2:");
         logIndentUp();
-        buildDescription(description, hour2.rain, hour2.snow, hour2.clouds, "");
+        buildDescription(description, hour2.rain, hour2.snow_mm, hour2.clouds, "");
         logDebugP("Description: %s", description);
         setValueCompare(KoIW_CHHour2Description, description, DPT_String_8859_1);
         logDebugP("Temperature: %f", hour2.temperature);
@@ -302,7 +302,7 @@ void BaseWeatherChannel::fetchData()
         logDebugP("Rain: %f", hour2.rain);
         setValueCompare(KoIW_CHHour2Rain, hour2.rain, DPT_Rain_Amount);
         logDebugP("Snow: %f", hour2.rain);
-        setValueCompare(KoIW_CHHour2Snow, hour2.snow, DPT_Length_mm);
+        setValueCompare(KoIW_CHHour2Snow, hour2.snow_mm, DPT_Length_mm);
         logDebugP("Probability of precipitation: %d", (int) hour2.probabilityOfPrecipitation);
         setValueCompare(KoIW_CHHour2ProbabilityOfPrecipitation, hour2.probabilityOfPrecipitation, DPT_Scaling);
         updateUviKo(KoIW_CHHour2UVI, hour2.uvi);
@@ -351,8 +351,8 @@ void BaseWeatherChannel::updateDayForecastKo(ForecastDayWheatherDataWithDescript
     setValueCompare(koOffset + IW_KoCHTodayWindDirection, fd.windDirection, DPT_Angle);
     logDebugP("rain: %f", fd.rain);
     setValueCompare(koOffset + IW_KoCHTodayRain, fd.rain, DPT_Rain_Amount);
-    logDebugP("snow: %f", fd.snow);
-    setValueCompare(koOffset + IW_KoCHTodaySnow, fd.snow, DPT_Length_mm);
+    logDebugP("snow: %f", fd.snow_mm);
+    setValueCompare(koOffset + IW_KoCHTodaySnow, fd.snow_mm, DPT_Length_mm);
     logDebugP("probability of precipitation: %d", (int) fd.probabilityOfPrecipitation);
     setValueCompare(koOffset + IW_KoCHTodayProbabilityOfPrecipitation, fd.probabilityOfPrecipitation, DPT_Scaling);
 

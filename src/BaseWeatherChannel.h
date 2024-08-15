@@ -31,7 +31,7 @@ struct CurrentWheatherData
     float windGust = 0;
     uint16_t windDirection = 0;
     float rain = 0;
-    float snow = 0;
+    float snow_mm = 0;
     float uvi = 0;
     uint8_t clouds = 0;
 };
@@ -47,7 +47,7 @@ struct ForecastHourWheatherData
     uint16_t windDirection = 0;
     uint8_t probabilityOfPrecipitation = 0;
     float rain = 0;
-    float snow = 0;
+    float snow_mm = 0;
     float uvi = 0;
     uint8_t clouds = 0;
 };
@@ -74,7 +74,7 @@ struct ForecastDayWheatherData
     uint16_t windDirection = 0;
     uint8_t probabilityOfPrecipitation = 0;
     float rain = 0;
-    float snow = 0;
+    float snow_mm = 0;
     float uvi = 0;
     uint8_t clouds = 0;
 };

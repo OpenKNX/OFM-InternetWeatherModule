@@ -73,7 +73,7 @@ void OpenWeatherMapChannel::fillForecast(JsonObject& json, CurrentWheatherData& 
     JsonObject rainObject = json["rain"];
     wheater.rain = rainObject ? (float) rainObject["1h"] : (float)0; // 2.5
     JsonObject snowObject = json["snow"];
-    wheater.snow = snowObject ? (float) snowObject["1h"] : (float)0; // 2.5
+    wheater.snow_mm = snowObject ? (float) snowObject["1h"] : (float)0; // 2.5
     wheater.uvi = json["uvi"];                                 // 6.29
     wheater.clouds = json["clouds"];                           // 40
 }
@@ -104,7 +104,7 @@ void OpenWeatherMapChannel::fillForecast(JsonObject& json, ForecastDayWheatherDa
     wheater.windGust = 3.6 * (float)json["wind_gust"];   // 69
     wheater.windDirection = json["wind_deg"];            // 70
     wheater.rain = json["rain"];                         // 2.5
-    wheater.snow = json["snow"];                         // 2.5
+    wheater.snow_mm = json["snow"];                         // 2.5
     wheater.probabilityOfPrecipitation = round(100. * (float) json["pop"]);    // 0.70
     wheater.uvi = json["uvi"];                           // 6.29
     wheater.clouds = json["clouds"];                     // 40
