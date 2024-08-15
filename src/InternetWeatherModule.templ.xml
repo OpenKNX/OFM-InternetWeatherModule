@@ -303,7 +303,7 @@
               <!-- Aktueller Schnee -->
               <ComObjectRef Id="%AID%_O-%TT%%CC%009_R-%TT%%CC%00901" RefId="%AID%_O-%TT%%CC%009" Text="%C%: Aktueller Schnee" FunctionText="{{0:-}} Aktueller Schnee" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
               <!-- Aktueller UV Index -->
-              <ComObjectRef Id="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001" RefId="%AID%_O-%TT%%CC%010" Text="%C%: Aktueller UV-Index" FunctionText="{{0:-}} Aktuelle UV-Index" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+              <ComObjectRef Id="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001" RefId="%AID%_O-%TT%%CC%010" Text="%C%: Aktueller UV-Index" FunctionText="{{0:-}} Aktueller UV-Index" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
               <!-- Aktuelle Wolken -->
               <ComObjectRef Id="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" RefId="%AID%_O-%TT%%CC%011" Text="%C%: Aktuelle Wolken" FunctionText="{{0:-}} Aktuelle Wolken" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
