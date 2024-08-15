@@ -5,6 +5,22 @@
 #include "HTTPClient.h"
 
 
+// simple compile-time-checks for ko calculation
+#if ((IW_KoCHTomorrowDescription - IW_KoCHTodayDescription) != (IW_KoCHTomorrowClouds - IW_KoCHTodayClouds))
+    #error "KO offset for tomorrow is NOT constant!"
+#endif
+#if ((IW_KoCHForecastDescription - IW_KoCHTodayDescription) != (IW_KoCHForecastClouds - IW_KoCHTodayClouds))
+    #error "KO offset for switchable forecast is NOT constant!"
+#endif
+#if ((IW_KoCHTomorrowDescription - IW_KoCHTomorrowClouds) != (IW_KoCHForecastDescription - IW_KoCHForecastClouds))
+    #error "different structure of KO-groups"
+#endif
+
+// ko numbers relative to today forecast
+#define IW_KoOffset_Tomorrow (IW_KoCHTomorrowDescription - IW_KoCHTodayDescription)
+#define IW_KoOffset_Forecast (IW_KoCHForecastDescription - IW_KoCHTodayDescription)
+
+
 struct CurrentWheatherData
 {
     float temperature = 0;

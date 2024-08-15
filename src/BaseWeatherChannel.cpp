@@ -42,10 +42,7 @@ void BaseWeatherChannel::processInputKo(GroupObject& ko)
             {
                 bool select = (bool) KoIW_CHForecastSelection.value(DPT_Switch);
                 logDebugP("changed switchable KO's to %s", select ? "tomorrow" : "today");
-
-                // TODO ensure constant distance of Tomorrow and Today KOs by compile-time-check!
-                int offsetSwitchable = IW_KoCHForecastDescription - IW_KoCHTodayDescription;
-                updateDayForecastKo(select ? tomorrow : today, offsetSwitchable);
+                updateDayForecastKo(select ? tomorrow : today, IW_KoOffset_Forecast);
             }
             break;
     }
@@ -238,20 +235,14 @@ void BaseWeatherChannel::fetchData()
     if (ParamIW_CHOutTomorrow)
     {
         logDebugP("Tomorrow:");
-
-        // TODO ensure constant distance of Tomorrow and Today KOs by compile-time-check!
-        int offsetTomorrow = IW_KoCHTomorrowDescription - IW_KoCHTodayDescription;
-        updateDayForecastKo(tomorrow, offsetTomorrow);
+        updateDayForecastKo(tomorrow, IW_KoOffset_Tomorrow);
     }
 
     if (ParamIW_CHOutForecast)
     {
         bool select = (bool) KoIW_CHForecastSelection.value(DPT_Switch);
         logDebugP("update switchable KO's to %s", select ? "tomorrow" : "today");
-
-        // TODO ensure constant distance of Tomorrow and Today KOs by compile-time-check!
-        int offsetSwitchable = IW_KoCHForecastDescription - IW_KoCHTodayDescription;
-        updateDayForecastKo(select ? tomorrow : today, offsetSwitchable);
+        updateDayForecastKo(select ? tomorrow : today, IW_KoOffset_Forecast);
     }
 
     char description[15];
