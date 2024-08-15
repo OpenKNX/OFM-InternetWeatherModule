@@ -218,7 +218,7 @@ void BaseWeatherChannel::fetchData()
         setValueCompare(KoIW_CHCurrentWindDirection, current.windDirection, DPT_Angle);
         logDebugP("Rain: %f", current.rain);
         setValueCompare(KoIW_CHCurrentRain, current.rain, DPT_Rain_Amount);
-        logDebugP("Snow: %f", current.rain);
+        logDebugP("Snow: %.1f mm/m²", current.snow_mm);
         setValueCompare(KoIW_CHCurrentSnow, current.snow_mm, DPT_Length_mm);
         updateUviKo(KoIW_CHCurrentUVI, current.uvi);
         logDebugP("Clouds: %d", (int) current.clouds);
