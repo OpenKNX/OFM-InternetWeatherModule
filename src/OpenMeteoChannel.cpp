@@ -59,7 +59,8 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
 #ifdef OPENKNX_DEBUG
     const size_t urlLen = url.length();
     const size_t lineLen = 100;
-    for (size_t i = 0; i < urlLen; i += lineLen) {
+    for (size_t i = 0; i < urlLen; i += lineLen)
+    {
         logDebugP("Call URL: %s", url.substring(i, std::min(i + lineLen, urlLen)).c_str());
     }
 #endif
@@ -131,7 +132,7 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     const uint32_t curTimestamp = current["time"];
     JsonArray hourlyTimes = hourly["time"];
     int hour = 0;
-    for (JsonVariant t: hourlyTimes)
+    for (JsonVariant t : hourlyTimes)
     {
         if (t > curTimestamp)
         {
@@ -139,7 +140,7 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
         }
         hour++;
     }
-    
+
     fillForecast(hourly, hour + 0, hour1Weather);
     fillForecast(hourly, hour + 1, hour2Weather);
 
@@ -156,7 +157,7 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, CurrentWheatherData& wheat
     wheater.windGust = json["wind_gusts_10m"];           // TODO check required conversion and handling of units // 3.6 * (float)json["wind_gust"];
     wheater.windDirection = json["wind_direction_10m"];  // TODO check representation and required conversion
     wheater.rain = json["rain"];
-    wheater.snow = json["snowfall"];
+    wheater.snow_mm = 0.1 * (float)json["snowfall"];  // open-meteo returns value in cm
     wheater.uvi = json["uv_index"];
     wheater.clouds = json["cloud_cover"];
 
@@ -185,7 +186,7 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, int vi, ForecastHourWheath
     wheater.windGust = json["wind_gusts_10m"][vi];           // TODO check required conversion and handling of units // 3.6 * (float)json["wind_gust"];
     wheater.windDirection = json["wind_direction_10m"][vi];  // TODO check representation and required conversion
     wheater.rain = json["rain"][vi];
-    wheater.snow = json["snowfall"][vi];
+    wheater.snow_mm = 0.1 * (float)json["snowfall"][vi]; // open-meteo returns value in cm
     wheater.uvi = json["uv_index"][vi];
     wheater.clouds = json["cloud_cover"][vi];
 
@@ -234,7 +235,7 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, JsonObject& jsonHourly, in
     wheater.windDirection = json["wind_direction_10m_dominant"][vi];
 
     wheater.rain = json["rain_sum"][vi];
-    wheater.snow = json["snowfall_sum"][vi];
+    wheater.snow_mm = 0.1 * (float)json["snowfall_sum"][vi]; // open-meteo returns value in cm
     wheater.probabilityOfPrecipitation = json["precipitation_probability_max"][vi]; // round(100. * (float) json["pop"]);    // 0.70
     wheater.uvi = json["uv_index_max"][vi];
     JsonArray hourlyCloud = jsonHourly["cloud_cover"];
