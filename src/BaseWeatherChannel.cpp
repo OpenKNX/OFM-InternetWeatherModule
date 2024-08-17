@@ -170,7 +170,7 @@ void BaseWeatherChannel::setValueCompare(uint goNumber, const KNXValue& value, c
 void BaseWeatherChannel::updateUviKo(GroupObject& groupObject, float uviFloatValue)
 {
     logDebugP("UVI: %f", uviFloatValue);
-    setValueCompare(groupObject, (uint8_t)(max((uint8_t) 0, (uint8_t) min(round(uviFloatValue), (float) 255))), DPT_DecimalFactor);
+    setValueCompare(groupObject, (uint8_t)(max((uint8_t)0, min((uint8_t)round(uviFloatValue), (uint8_t)255))), DPT_DecimalFactor);
 }
 
 void BaseWeatherChannel::fetchData()
