@@ -75,8 +75,10 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     // Send HTTP GET request
     auto httpStatus = http.GET();
     if (httpStatus != 200)
+    {
         http.end();
         return httpStatus;
+    }
 
     JsonDocument doc;
     deserializeJson(doc, http.getString());
