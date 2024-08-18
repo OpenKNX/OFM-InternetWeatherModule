@@ -151,6 +151,7 @@ void BaseWeatherChannel::buildDescription(char* description, float rain, float s
             snprintf(buffer, bufferSize, formatText.c_str(), clouds);
         }
     }
+    logDebugP("Description: %s", description);
 }
 
 void BaseWeatherChannel::setValueCompare(GroupObject& groupObject, const KNXValue& value, const Dpt& type)
