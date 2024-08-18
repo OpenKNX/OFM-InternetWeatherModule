@@ -42,7 +42,7 @@ void BaseWeatherChannel::processInputKo(GroupObject& ko)
             {
                 bool select = (bool) KoIW_CHForecastSelection.value(DPT_Switch);
                 logDebugP("changed switchable KO's to %s", select ? "tomorrow" : "today");
-                updateDayForecastKo(select ? tomorrow : today, IW_KoOffset_Forecast);
+                updateDayForecastKo(select ? _tomorrow : _today, IW_KoOffset_Forecast);
             }
             break;
     }
@@ -174,14 +174,10 @@ void BaseWeatherChannel::updateUviKo(GroupObject& groupObject, float uviFloatVal
 void BaseWeatherChannel::fetchData()
 {
     CurrentWheatherData current = CurrentWheatherData();
-    /*
-    ForecastDayWheatherDataWithDescription today = ForecastDayWheatherDataWithDescription();
-    ForecastDayWheatherDataWithDescription tomorrow = ForecastDayWheatherDataWithDescription();
-    */
     ForecastHourWheatherData hour1 = ForecastHourWheatherData();
     ForecastHourWheatherData hour2 = ForecastHourWheatherData();
 
-    int16_t httpStatus = fillWeather(current, today, tomorrow, hour1, hour2);
+    int16_t httpStatus = fillWeather(current, _today, _tomorrow, hour1, hour2);
     KoIW_CHHTTPStatus.value(httpStatus, DPT_Value_2_Count);
     if (httpStatus != 200)
     {
@@ -194,8 +190,8 @@ void BaseWeatherChannel::fetchData()
         // set _available to true after description is
         logDebugP("Http result %d", httpStatus);
     } 
-    buildDescription(today.description, today.rain, today.snow_mm, today.clouds, (const char*)ParamIW_TextPrefixDayCurrent);
-    buildDescription(tomorrow.description, tomorrow.rain, tomorrow.snow_mm, tomorrow.clouds, (const char*)ParamIW_TextPrefixDayNext);
+    buildDescription(_today.description, _today.rain, _today.snow_mm, _today.clouds, (const char*)ParamIW_TextPrefixDayCurrent);
+    buildDescription(_tomorrow.description, _tomorrow.rain, _tomorrow.snow_mm, _tomorrow.clouds, (const char*)ParamIW_TextPrefixDayNext);
     _available = true;
 
     if (ParamIW_CHOutCurrent)
@@ -229,20 +225,20 @@ void BaseWeatherChannel::fetchData()
     if (ParamIW_CHOutToday)
     {
         logDebugP("Today:");
-        updateDayForecastKo(today, 0);
+        updateDayForecastKo(_today, 0);
     }
 
     if (ParamIW_CHOutTomorrow)
     {
         logDebugP("Tomorrow:");
-        updateDayForecastKo(tomorrow, IW_KoOffset_Tomorrow);
+        updateDayForecastKo(_tomorrow, IW_KoOffset_Tomorrow);
     }
 
     if (ParamIW_CHOutForecast)
     {
         bool select = (bool) KoIW_CHForecastSelection.value(DPT_Switch);
         logDebugP("update switchable KO's to %s", select ? "tomorrow" : "today");
-        updateDayForecastKo(select ? tomorrow : today, IW_KoOffset_Forecast);
+        updateDayForecastKo(select ? _tomorrow : _today, IW_KoOffset_Forecast);
     }
 
     char description[15];
@@ -312,10 +308,8 @@ void BaseWeatherChannel::fetchData()
     }
 }
 
-void BaseWeatherChannel::updateDayForecastKo(ForecastDayWheatherDataWithDescription fd, int koOffset)
+void BaseWeatherChannel::updateDayForecastKo(ForecastDayWheatherDataWithDescription& fd, int koOffset)
 {
-    // TODO use reference for fd
-
     logIndentUp();
     logDebugP("description: %s", fd.description);
     setValueCompare(koOffset + IW_KoCHTodayDescription, fd.description, DPT_String_8859_1);
