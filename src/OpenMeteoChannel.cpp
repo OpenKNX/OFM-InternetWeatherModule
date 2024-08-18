@@ -153,17 +153,17 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
 
 void OpenMeteoChannel::fillForecast(JsonObject& json, CurrentWheatherData& wheater)
 {
-    wheater.temperature_C = json["temperature_2m"];
+    wheater.temperature_C          = json["temperature_2m"];
     wheater.temperatureFeelsLike_C = json["apparent_temperature"];
-    wheater.humidity_percent = json["relative_humidity_2m"];
-    wheater.pressure_hPa = json["surface_pressure"];         // possible alternative: `pressure_msl` (at sealevel)
-    wheater.windSpeed_Km_h = json["wind_speed_10m"];         // open-meteo returns value in Km/h
-    wheater.windGust_Km_h  = json["wind_gusts_10m"];         // open-meteo returns value in Km/h
-    wheater.windDirection_deg = json["wind_direction_10m"];
-    wheater.rain_mm = json["rain"];
-    wheater.snow_mm = 0.1 * (float)json["snowfall"];  // open-meteo returns value in cm
-    wheater.uvi_unitOne = json["uv_index"];
-    wheater.cloudsCover_percent = json["cloud_cover"];
+    wheater.humidity_percent       = json["relative_humidity_2m"];
+    wheater.pressure_hPa           = json["surface_pressure"];       // at ground level
+    wheater.windSpeed_Km_h         = json["wind_speed_10m"];         // open-meteo returns value in Km/h
+    wheater.windGust_Km_h          = json["wind_gusts_10m"];         // open-meteo returns value in Km/h
+    wheater.windDirection_deg      = json["wind_direction_10m"];
+    wheater.rain_mm                = json["rain"];
+    wheater.snow_mm                = 0.1 * (float)json["snowfall"];  // open-meteo returns value in cm
+    wheater.uvi_unitOne            = json["uv_index"];
+    wheater.cloudsCover_percent    = json["cloud_cover"];
 
     // TODO check integraten of additional fields from Open-Meteo:
     // * Is Day or Night [0/1] - not planned, as day-calc is available in LOG
@@ -174,27 +174,20 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, CurrentWheatherData& wheat
 
 void OpenMeteoChannel::fillForecast(JsonObject& json, int vi, ForecastHourWheatherData& wheater)
 {
-    // TODO fill with data from OpenMeteo
-    /*
-    // this will not work, due to different structure
-    fillForecast(json, (CurrentWheatherData&) wheater);
-    wheater.probabilityOfPrecipitation = round(100. * (float) json["pop"]);    // 0.70
-    */
-
     // same as for current, but value-arrays instead of values
-    wheater.temperature_C = json["temperature_2m"][vi];
-    wheater.temperatureFeelsLike_C = json["apparent_temperature"][vi];
-    wheater.humidity_percent = json["relative_humidity_2m"][vi];
-    wheater.pressure_hPa = json["surface_pressure"][vi];         // possible alternative: `pressure_msl` (at sealevel)
-    wheater.windSpeed_Km_h    = json["wind_speed_10m"][vi];      // open-meteo returns value in Km/h
-    wheater.windGust_Km_h     = json["wind_gusts_10m"][vi];      // open-meteo returns value in Km/h
-    wheater.windDirection_deg = json["wind_direction_10m"][vi];
-    wheater.rain_mm = json["rain"][vi];
-    wheater.snow_mm = 0.1 * (float)json["snowfall"][vi]; // open-meteo returns value in cm
-    wheater.uvi_unitOne = json["uv_index"][vi];
-    wheater.cloudsCover_percent = json["cloud_cover"][vi];
+    wheater.temperature_C                      = json["temperature_2m"][vi];
+    wheater.temperatureFeelsLike_C             = json["apparent_temperature"][vi];
+    wheater.humidity_percent                   = json["relative_humidity_2m"][vi];
+    wheater.pressure_hPa                       = json["surface_pressure"][vi];      // at ground level
+    wheater.windSpeed_Km_h                     = json["wind_speed_10m"][vi];        // open-meteo returns value in Km/h
+    wheater.windGust_Km_h                      = json["wind_gusts_10m"][vi];        // open-meteo returns value in Km/h
+    wheater.windDirection_deg                  = json["wind_direction_10m"][vi];
+    wheater.rain_mm                            = json["rain"][vi];
+    wheater.snow_mm                            = 0.1 * (float)json["snowfall"][vi]; // open-meteo returns value in cm
+    wheater.uvi_unitOne                        = json["uv_index"][vi];
+    wheater.cloudsCover_percent                = json["cloud_cover"][vi];
 
-    wheater.probabilityOfPrecipitation_percent = json["precipitation_probability"][vi]; //  = round(100. * (float) json["pop"]);    // 0.70
+    wheater.probabilityOfPrecipitation_percent = json["precipitation_probability"][vi];
 }
 
 float OpenMeteoChannel::avg(JsonArray& arr, int begin, int n)
@@ -210,27 +203,29 @@ float OpenMeteoChannel::avg(JsonArray& arr, int begin, int n)
 void OpenMeteoChannel::fillForecast(JsonObject& json, JsonObject& jsonHourly, int vi, ForecastDayWheatherData& wheater)
 {
     const int vih = 24 * vi;
-    const int vihDay = vih + 12;
-    const int vihNight = vih + 0;
-    const int vihEve = vih + 18;
-    const int vihMorn = vih + 06;
+    const int vihNight = vih +  0;
+    const int vihMorn  = vih +  6;
+    const int vihDay   = vih + 12;
+    const int vihEve   = vih + 18;
 
     JsonArray temperature = jsonHourly["temperature_2m"];
-    wheater.temperatureDay_C = temperature[vihDay];
-    wheater.temperatureNight_C = temperature[vihNight];
-    wheater.temperatureEvening_C = temperature[vihEve];
+    wheater.temperatureNight_C   = temperature[vihNight];
     wheater.temperatureMorning_C = temperature[vihMorn];
+    wheater.temperatureDay_C     = temperature[vihDay];
+    wheater.temperatureEvening_C = temperature[vihEve];
+
     wheater.temperatureMin_C = json["temperature_2m_min"][vi];
     wheater.temperatureMax_C = json["temperature_2m_max"][vi];
 
     JsonArray apparentTemperature = jsonHourly["apparent_temperature"];
-    wheater.temperatureFeelsLikeDay_C = apparentTemperature[vihDay];
-    wheater.temperatureFeelsLikeNight_C = apparentTemperature[vihNight];
-    wheater.temperatureFeelsLikeEvening_C = apparentTemperature[vihEve];
+    wheater.temperatureFeelsLikeNight_C   = apparentTemperature[vihNight];
     wheater.temperatureFeelsLikeMorning_C = apparentTemperature[vihMorn];
+    wheater.temperatureFeelsLikeDay_C     = apparentTemperature[vihDay];
+    wheater.temperatureFeelsLikeEvening_C = apparentTemperature[vihEve];
 
     JsonArray hourlyHumidity = jsonHourly["relative_humidity_2m"];
     wheater.humidity_percent = avg(hourlyHumidity, vih, 24);
+
     JsonArray hourlyPressure = jsonHourly["surface_pressure"];
     wheater.pressure_hPa = avg(hourlyPressure, vih, 24);
 
@@ -240,8 +235,9 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, JsonObject& jsonHourly, in
 
     wheater.rain_mm = json["rain_sum"][vi];
     wheater.snow_mm = 0.1 * (float)json["snowfall_sum"][vi]; // open-meteo returns value in cm
-    wheater.probabilityOfPrecipitation_percent = json["precipitation_probability_max"][vi]; // round(100. * (float) json["pop"]);    // 0.70
+    wheater.probabilityOfPrecipitation_percent = json["precipitation_probability_max"][vi];
     wheater.uvi_unitOne = json["uv_index_max"][vi];
+
     JsonArray hourlyCloud = jsonHourly["cloud_cover"];
     wheater.cloudsCover_percent = avg(hourlyCloud, vih, 24);
 }
