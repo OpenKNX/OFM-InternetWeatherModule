@@ -103,6 +103,7 @@ bool BaseWeatherChannel::processCommand(const std::string cmd, bool diagnoseKo)
     {
         fetchData();
         return true;
+    }
     return false;
 }
 
