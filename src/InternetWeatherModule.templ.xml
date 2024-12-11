@@ -11,59 +11,49 @@
               <!-- Kanal Name -->
               <Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
               <!-- Weather outputs -->
-              <Union SizeInBit="8">
-                <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
-                <!-- Aktuell -->
-                <Parameter Id="%AID%_UP-%TT%%CC%011" Name="CH%C%OutCurrent"  ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="0" Text="Aktuelles Wetter"                  Value="1" />
-                <!-- Prognose Heute -->
-                <Parameter Id="%AID%_UP-%TT%%CC%012" Name="CH%C%OutToday"    ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="1" Text="Prognose Heute"                    Value="0" />
-                <!-- Prognose Morgen -->
-                <Parameter Id="%AID%_UP-%TT%%CC%013" Name="CH%C%OutTomorrow" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="2" Text="Prognose Morgen"                   Value="0" />
-                <!-- Prognose Heute/Morgen Umschaltbar -->
-                <Parameter Id="%AID%_UP-%TT%%CC%014" Name="CH%C%OutForecast" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="3" Text="Prognose Heute/Morgen Umschaltbar" Value="0" />
-                <!-- Prognose Nächste Stunde -->
-                <Parameter Id="%AID%_UP-%TT%%CC%015" Name="CH%C%OutHour1"    ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="4" Text="Prognose nächste Stunde"           Value="0" />
-                <!-- Prognose Übernächste Stunde -->
-                <Parameter Id="%AID%_UP-%TT%%CC%016" Name="CH%C%OutHour2"    ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="5" Text="Prognose übernächste Stunde"       Value="0" />
-                <!-- 2 bit unused -->
-              </Union>              
+              <Union SizeInBit="24">
+                <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />     
+                <!-- Provider -->
+                <Parameter Id="%AID%_UP-%TT%%CC%001" Name="CH%C%Provider"  ParameterType="%AID%_PT-WeatherChannelProvider" Offset="0" BitOffset="0" Text="Wetterdienst" Value="2" /> 
+                <!-- Ort -->
+                <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%Location"  ParameterType="%AID%_PT-WeatherChannelLocation" Offset="0" BitOffset="4" Text="Wetterdienst" Value="2" /> 
+                <!-- Vorhersage Type -->
+                <Parameter Id="%AID%_UP-%TT%%CC%003" Name="CH%C%Forecast"  ParameterType="%AID%_PT-WeatherChannelForecastType" Offset="1" BitOffset="0" Text="Vorhersagezeit" Value="0" />              
+                <!-- Type -->
+                <Parameter Id="%AID%_UP-%TT%%CC%004" Name="CH%C%Measurement"  ParameterType="%AID%_PT-WeatherChannelMeasurement" Offset="2" BitOffset="0" Text="Aktuelles Wetter" Value="1" />                
+              </Union>     
 
-              <!-- Weather channel type -->
+              <!-- Temperatur -->
               <Union SizeInBit="8">
-                <Memory CodeSegment="%MID%" Offset="2" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%001" Name="CH%C%WeatherChannelType" ParameterType="%AID%_PT-WeatherChannelType" Offset="0" BitOffset="0" Text="Wetterdienst" Value="0" />
-              </Union>
-              <!-- Weather location -->
-              <Union SizeInBit="65">
                 <Memory CodeSegment="%MID%" Offset="3" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%WeatherLocationType" ParameterType="%AID%_PT-WeatherLocationType" Offset="0" BitOffset="0" Text="Ort für Wetter" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%003" Name="CH%C%Latitude" ParameterType="%AID%_PT-Latitude" Offset="1" BitOffset="0" Text="Breitengrad" Value="48.2083" />
-                <Parameter Id="%AID%_UP-%TT%%CC%004" Name="CH%C%Longitude" ParameterType="%AID%_PT-Longitude" Offset="5" BitOffset="0" Text="Längengrad" Value="16.3731" />
-              </Union>
+                <!-- Temperaturtype -->    
+                <Parameter Id="%AID%_UP-%TT%%CC%101" Name="CH%C%TempTime"  ParameterType="%AID%_PT-WeatherChannelTempTime" Offset="0" BitOffset="0" Text="Type" Value="1" />
+                <!-- Temperatur Einheit -->    
+                <Parameter Id="%AID%_UP-%TT%%CC%102" Name="CH%C%TempUnit"  ParameterType="%AID%_PT-WeatherChannelTempUnit" Offset="0" BitOffset="4" Text="Einheit" Value="1" />
+                <!-- 3 bits free -->
+              </Union>   
+                        
             </Parameters>
             <ParameterRefs>
               <!-- Kanal Name -->
               <ParameterRef Id="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" RefId="%AID%_P-%TT%%CC%000" />
-              <!-- Aktuell -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" RefId="%AID%_UP-%TT%%CC%011" />
-              <!-- Prognose Heute -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" RefId="%AID%_UP-%TT%%CC%012" />
-              <!-- Prognose Morgen -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_UP-%TT%%CC%013" />
-              <!-- Prognose Heute/Morgen Umschaltbar -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401" RefId="%AID%_UP-%TT%%CC%014" />
-              <!-- Prognose nächste Stunde -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" RefId="%AID%_UP-%TT%%CC%015" />
-              <!-- Prognose übernächste Stunde -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" RefId="%AID%_UP-%TT%%CC%016" />
-              <!-- WeatherChannelType -->
+             
+              <!-- Provider -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_UP-%TT%%CC%001" />
-              <!-- Weather location type -->
+              <!-- Ort -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_UP-%TT%%CC%002" />
-              <!-- Latitude -->
+              <!-- Vorhersage Type -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_UP-%TT%%CC%003" />
-              <!-- Longitude -->
+              <!-- Type -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_UP-%TT%%CC%004" />
+
+              <!-- Temperatur -->
+              <!-- Temperaturtype -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" RefId="%AID%_UP-%TT%%CC%101" />
+              <!-- Temperatur Einheit -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" RefId="%AID%_UP-%TT%%CC%102" />
+
+
             </ParameterRefs>
             <ComObjectTable>
               <!-- Diagnose HTTP Status -->
@@ -503,299 +493,31 @@
               <!-- Anzahl der Kanäle -->
               <choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
                 <when test="&gt;=%C%">
-                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW"   Text="Ort %C%: {{0: ...}}"   TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="map-marker-radius-outline" HelpContext="IW-Service" ShowInComObjectTree="true">
-                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Standort" UIHint="Headline" />
+                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW"   Text="Wert %C%: {{0: ...}}"   TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="map-marker-radius-outline" HelpContext="IW-Service" ShowInComObjectTree="true">
+                   
+                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert" UIHint="Headline" />
                     <!-- Kanal Name -->
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="IW-ChannelName" />
-                    <!-- WeatherChannelType -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="IW-WeatherLocationType" />
-                    <choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">                          <!-- WeatherChannelType -->
-                      <!-- Open-Meteo -->
-                      <when test="2">         
-                        <!-- 2024-08-01: Maximal 10000 API-Aufrufe pro Tag, 5000 pro Stunde und 600 pro Minute. -->
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Maximal insgesamt erlaubte API-Aufrufe beachten!" UIHint="Information" />
-                      </when>
 
-                      <!-- ALL Services (OpenWeather Map + OpenMeteo) -->
+                    <!-- Provider -->
+                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101"  />
+                    <!-- Ort -->
+                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201"  />
+                    <!-- Vorhersage Type -->
+                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301"  />
+                    <!-- Type -->
+                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401"  />
+                    <choose ParamRefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401">
                       <when test="1 2">
-
-                        <!-- Diagnose HTTP Status -->
-                        <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
-
-                        <!-- Weather location type -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="IW-WeatherLocationType" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">                              <!-- Weather location type -->
-                          <when test="1">                                <!-- Anderer Ort -->
-                            <!-- Latitude -->
-                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" HelpContext="IW-Latitude" />
-                            <!-- Longitude -->
-                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" HelpContext="IW-Longitude" />
-                          </when>
-                        </choose>
-
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Aktuelles Wetter" UIHint="Headline" />
-
-                        <!-- Aktuell -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" HelpContext="IW-Current" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101">                              <!-- Aktuell -->
-                          <when test="1">                                <!-- Ja -->
-                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW_Current"   Text="Aktuelles Wetter"   Inline="true" ShowInComObjectTree="true">
-                                <!-- Aktuelle Temperatur -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101" />
-                                <!-- Aktuelle Gefühlte Temperatur -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" />
-                                <!-- Aktuelle Luftfeuchtigkeit -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%003_R-%TT%%CC%00301" />
-                                <!-- Aktueller Luftdruck -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" />
-                                <!-- Aktueller Wind -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" />
-                                <!-- Aktuelle Windböen -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%006_R-%TT%%CC%00601" />
-                                <!-- Aktueller Wind Richtung -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" />
-                                <!-- Aktueller Regen -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" />
-                                <!-- Aktueller Schnee -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%009_R-%TT%%CC%00901" />
-                                <!-- Aktueller UV-Index -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001" />
-                                <!-- Aktuelle Wolken -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" />
-                            </ParameterBlock>
-                          </when>
-                        </choose>
-
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Tagesprognose" UIHint="Headline" />
-
-                        <!-- Heute -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" HelpContext="IW-Today" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201">                              <!-- Heute -->
-                          <when test="1">                                <!-- Ja -->
-                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW_Today"   Text="Prognose Heute"   Inline="true" ShowInComObjectTree="true">
-                                <!-- Prognose Heute Beschreibung -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" />
-                                <!-- Prognose Heute Temperatur Tag -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" />
-                                <!-- Prognose Heute Temperatur Nacht -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" />
-                                <!-- Prognose Heute Temperatur Früh -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" />
-                                <!-- Prognose Heute Temperatur Abend -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" />
-                                <!-- Prognose Heute Temperatur Min -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%017_R-%TT%%CC%01701" />
-                                <!-- Prognose Heute Temperatur Max -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%018_R-%TT%%CC%01801" />
-                                <!-- Prognose Heute Gefühlte Temperatur Tag -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%019_R-%TT%%CC%01901" />
-                                <!-- Prognose Heute Gefühlte Temperatur Nacht -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" />
-                                <!-- Prognose Heute Gefühlte Temperatur Früh -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" />
-                                <!-- Prognose Heute Gefühlte Temperatur Abend -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" />
-                                <!-- Prognose Heute Luftfeuchtigkeit -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" />
-                                <!-- Prognose Heute Luftdruck -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" />
-                                <!-- Prognose Heute Wind -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" />
-                                <!-- Prognose Heute Windböen -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%026_R-%TT%%CC%02601" />
-                                <!-- Prognose Heute Wind Richtung -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%027_R-%TT%%CC%02701" />
-                                <!-- Prognose Heute Regen -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%028_R-%TT%%CC%02801" />
-                                <!-- Prognose Heute Schnee -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%029_R-%TT%%CC%02901" />
-                                <!-- Prognose Heute Niederschlagswahrscheinlichkeit -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%030_R-%TT%%CC%03001" />
-                                <!-- Prognose Heute UV-Index -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%031_R-%TT%%CC%03101" />
-                                <!-- Prognose Heute Wolken -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%032_R-%TT%%CC%03201" />
-                            </ParameterBlock>
-                          </when>
-                        </choose>
-
-                        <!-- Morgen -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" HelpContext="IW-Tomorrow" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301">                              <!-- Morgen -->
-                          <when test="1">                                <!-- Ja -->
-                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW_Tomorrow"   Text="Prognose Morgen"   Inline="true" ShowInComObjectTree="true">
-                                <!-- Prognose Morgen Beschreibung -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%033_R-%TT%%CC%03301" />
-                                <!-- Prognose Morgen Temperatur Tag -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%034_R-%TT%%CC%03401" />
-                                <!-- Prognose Morgen Temperatur Nacht -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%035_R-%TT%%CC%03501" />
-                                <!-- Prognose Morgen Temperatur Früh -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%036_R-%TT%%CC%03601" />
-                                <!-- Prognose Morgen Temperatur Abend -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%037_R-%TT%%CC%03701" />
-                                <!-- Prognose Morgen Temperatur Min -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%038_R-%TT%%CC%03801" />
-                                <!-- Prognose Morgen Temperatur Max -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%039_R-%TT%%CC%03901" />
-                                <!-- Prognose Morgen Gefühlte Temperatur Tag -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%040_R-%TT%%CC%04001" />
-                                <!-- Prognose Morgen Gefühlte Temperatur Nacht -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%041_R-%TT%%CC%04101" />
-                                <!-- Prognose Morgen Gefühlte Temperatur Früh -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%042_R-%TT%%CC%04201" />
-                                <!-- Prognose Morgen Gefühlte Temperatur Abend -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%043_R-%TT%%CC%04301" />
-                                <!-- Prognose Morgen Luftfeuchtigkeit -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%044_R-%TT%%CC%04401" />
-                                <!-- Prognose Morgen Luftdruck -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%045_R-%TT%%CC%04501" />
-                                <!-- Prognose Morgen Wind -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%046_R-%TT%%CC%04601" />
-                                <!-- Prognose Morgen Windböen -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%047_R-%TT%%CC%04701" />
-                                <!-- Prognose Morgen Wind Richtung -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%048_R-%TT%%CC%04801" />
-                                <!-- Prognose Morgen Regen -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%049_R-%TT%%CC%04901" />
-                                <!-- Prognose Morgen Schnee -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%050_R-%TT%%CC%05001" />
-                                <!-- Prognose Heute Niederschlagswahrscheinlichkeit -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%051_R-%TT%%CC%05101" />
-                                <!-- Prognose Morgen UV-Index -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%052_R-%TT%%CC%05201" />
-                                <!-- Prognose Morgen Wolken -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%053_R-%TT%%CC%05301" />
-                            </ParameterBlock>
-                          </when>
-                        </choose>
-
-                        <!-- Prognose Heute/Morgen Umschaltbar -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401" HelpContext="IW-ForecastSelectable" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401">                              <!-- Prognose Heute/Morgen Umschaltbar  -->
-                          <when test="1">                                <!-- Ja -->
-                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW_ForecastSelectable"   Text="Prognose Heute/Morgen Umschaltbar"   Inline="true" ShowInComObjectTree="true">
-                                <!-- Prognose Auswahl -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%054_R-%TT%%CC%05401" />
-                                <!-- Prognose Beschreibung -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%055_R-%TT%%CC%05501" />
-                                <!-- Prognose Temperatur Tag -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%056_R-%TT%%CC%05601" />
-                                <!-- Prognose Temperatur Nacht -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%057_R-%TT%%CC%05701" />
-                                <!-- Prognose Temperatur Früh -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%058_R-%TT%%CC%05801" />
-                                <!-- Prognose Temperatur Abend -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%059_R-%TT%%CC%05901" />
-                                <!-- Prognose Temperatur Min -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%060_R-%TT%%CC%06001" />
-                                <!-- Prognose Temperatur Max -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%061_R-%TT%%CC%06101" />
-                                <!-- Prognose Gefühlte Temperatur Tag -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%062_R-%TT%%CC%06201" />
-                                <!-- Prognose Gefühlte Temperatur Nacht -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%063_R-%TT%%CC%06301" />
-                                <!-- Prognose Gefühlte Temperatur Früh -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%064_R-%TT%%CC%06401" />
-                                <!-- Prognose Gefühlte Temperatur Abend -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%065_R-%TT%%CC%06501" />
-                                <!-- Prognose Luftfeuchtigkeit -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%066_R-%TT%%CC%06601" />
-                                <!-- Prognose Luftdruck -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%067_R-%TT%%CC%06701" />
-                                <!-- Prognose Wind -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%068_R-%TT%%CC%06801" />
-                                <!-- Prognose Windböen -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%069_R-%TT%%CC%06901" />
-                                <!-- Prognose Wind Richtung -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%070_R-%TT%%CC%07001" />
-                                <!-- Prognose Regen -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%071_R-%TT%%CC%07101" />
-                                <!-- Prognose Schnee -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%072_R-%TT%%CC%07201" />
-                                <!-- Prognose Heute Niederschlagswahrscheinlichkeit -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%073_R-%TT%%CC%07301" />
-                                <!-- Prognose UV-Index -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%074_R-%TT%%CC%07401" />
-                                <!-- Prognose Wolken -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%075_R-%TT%%CC%07501" />
-                            </ParameterBlock>
-                          </when>
-                        </choose>
-
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Stundenprognose" UIHint="Headline" />
-
-                        <!-- Prognose nächste Stunde -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" HelpContext="IW-Hour1" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">                              <!-- Prognose nächste Stunde -->
-                          <when test="1">                                <!-- Ja -->
-                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW_Hour1"   Text="Prognose nächste Stunde"   Inline="true" ShowInComObjectTree="true">
-                                <!-- Prognose Beschreibung -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%076_R-%TT%%CC%07601" />
-                                <!-- Prognose Temperatur -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%077_R-%TT%%CC%07701" />
-                                <!-- Prognose Gefühlte Temperatur -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%078_R-%TT%%CC%07801" />
-                                <!-- Prognose Luftfeuchtigkeit -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%079_R-%TT%%CC%07901" />
-                                <!-- Prognose Luftdruck -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%080_R-%TT%%CC%08001" />
-                                <!-- Prognose Wind -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%081_R-%TT%%CC%08101" />
-                                <!-- Prognose Windböen -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%082_R-%TT%%CC%08201" />
-                                <!-- Prognose Wind Richtung -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%083_R-%TT%%CC%08301" />
-                                <!-- Prognose Regen -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%084_R-%TT%%CC%08401" />
-                                <!-- Prognose Schnee -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%085_R-%TT%%CC%08501" />
-                                <!-- Prognose Heute Niederschlagswahrscheinlichkeit -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%086_R-%TT%%CC%08601" />
-                                <!-- Prognose UV-Index -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%087_R-%TT%%CC%08701" />
-                                <!-- Prognose Wolken -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%088_R-%TT%%CC%08801" />
-                            </ParameterBlock>
-                          </when>
-                        </choose>
-
-                        <!-- Prognose übernächste Stunde -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" HelpContext="IW-Hour2" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601">                              <!-- Prognose übernächste Stunde -->
-                          <when test="1">                                <!-- Ja -->
-                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW_Hour2"   Text="Prognose übernächste Stunde"   Inline="true" ShowInComObjectTree="true">
-                                <!-- Prognose Beschreibung -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%089_R-%TT%%CC%08901" />
-                                <!-- Prognose Temperatur -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%090_R-%TT%%CC%09001" />
-                                <!-- Prognose Gefühlte Temperatur -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%091_R-%TT%%CC%09101" />
-                                <!-- Prognose Luftfeuchtigkeit -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%092_R-%TT%%CC%09201" />
-                                <!-- Prognose Luftdruck -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%093_R-%TT%%CC%09301" />
-                                <!-- Prognose Wind -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%094_R-%TT%%CC%09401" />
-                                <!-- Prognose Windböen -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%095_R-%TT%%CC%09501" />
-                                <!-- Prognose Wind Richtung -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%096_R-%TT%%CC%09601" />
-                                <!-- Prognose Regen -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%097_R-%TT%%CC%09701" />
-                                <!-- Prognose Schnee -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%098_R-%TT%%CC%09801" />
-                                <!-- Prognose Heute Niederschlagswahrscheinlichkeit -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%099_R-%TT%%CC%09901" />
-                                <!-- Prognose UV-Index -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%100_R-%TT%%CC%10001" />
-                                <!-- Prognose Wolken -->
-                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%101_R-%TT%%CC%10101" />
-                            </ParameterBlock>
-                          </when>
-                        </choose>
+                        <!-- Temperatur / Gefühlte Temperatur -->
+                        <!-- Temperaturtype -->
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" />
+                        <!-- Temperatur Einheit -->
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" />
                       </when>
+                      
                     </choose>
+                    
                   </ParameterBlock>
                 </when>
               </choose>
