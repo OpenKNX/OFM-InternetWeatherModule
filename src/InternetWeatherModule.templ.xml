@@ -16,11 +16,11 @@
                 <!-- Provider -->
                 <Parameter Id="%AID%_UP-%TT%%CC%001" Name="CH%C%Provider"  ParameterType="%AID%_PT-WeatherChannelProvider" Offset="0" BitOffset="0" Text="Wetterdienst" Value="2" /> 
                 <!-- Ort -->
-                <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%Location"  ParameterType="%AID%_PT-WeatherChannelLocation" Offset="0" BitOffset="4" Text="Wetterdienst" Value="2" /> 
-                <!-- Vorhersage Type -->
+                <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%Location"  ParameterType="%AID%_PT-WeatherChannelLocation" Offset="0" BitOffset="4" Text="Ort" Value="0" /> 
+                <!-- Vorhersagezeit -->
                 <Parameter Id="%AID%_UP-%TT%%CC%003" Name="CH%C%Forecast"  ParameterType="%AID%_PT-WeatherChannelForecastType" Offset="1" BitOffset="0" Text="Vorhersagezeit" Value="0" />              
-                <!-- Type -->
-                <Parameter Id="%AID%_UP-%TT%%CC%004" Name="CH%C%Measurement"  ParameterType="%AID%_PT-WeatherChannelMeasurement" Offset="2" BitOffset="0" Text="Aktuelles Wetter" Value="1" />                
+                <!-- Messwert -->
+                <Parameter Id="%AID%_UP-%TT%%CC%004" Name="CH%C%Measurement"  ParameterType="%AID%_PT-WeatherChannelMeasurement" Offset="2" BitOffset="0" Text="Messwert" Value="1" />                
               </Union>     
 
               <!-- Temperatur -->
@@ -29,7 +29,7 @@
                 <!-- Temperaturtype -->    
                 <Parameter Id="%AID%_UP-%TT%%CC%101" Name="CH%C%TempTime"  ParameterType="%AID%_PT-WeatherChannelTempTime" Offset="0" BitOffset="0" Text="Type" Value="1" />
                 <!-- Temperatur Einheit -->    
-                <Parameter Id="%AID%_UP-%TT%%CC%102" Name="CH%C%TempUnit"  ParameterType="%AID%_PT-WeatherChannelTempUnit" Offset="0" BitOffset="4" Text="Einheit" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%102" Name="CH%C%TempUnit"  ParameterType="%AID%_PT-WeatherChannelTempUnit" Offset="0" BitOffset="4" Text="Einheit" Value="0" />
                 <!-- 3 bits free -->
               </Union>   
                         
@@ -42,17 +42,18 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_UP-%TT%%CC%001" />
               <!-- Ort -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_UP-%TT%%CC%002" />
-              <!-- Vorhersage Type -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_UP-%TT%%CC%003" />
-              <!-- Type -->
+              <!-- Messwert -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_UP-%TT%%CC%004" />
-
-              <!-- Temperatur -->
-              <!-- Temperaturtype -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" RefId="%AID%_UP-%TT%%CC%101" />
               <!-- Temperatur Einheit -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" RefId="%AID%_UP-%TT%%CC%102" />
 
+              <!-- Vorhersagezeit -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_UP-%TT%%CC%003" />
+           
+              <!-- Temperatur -->
+              <!-- Temperaturtype -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" RefId="%AID%_UP-%TT%%CC%101" />
+         
 
             </ParameterRefs>
             <ComObjectTable>
