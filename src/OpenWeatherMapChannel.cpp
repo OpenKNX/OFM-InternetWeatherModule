@@ -63,49 +63,49 @@ int16_t OpenWeatherMapChannel::fillWeather(CurrentWheatherData& currentWeather, 
 
 void OpenWeatherMapChannel::fillForecast(JsonObject& json, CurrentWheatherData& wheater)
 {
-    wheater.temperature = json["temp"];                  // 22.34
-    wheater.temperatureFeelsLike = json["feels_like"];   // 21.95
-    wheater.humidity = json["humidity"];                 // 69
-    wheater.pressure = json["pressure"];                 // 1006
-    wheater.windSpeed = 3.6 * (float)json["wind_speed"]; // 69
-    wheater.windGust = 3.6 * (float)json["wind_gust"];   // 69
-    wheater.windDirection = json["wind_deg"];            // 70
+    wheater.temperature_C = json["temp"];                  // 22.34
+    wheater.temperatureFeelsLike_C = json["feels_like"];   // 21.95
+    wheater.humidity_percent = json["humidity"];                 // 69
+    wheater.pressure_hPa = json["pressure"];                 // 1006
+    wheater.windSpeed_Km_h = 3.6 * (float)json["wind_speed"]; // 69
+    wheater.windGust_Km_h = 3.6 * (float)json["wind_gust"];   // 69
+    wheater.windDirection_deg = json["wind_deg"];            // 70
     JsonObject rainObject = json["rain"];
-    wheater.rain = rainObject ? (float) rainObject["1h"] : (float)0; // 2.5
+    wheater.rain_mm = rainObject ? (float) rainObject["1h"] : (float)0; // 2.5
     JsonObject snowObject = json["snow"];
     wheater.snow_mm = snowObject ? (float) snowObject["1h"] : (float)0; // 2.5
-    wheater.uvi = json["uvi"];                                 // 6.29
-    wheater.clouds = json["clouds"];                           // 40
+    wheater.uvi_unitOne = json["uvi"];                                 // 6.29
+    wheater.cloudsCover_percent = json["clouds"];                           // 40
 }
 
 void OpenWeatherMapChannel::fillForecast(JsonObject& json, ForecastHourWheatherData& wheater)
 {
     fillForecast(json, (CurrentWheatherData&) wheater);
-    wheater.probabilityOfPrecipitation = round(100. * (float) json["pop"]);    // 0.70
+    wheater.probabilityOfPrecipitation_percent = round(100. * (float) json["pop"]);    // 0.70
 }
 
 void OpenWeatherMapChannel::fillForecast(JsonObject& json, ForecastDayWheatherData& wheater)
 {
     JsonObject tempObject = json["temp"];
-    wheater.temperatureDay = tempObject["day"];     // 21.95
-    wheater.temperatureNight = tempObject["night"]; // 21.95
-    wheater.temperatureEvening = tempObject["eve"]; // 21.95
-    wheater.temperatureMorning = tempObject["morn"]; // 21.95
-    wheater.temperatureMin = tempObject["min"];      // 21.95
-    wheater.temperatureMax = tempObject["max"];      // 21.95
+    wheater.temperatureDay_C = tempObject["day"];     // 21.95
+    wheater.temperatureNight_C = tempObject["night"]; // 21.95
+    wheater.temperatureEvening_C = tempObject["eve"]; // 21.95
+    wheater.temperatureMorning_C = tempObject["morn"]; // 21.95
+    wheater.temperatureMin_C = tempObject["min"];      // 21.95
+    wheater.temperatureMax_C = tempObject["max"];      // 21.95
     tempObject = json["feels_like"];
-    wheater.temperatureFeelsLikeDay = tempObject["day"];     // 21.95
-    wheater.temperatureFeelsLikeNight = tempObject["night"]; // 21.95
-    wheater.temperatureFeelsLikeEvening = tempObject["eve"]; // 21.95
-    wheater.temperatureFeelsLikeMorning = tempObject["morn"]; // 21.95
-    wheater.humidity = json["humidity"];                 // 69
-    wheater.pressure = json["pressure"];                 // 1006
-    wheater.windSpeed = 3.6 * (float)json["wind_speed"]; // 69
-    wheater.windGust = 3.6 * (float)json["wind_gust"];   // 69
-    wheater.windDirection = json["wind_deg"];            // 70
-    wheater.rain = json["rain"];                         // 2.5
+    wheater.temperatureFeelsLikeDay_C = tempObject["day"];     // 21.95
+    wheater.temperatureFeelsLikeNight_C = tempObject["night"]; // 21.95
+    wheater.temperatureFeelsLikeEvening_C = tempObject["eve"]; // 21.95
+    wheater.temperatureFeelsLikeMorning_C = tempObject["morn"]; // 21.95
+    wheater.humidity_percent = json["humidity"];                 // 69
+    wheater.pressure_hPa = json["pressure"];                 // 1006
+    wheater.windSpeed_Km_h = 3.6 * (float)json["wind_speed"]; // 69
+    wheater.windGust_Km_h = 3.6 * (float)json["wind_gust"];   // 69
+    wheater.windDirection_deg = json["wind_deg"];            // 70
+    wheater.rain_mm = json["rain"];                         // 2.5
     wheater.snow_mm = json["snow"];                         // 2.5
-    wheater.probabilityOfPrecipitation = round(100. * (float) json["pop"]);    // 0.70
-    wheater.uvi = json["uvi"];                           // 6.29
-    wheater.clouds = json["clouds"];                     // 40
+    wheater.probabilityOfPrecipitation_percent = round(100. * (float) json["pop"]);    // 0.70
+    wheater.uvi_unitOne = json["uvi"];                           // 6.29
+    wheater.cloudsCover_percent = json["clouds"];                     // 40
 }

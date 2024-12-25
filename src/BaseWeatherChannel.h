@@ -23,60 +23,60 @@
 
 struct CurrentWheatherData
 {
-    float temperature = 0;
-    float temperatureFeelsLike = 0;
-    float humidity = 0;
-    uint16_t pressure = 0;
-    float windSpeed = 0;
-    float windGust = 0;
-    uint16_t windDirection = 0;
-    float rain = 0;
+    float temperature_C = 0;
+    float temperatureFeelsLike_C = 0;
+    float humidity_percent = 0;
+    uint16_t pressure_hPa = 0;
+    float windSpeed_Km_h = 0;
+    float windGust_Km_h = 0;
+    uint16_t windDirection_deg = 0;
+    float rain_mm = 0;
     float snow_mm = 0;
-    float uvi = 0;
-    uint8_t clouds = 0;
+    float uvi_unitOne = 0;
+    uint8_t cloudsCover_percent = 0;
 };
 
 struct ForecastHourWheatherData
 {
-    float temperature = 0;
-    float temperatureFeelsLike = 0;
-    float humidity = 0;
-    uint16_t pressure = 0;
-    float windSpeed = 0;
-    float windGust = 0;
-    uint16_t windDirection = 0;
-    uint8_t probabilityOfPrecipitation = 0;
-    float rain = 0;
+    float temperature_C = 0;
+    float temperatureFeelsLike_C = 0;
+    float humidity_percent = 0;
+    uint16_t pressure_hPa = 0;
+    float windSpeed_Km_h = 0;
+    float windGust_Km_h = 0;
+    uint16_t windDirection_deg = 0;
+    uint8_t probabilityOfPrecipitation_percent = 0;
+    float rain_mm = 0;
     float snow_mm = 0;
-    float uvi = 0;
-    uint8_t clouds = 0;
+    float uvi_unitOne = 0;
+    uint8_t cloudsCover_percent = 0;
 };
 
 
 struct ForecastDayWheatherData
 {
-    float temperatureMin = 0;
-    float temperatureMax = 0;
-    float temperatureMorning = 0;
-    float temperatureDay = 0;
-    float temperatureEvening = 0;
-    float temperatureNight = 0;
+    float temperatureMin_C = 0;
+    float temperatureMax_C = 0;
+    float temperatureMorning_C = 0;
+    float temperatureDay_C = 0;
+    float temperatureEvening_C = 0;
+    float temperatureNight_C = 0;
 
-    float temperatureFeelsLikeMorning = 0;
-    float temperatureFeelsLikeDay = 0;
-    float temperatureFeelsLikeEvening = 0;
-    float temperatureFeelsLikeNight = 0;
+    float temperatureFeelsLikeMorning_C = 0;
+    float temperatureFeelsLikeDay_C = 0;
+    float temperatureFeelsLikeEvening_C = 0;
+    float temperatureFeelsLikeNight_C = 0;
 
-    float humidity = 0;
-    uint16_t pressure = 0;
-    float windSpeed = 0;
-    float windGust = 0;
-    uint16_t windDirection = 0;
-    uint8_t probabilityOfPrecipitation = 0;
-    float rain = 0;
+    float humidity_percent = 0;
+    uint16_t pressure_hPa = 0;
+    float windSpeed_Km_h = 0;
+    float windGust_Km_h = 0;
+    uint16_t windDirection_deg = 0;
+    uint8_t probabilityOfPrecipitation_percent = 0;
+    float rain_mm = 0;
     float snow_mm = 0;
-    float uvi = 0;
-    uint8_t clouds = 0;
+    float uvi_unitOne = 0;
+    uint8_t cloudsCover_percent = 0;
 };
 
 struct ForecastDayWheatherDataWithDescription : ForecastDayWheatherData
