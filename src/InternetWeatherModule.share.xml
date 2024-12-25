@@ -148,7 +148,7 @@
               				<Parameter Id="%AID%_P-%TT%00009" Name="Location1Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="Berlin" />
         
 							<!-- Weather location 1 -->
-							<Union SizeInBit="32">
+							<Union SizeInBit="64">
 								<Memory CodeSegment="%MID%" Offset="107" BitOffset="0" />
 								<Parameter Id="%AID%_UP-%TT%00010" Name="Location1Latitude"  ParameterType="%AID%_PT-Latitude"  Offset="0" BitOffset="0" Text="Breitengrad" Value="48.2083" />
 								<Parameter Id="%AID%_UP-%TT%00011" Name="Location1Longitude" ParameterType="%AID%_PT-Longitude" Offset="4" BitOffset="0" Text="Längengrad"  Value="16.3731" />
@@ -158,7 +158,7 @@
               				<Parameter Id="%AID%_P-%TT%00012" Name="Location2Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="Wien" />
         
 							<!-- Weather location 2 -->
-							<Union SizeInBit="32">
+							<Union SizeInBit="64">
 								<Memory CodeSegment="%MID%" Offset="115" BitOffset="0" />
 								<Parameter Id="%AID%_UP-%TT%00013" Name="Location2Latitude"  ParameterType="%AID%_PT-Latitude"  Offset="0" BitOffset="0" Text="Breitengrad" Value="48.2083" />
 								<Parameter Id="%AID%_UP-%TT%00014" Name="Location2Longitude" ParameterType="%AID%_PT-Longitude" Offset="4" BitOffset="0" Text="Längengrad"  Value="16.3731" />
