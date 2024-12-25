@@ -54,20 +54,17 @@
 							<ParameterType Id="%AID%_PT-WeatherChannelMeasurement" Name="WeatherChannelMeasurement">
 								<TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
 									<Enumeration Text="Temperatur"                      Value="1" Id="%ENID%" />
-									<Enumeration Text="Gefühlte Temperatur"             Value="2" Id="%ENID%" />
-									<Enumeration Text="Luftfeuchtigkeit"                Value="3" Id="%ENID%" />
-									<Enumeration Text="Luftdruck"                       Value="4" Id="%ENID%" />
+									<Enumeration Text="Luftfeuchtigkeit"                Value="2" Id="%ENID%" />
+									<Enumeration Text="Luftdruck"                       Value="3" Id="%ENID%" />
+									<Enumeration Text="Taupunkt"                        Value="4" Id="%ENID%" />
 									<Enumeration Text="Wind"                            Value="5" Id="%ENID%" />
-									<Enumeration Text="Windböen"                        Value="6" Id="%ENID%" />
-									<Enumeration Text="Windrichtung"                    Value="7" Id="%ENID%" />
-									<Enumeration Text="Regen"                           Value="8" Id="%ENID%" />
-									<Enumeration Text="Schnee"                          Value="9" Id="%ENID%" />
-									<Enumeration Text="UV-Index"                        Value="10" Id="%ENID%" />
-									<Enumeration Text="Niederschlagswahrscheinlichkeit" Value="11" Id="%ENID%" />
-									<Enumeration Text="Taupunkt"                        Value="12" Id="%ENID%" />
-									<Enumeration Text="Wolken"                          Value="13" Id="%ENID%" />
-									<Enumeration Text="Sichtweite"                      Value="14" Id="%ENID%" />
-									<Enumeration Text="Beschreibung"                    Value="15" Id="%ENID%" />
+									<Enumeration Text="Regen"                           Value="6" Id="%ENID%" />
+									<Enumeration Text="Schnee"                          Value="7" Id="%ENID%" />
+									<Enumeration Text="Niederschlagswahrscheinlichkeit" Value="8" Id="%ENID%" />
+									<Enumeration Text="UV-Index"                        Value="9" Id="%ENID%" />
+									<Enumeration Text="Wolken"                          Value="10" Id="%ENID%" />
+									<Enumeration Text="Sichtweite"                      Value="11" Id="%ENID%" />
+									<Enumeration Text="Beschreibung"                    Value="12" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-WeatherChannelForecastType" Name="WeatherChannelForecastType">
@@ -90,6 +87,12 @@
 									<Enumeration Text="Nacht"   Value="5" Id="%ENID%" />
 									</TypeRestriction>
 							</ParameterType>
+							<ParameterType Id="%AID%_PT-WeatherChannelTempFeeling" Name="WeatherChannelTempFeeling">
+								<TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
+									<Enumeration Text="Normal" Value="0" Id="%ENID%" />
+									<Enumeration Text="Gefühlt" Value="1" Id="%ENID%" />	
+								</TypeRestriction>
+							</ParameterType>
 							<ParameterType Id="%AID%_PT-WeatherChannelTempUnit" Name="WeatherChannelTempUnit">
 								<TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
 									<Enumeration Text="°C" Value="0" Id="%ENID%" />
@@ -100,6 +103,13 @@
 								<TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
 									<Enumeration Text="m/s" Value="0" Id="%ENID%" />
 									<Enumeration Text="km/h" Value="1" Id="%ENID%" />	
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-WeatherChannelWindType" Name="WeatherChannelWindType">
+								<TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
+									<Enumeration Text="Wind" Value="0" Id="%ENID%" />
+									<Enumeration Text="Windböen" Value="1" Id="%ENID%" />	
+									<Enumeration Text="Windrichtung" Value="2" Id="%ENID%" />	
 								</TypeRestriction>
 							</ParameterType>
 						
