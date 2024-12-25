@@ -35,15 +35,23 @@
                 <!-- 2 bits free -->
               </Union>   
 
-                <!-- Wind -->
+              <!-- Wind -->
               <Union SizeInBit="8">
                 <Memory CodeSegment="%MID%" Offset="3" BitOffset="0" />
                 <!-- Wind Type -->    
                 <Parameter Id="%AID%_UP-%TT%%CC%201" Name="CH%C%WindType"  ParameterType="%AID%_PT-WeatherChannelWindType" Offset="0" BitOffset="0" Text="Einheit" Value="0" />
                 <!-- Wind Einheit -->    
                 <Parameter Id="%AID%_UP-%TT%%CC%202" Name="CH%C%WindUnit"  ParameterType="%AID%_PT-WeatherChannelKoSpeedUnit" Offset="0" BitOffset="2" Text="Type" Value="1" />
-                <!-- 6 bits free -->
+                <!-- 5 bits free -->
               </Union>   
+
+              <!-- Niederschlag -->
+              <Union SizeInBit="8">
+                <Memory CodeSegment="%MID%" Offset="3" BitOffset="0" />
+                <!-- Niederschlag Type -->    
+                <Parameter Id="%AID%_UP-%TT%%CC%301" Name="CH%C%PrecipitationType"  ParameterType="%AID%_PT-PrecipitationType" Offset="0" BitOffset="0" Text="Art" Value="0" />
+                 <!-- 6 bits free -->
+              </Union>  
                         
             </Parameters>
             <ParameterRefs>
@@ -74,6 +82,10 @@
               <!-- Wind Einheit -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%202_R-%TT%%CC%20201" RefId="%AID%_UP-%TT%%CC%202" />  
 
+              <!-- Niederschlag -->
+              <!-- Niederschlag Type -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" RefId="%AID%_UP-%TT%%CC%301" />
+
             </ParameterRefs>
             <ComObjectTable>
               <!-- Messwert -->
@@ -103,7 +115,8 @@
               <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00010" RefId="%AID%_O-%TT%%CC%000" ObjectSize="1 Byte" DatapointType="DPST-5-1"   Text="%C%" FunctionText="{{0:-}} Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
               <!-- Sichtweite -->
               <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00011" RefId="%AID%_O-%TT%%CC%000" ObjectSize="2 Bytes" DatapointType="DPST-9-32" Text="%C%" FunctionText="{{0:-}} Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-            
+              <!-- Beschreibung -->
+              <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00012" RefId="%AID%_O-%TT%%CC%000" ObjectSize="14 Bytes" DatapointType="DPST-16-1" Text="%C%" FunctionText="{{0:-}} Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />   
           
             </ComObjectRefs>
           </Static>
@@ -146,6 +159,29 @@
                           </when>
                         </choose>
                       </when>
+                      <when test="2">
+                        <!-- Luftfeuchtigkeit -->
+                        <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00003" />
+                      </when>
+                      <when test="3">
+                        <!-- Luftdruck -->
+                        <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00004" />
+                      </when>
+                      <when test="4">
+                        <!-- Taupunkt -->
+                        <!-- Temperatur Einheit -->
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%103_R-%TT%%CC%10301" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%103_R-%TT%%CC%10301">
+                          <when test="0">
+                            <!-- Temperatur in °C -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
+                          </when>
+                          <when test="1">
+                            <!-- Temperatur in °F -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00002" />
+                          </when>
+                        </choose>
+                      </when>
                       <when test="5">
                         <!-- Wind -->
                         <!-- Wind Type -->
@@ -163,7 +199,42 @@
                           </when>
                         </choose>
                       </when>
-                      
+                      <when test="6">
+                        <!-- Niederschlag -->
+                        <!-- Niederschlag Type -->
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101">
+                          <when test="0">
+                            <!-- Regen -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00007" />
+                          </when>
+                          <when test="1">
+                            <!-- Schnee -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00008" />
+                          </when>
+                           <when test="2">
+                            <!-- Wahrscheinlichkeit -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00010" />
+                          </when>
+                        </choose>
+                      </when>
+                      <when test="7">
+                        <!-- UV Index -->
+                        <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00009" />
+                      </when>
+                      <when test="8">
+                        <!-- Wolken -->
+                        <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00010" />
+                      </when>
+                      <when test="9">
+                        <!-- Sichtweite -->
+                        <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00011" />
+                      </when>
+                      <when test="10">
+                        <!-- Beschreibung -->
+                        <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00012" />
+                      </when>
+                       
                     </choose>
                     
                   </ParameterBlock>
