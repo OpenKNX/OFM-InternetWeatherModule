@@ -165,7 +165,7 @@
 								<!-- 1 byte empty after string -                                                                                   Offset="1"                                                         -->
 								<Parameter Id="%AID%_UP-%TT%00004" Name="TextPrefixDayNext"     ParameterType="%AID%_PT-WeatherConditionDayPrefix" Offset="2"  BitOffset="0" Text="Nächster Tag"  Value=">"            />
 								<!-- 1 byte empty after string -                                                                                   Offset="3"                                                         -->
-								<Parameter Id="%AID%_UP-%TT%00005" Name="TextSun"               ParameterType="%AID%_PT-WeatherCondition"          Offset="4"  BitOffset="0" Text="Sonne"         Value="Sonne"        />
+								<Parameter Id="%AID%_UP-%TT%00005" Name="TextSun"               ParameterType="%AID%_PT-WeatherCondition"          Offset="4"  BitOffset="0" Text="Wolkenlos"     Value="Wolkenlos"    />
 								<!-- 1 byte empty after string -                                                                                   Offset="17"                                                        -->
 								<!-- 1 byte empty after string -                                                                                   Offset="18"                                                        -->
 								<Parameter Id="%AID%_UP-%TT%00006" Name="TextClouds"            ParameterType="%AID%_PT-WeatherCondition"          Offset="19" BitOffset="0" Text="Wolken"        Value="Wolken XXX%"  />
