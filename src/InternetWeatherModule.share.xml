@@ -54,26 +54,47 @@
 							<ParameterType Id="%AID%_PT-WeatherChannelCategory" Name="WeatherChannelCategory">
 								<TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
 									<Enumeration Value="1" Id="%ENID%" Text="Temperatur"           />
-									<Enumeration Value="2" Id="%ENID%" Text="Luft"                 />
-									<Enumeration Value="3" Id="%ENID%" Text="Wind"                 />
-									<Enumeration Value="4" Id="%ENID%" Text="Niederschlag"         />
-									<Enumeration Value="5" Id="%ENID%" Text="Himmel"               />
-									<Enumeration Value="6" Id="%ENID%" Text="Beschreibung"         />
-									<Enumeration Value="7" Id="%ENID%" Text="Dienst Status"        />
+									<Enumeration Value="2" Id="%ENID%" Text="Temperatur Gefühlt"           />
+									<Enumeration Value="3" Id="%ENID%" Text="Luftdruck" />
+									<Enumeration Value="4" Id="%ENID%" Text="Luftfeuchtigkeit" />	
+									<Enumeration Value="5" Id="%ENID%" Text="Taupunkt" />
+									<Enumeration Value="6" Id="%ENID%" Text="Wind" />
+									<Enumeration Value="7" Id="%ENID%" Text="Windböen" />	
+									<Enumeration Value="8" Id="%ENID%" Text="Windrichtung" />	
+									<Enumeration Value="9" Id="%ENID%" Text="Regen" />
+									<Enumeration Value="10" Id="%ENID%" Text="Schnee" />	
+									<Enumeration Value="11" Id="%ENID%" Text="Niederschhlag Wahrscheinlichkeit" />	
+									<Enumeration Value="12" Id="%ENID%" Text="Wolken"       />
+									<Enumeration Value="13" Id="%ENID%" Text="Sichtweite"   />
+									<Enumeration Value="14" Id="%ENID%" Text="UV Index" />
+									<Enumeration Value="15" Id="%ENID%" Text="Beschreibung"         />
+									<Enumeration Value="16" Id="%ENID%" Text="Fehler"        />
+									<Enumeration Value="17" Id="%ENID%" Text="HTTP Status"        />
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-WeatherChannelForecastType" Name="WeatherChannelForecastType">
+							<ParameterType Id="%AID%_PT-WeatherChannelForecastTimeType" Name="WeatherChannelForecastTimeType">
 								<TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
 									<Enumeration Value="0" Id="%ENID%" Text="Aktuell" />
-									<Enumeration Value="1" Id="%ENID%" Text="Heute" />
-									<Enumeration Value="2" Id="%ENID%" Text="Morgen" />	
-									<Enumeration Value="3" Id="%ENID%" Text="Heute/Morgen Umschaltbar" />	
-									<Enumeration Value="4" Id="%ENID%" Text="Aktuelle Stunde" />	
-									<Enumeration Value="5" Id="%ENID%" Text="Nächste Stunde" />	
+									<Enumeration Value="1" Id="%ENID%" Text="Tageswerte" />
+									<Enumeration Value="2" Id="%ENID%" Text="Stundenwerte" />	
 								</TypeRestriction>
 							</ParameterType>
+							<ParameterType Id="%AID%_PT-WeatherChannelForecastTypeHour" Name="WeatherChannelForecastTypeHour">
+								<TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+									<Enumeration Value="0" Id="%ENID%" Text="Aktuelle Stunde" />
+									<Enumeration Value="1" Id="%ENID%" Text="Nächste Stunde" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-WeatherChannelForecastTypeDay" Name="WeatherChannelForecastTypeDay">
+								<TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+									<Enumeration Value="0" Id="%ENID%" Text="Heute" />
+									<Enumeration Value="1" Id="%ENID%" Text="Morgen" />
+									<Enumeration Value="255" Id="%ENID%" Text="Umschaltbar Heute/Morgen" />
+								</TypeRestriction>
+							</ParameterType>
+
 							<ParameterType Id="%AID%_PT-WeatherChannelTempTime" Name="WeatherChannelTempTime">
-								<TypeRestriction Base="Value" SizeInBit="4" UIHint="DropDown">
+								<TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
 									<Enumeration Value="0" Id="%ENID%" Text="Minimum" />
 									<Enumeration Value="1" Id="%ENID%" Text="Maximum" />
 									<Enumeration Value="2" Id="%ENID%" Text="Früh"    />
@@ -82,20 +103,7 @@
 									<Enumeration Value="5" Id="%ENID%" Text="Nacht"   />
 									</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-WeatherChannelTempFeeling" Name="WeatherChannelTempFeeling">
-								<TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
-									<Enumeration Value="0" Id="%ENID%" Text="Normal" />
-									<Enumeration Value="1" Id="%ENID%" Text="Gefühlt" />	
-								</TypeRestriction>
-							</ParameterType>
-
-							<ParameterType Id="%AID%_PT-WeatherChannelAirCondition" Name="WeatherChannelAirCondition">
-								<TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
-									<Enumeration Value="0" Id="%ENID%" Text="Luftdruck" />
-									<Enumeration Value="1" Id="%ENID%" Text="Luftfeuchtigkeit" />	
-									<Enumeration Value="2" Id="%ENID%" Text="Taupunkt" />
-								</TypeRestriction>
-							</ParameterType>
+				
 
 							<ParameterType Id="%AID%_PT-WeatherChannelTempUnit" Name="WeatherChannelTempUnit">
 								<TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
@@ -103,39 +111,13 @@
 									<Enumeration Value="1" Id="%ENID%" Text="°F"  />	
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-WeatherChannelKoSpeedUnit" Name="WeatherChannelKoSpeedUnit">
+							<ParameterType Id="%AID%_PT-WeatherChannelSpeedUnit" Name="WeatherChannelSpeedUnit">
 								<TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
 									<Enumeration Value="0" Id="%ENID%" Text="m/s"  />
 									<Enumeration Value="1" Id="%ENID%" Text="km/h" />	
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-WeatherChannelWindType" Name="WeatherChannelWindType">
-								<TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
-									<Enumeration Value="0" Id="%ENID%" Text="Wind" />
-									<Enumeration Value="1" Id="%ENID%" Text="Windböen" />	
-									<Enumeration Value="2" Id="%ENID%" Text="Windrichtung" />	
-								</TypeRestriction>
-							</ParameterType>
-							<ParameterType Id="%AID%_PT-WeatherChannelPrecipitationType" Name="WeatherChannelPrecipitationType">
-								<TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
-									<Enumeration Value="0" Id="%ENID%" Text="Regen" />
-									<Enumeration Value="1" Id="%ENID%" Text="Schnee" />	
-									<Enumeration Value="2" Id="%ENID%" Text="Wahrscheinlichkeit" />	
-								</TypeRestriction>
-							</ParameterType>
-							<ParameterType Id="%AID%_PT-WeatherChannelSkyConditions" Name="WeatherChannelSkyConditions">
-								<TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
-									<Enumeration Value="0" Id="%ENID%" Text="Wolken"       />
-									<Enumeration Value="1" Id="%ENID%" Text="Sichtweite"   />
-									<Enumeration Value="2" Id="%ENID%" Text="UV Index" />
-								</TypeRestriction>
-							</ParameterType>
-							<ParameterType Id="%AID%_PT-WeatherChannelServiceState" Name="WeatherChannelServiceState">
-								<TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
-									<Enumeration Value="0" Id="%ENID%" Text="Fehler" />
-									<Enumeration Value="1" Id="%ENID%" Text="HTTP Status"   />
-								</TypeRestriction>
-							</ParameterType>
+							
 						
 							
 							
@@ -252,33 +234,33 @@
 								<!-- IW Client Kanalauswahl -->
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
 								<!-- Kanalanzahl -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
+								<ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Zusätzliche Orte" UIHint="Headline" />
 								
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Ort 1:" />
 								<!-- Ort 1 Name-->
-								<ParameterRefRef RefId="%AID%_P-%TT%00009_R-%TT%0000901" IndentLevel="1"/>
+								<ParameterRefRef IndentLevel="2"  RefId="%AID%_P-%TT%00009_R-%TT%0000901" />
 								<!-- Latitude 1 -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00010_R-%TT%0001001" IndentLevel="1"/>
+								<ParameterRefRef IndentLevel="2"  RefId="%AID%_UP-%TT%00010_R-%TT%0001001"/>
 								<!-- Longitude 1 -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00011_R-%TT%0001101" IndentLevel="1"/>
+								<ParameterRefRef IndentLevel="2"  RefId="%AID%_UP-%TT%00011_R-%TT%0001101" />
 						
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Ort 2:" />
 								<!-- Ort 2 -->
-								<ParameterRefRef RefId="%AID%_P-%TT%00012_R-%TT%0001201" IndentLevel="1"/>
+								<ParameterRefRef IndentLevel="2"  RefId="%AID%_P-%TT%00012_R-%TT%0001201" />
 							
 								<!-- Longitude 2 -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00013_R-%TT%0001301" IndentLevel="1" />
+								<ParameterRefRef IndentLevel="2"  RefId="%AID%_UP-%TT%00013_R-%TT%0001301" />
 								<!-- Latitude 2 -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00014_R-%TT%0001401" IndentLevel="1" />
+								<ParameterRefRef IndentLevel="2"  RefId="%AID%_UP-%TT%00014_R-%TT%0001401"  />
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="OpenWeatherMap" UIHint="Headline" />
 								<!-- OpenWeatherMap API Key -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00001_R-%TT%0000101" IndentLevel="1" HelpContext="IW-OpenWeatherMapAPIKey" />
+								<ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%00001_R-%TT%0000101" HelpContext="IW-OpenWeatherMapAPIKey" />
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Open-Meteo" UIHint="Headline" />
 								<!-- Open-Meteo API Key not supported yet -->
@@ -287,25 +269,25 @@
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Datenaktualisierung" UIHint="Headline" />
 								<!-- WeatherRefreshInterval -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00002_R-%TT%0000201" IndentLevel="1" HelpContext="IW-WeatherRefreshInterval" />
+								<ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%00002_R-%TT%0000201" HelpContext="IW-WeatherRefreshInterval" />
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Wetterbeschreibung als Text" UIHint="Headline" />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Präfix-Symbol für Zeitraum:" />
 								<!-- WeatherConditionCurrentDayPrefix -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00003_R-%TT%0000301" HelpContext="IW-WeatherConditionCurrentDayPrefix" IndentLevel="1" />
+								<ParameterRefRef IndentLevel="2"  RefId="%AID%_UP-%TT%00003_R-%TT%0000301" HelpContext="IW-WeatherConditionCurrentDayPrefix" />
 								<!-- WeatherConditionNextDayPrefix -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00004_R-%TT%0000401" HelpContext="IW-WeatherConditionNextDayPrefix"    IndentLevel="1" />
+								<ParameterRefRef IndentLevel="2"  RefId="%AID%_UP-%TT%00004_R-%TT%0000401" HelpContext="IW-WeatherConditionNextDayPrefix"  />
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Text-Vorlagen für das Wetter:" />
 								<!-- WeatherConditionSun -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00005_R-%TT%0000501" HelpContext="IW-WeatherConditionSun"              IndentLevel="1" />
+								<ParameterRefRef IndentLevel="2"  RefId="%AID%_UP-%TT%00005_R-%TT%0000501" HelpContext="IW-WeatherConditionSun"     />
 								<!-- WeatherConditionClouds -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00006_R-%TT%0000601" HelpContext="IW-WeatherConditionClouds"           IndentLevel="1" />
+								<ParameterRefRef IndentLevel="2"  RefId="%AID%_UP-%TT%00006_R-%TT%0000601" HelpContext="IW-WeatherConditionClouds"  />
 								<!-- WeatherConditionRain -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00007_R-%TT%0000701" HelpContext="IW-WeatherConditionRain"             IndentLevel="1" />
+								<ParameterRefRef IndentLevel="2"  RefId="%AID%_UP-%TT%00007_R-%TT%0000701" HelpContext="IW-WeatherConditionRain"    />
 								<!-- WeatherConditionSnow -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00008_R-%TT%0000801" HelpContext="IW-WeatherConditionSnow"             IndentLevel="1" />
+								<ParameterRefRef IndentLevel="2"  RefId="%AID%_UP-%TT%00008_R-%TT%0000801" HelpContext="IW-WeatherConditionSnow"    />
 
 								<!-- Refresh Weather Data -->
 								<ComObjectRefRef RefId="%AID%_O-%TT%00001_R-%TT%0000101" />
@@ -317,7 +299,7 @@
 								<when test="&lt;%N%">
 									<ParameterBlock Id="%AID%_PB-nnn" Name="IWAdditionalChannels" Text="(mehr)" Icon="dots-horizontal">										<!-- HelpContext="Empty" -->
 										<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
-										<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
+										<ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
 										<!-- HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" /-->
 									</ParameterBlock>
 								</when>

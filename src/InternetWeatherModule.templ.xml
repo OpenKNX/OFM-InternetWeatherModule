@@ -11,72 +11,45 @@
               <!-- Kanal Name -->
               <Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
               <!-- Weather outputs -->
-              <Union SizeInBit="24">
+              <Union SizeInBit="40">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
                 <!-- Provider -->
-                <Parameter Id="%AID%_UP-%TT%%CC%001" Name="CH%C%Provider" ParameterType="%AID%_PT-WeatherChannelProvider" Offset="0" BitOffset="0" Text="Wetterdienst" Value="2" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%001" Name="CH%C%Provider" ParameterType="%AID%_PT-WeatherChannelProvider" Text="Wetterdienst" Value="0" />
                 <!-- Ort -->
-                <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%Location" ParameterType="%AID%_PT-WeatherChannelLocation" Offset="0" BitOffset="4" Text="Ort" Value="0" />
-                <!-- Vorhersagezeit -->
-                <Parameter Id="%AID%_UP-%TT%%CC%003" Name="CH%C%Forecast" ParameterType="%AID%_PT-WeatherChannelForecastType" Offset="1" BitOffset="0" Text="Vorhersagezeit" Value="0" />
+                <Parameter Offset="0" BitOffset="4" Id="%AID%_UP-%TT%%CC%002" Name="CH%C%Location" ParameterType="%AID%_PT-WeatherChannelLocation" Text="Ort" Value="0" />
                 <!-- Kategorie -->
-                <Parameter Id="%AID%_UP-%TT%%CC%004" Name="CH%C%Category" ParameterType="%AID%_PT-WeatherChannelCategory" Offset="2" BitOffset="0" Text="Kategorie" Value="1" />
+                <Parameter Offset="1" BitOffset="0" Id="%AID%_UP-%TT%%CC%003" Name="CH%C%Category" ParameterType="%AID%_PT-WeatherChannelCategory" Text="Parameter" Value="1" />
+                <!-- Vorhersagezeit -->
+                <Parameter Offset="2" BitOffset="0" Id="%AID%_UP-%TT%%CC%004" Name="CH%C%ForecastTime" ParameterType="%AID%_PT-WeatherChannelForecastTimeType" Text="Zeitspanne" Value="0" />
+                
+                <!-- Vorhersagezeitpunkt Stunde -->
+                <Parameter Offset="3" BitOffset="0" Id="%AID%_UP-%TT%%CC%005" Name="CH%C%ForecastHour" ParameterType="%AID%_PT-WeatherChannelForecastTypeHour" Text="Zeit" Value="0" />
+                <!-- Vorhersagezeitpunkt Tag -->
+                <Parameter Offset="3" BitOffset="0" Id="%AID%_UP-%TT%%CC%006" Name="CH%C%ForecastDay" ParameterType="%AID%_PT-WeatherChannelForecastTypeDay" Text="Zeit" Value="0" />
+                <!-- Kanal Deaktiviert zu Testzwecke -->
+                <Parameter Offset="4" BitOffset="0" Id="%AID%_UP-%TT%%CC%007" Name="CH%C%Disabled" ParameterType="%AID%_PT-CheckBox" Text="Kanal deaktivieren (zu Testzwecken)" Value="0" />
+                <!-- 7 bits free -->
               </Union>
 
               <!-- Temperatur -->
               <Union SizeInBit="8">
-                <Memory CodeSegment="%MID%" Offset="3" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="5" BitOffset="0" />
                 <!-- Temperatur Prognose Wert -->
-                <Parameter Id="%AID%_UP-%TT%%CC%101" Name="CH%C%TempTime" ParameterType="%AID%_PT-WeatherChannelTempTime" Offset="0" BitOffset="0" Text="Prognose Wert" Value="0" />
-                <!-- Temperatur Gefühlt-->
-                <Parameter Id="%AID%_UP-%TT%%CC%102" Name="CH%C%TempFeeling" ParameterType="%AID%_PT-WeatherChannelTempFeeling" Offset="0" BitOffset="4" Text="Type" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%101" Name="CH%C%TempTime" ParameterType="%AID%_PT-WeatherChannelTempTime" Offset="0" BitOffset="0" Text="Prognose" Value="0" />
                 <!-- Temperatur Einheit -->
-                <Parameter Id="%AID%_UP-%TT%%CC%103" Name="CH%C%TempUnit" ParameterType="%AID%_PT-WeatherChannelTempUnit" Offset="0" BitOffset="5" Text="Einheit" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%102" Name="CH%C%TempUnit" ParameterType="%AID%_PT-WeatherChannelTempUnit" Offset="0" BitOffset="5" Text="Einheit" Value="0" />
                 <!-- 2 bits free -->
-              </Union>
-
-              <!-- Luft -->
-              <Union SizeInBit="8">
-                <Memory CodeSegment="%MID%" Offset="3" BitOffset="0" />
-                <!-- Luft Art -->
-                <Parameter Id="%AID%_UP-%TT%%CC%201" Name="CH%C%AirCondition" ParameterType="%AID%_PT-WeatherChannelAirCondition" Offset="0" BitOffset="0" Text="Wert" Value="0" />
-                <!-- 6 bits free -->
               </Union>
 
               <!-- Wind -->
               <Union SizeInBit="8">
-                <Memory CodeSegment="%MID%" Offset="3" BitOffset="0" />
-                <!-- Wind Bedingungen -->
-                <Parameter Id="%AID%_UP-%TT%%CC%301" Name="CH%C%WindType" ParameterType="%AID%_PT-WeatherChannelWindType" Offset="0" BitOffset="0" Text="Bedingungen" Value="0" />
+                <Memory CodeSegment="%MID%" Offset="5" BitOffset="0" />
                 <!-- Wind Einheit -->
-                <Parameter Id="%AID%_UP-%TT%%CC%302" Name="CH%C%WindUnit" ParameterType="%AID%_PT-WeatherChannelKoSpeedUnit" Offset="0" BitOffset="2" Text="Einheit" Value="1" />
-                <!-- 5 bits free -->
-              </Union>
-
-              <!-- Niederschlag -->
-              <Union SizeInBit="8">
-                <Memory CodeSegment="%MID%" Offset="3" BitOffset="0" />
-                <!-- Niederschlag Type -->
-                <Parameter Id="%AID%_UP-%TT%%CC%401" Name="CH%C%PrecipitationType" ParameterType="%AID%_PT-WeatherChannelPrecipitationType" Offset="0" BitOffset="0" Text="Art" Value="0" />
-                <!-- 6 bits free -->
-              </Union>
-
-              <!-- Himmel -->
-              <Union SizeInBit="8">
-                <Memory CodeSegment="%MID%" Offset="3" BitOffset="0" />
-                <!-- Himmel Type -->
-                <Parameter Id="%AID%_UP-%TT%%CC%501" Name="CH%C%SkyConditions" ParameterType="%AID%_PT-WeatherChannelSkyConditions" Offset="0" BitOffset="0" Text="Art" Value="0" />
-                <!-- 6 bits free -->
-              </Union>
-
-              <!-- Dienst Status  -->
-              <Union SizeInBit="8">
-                <Memory CodeSegment="%MID%" Offset="3" BitOffset="0" />
-                <!-- Status -->
-                <Parameter Id="%AID%_UP-%TT%%CC%701" Name="CH%C%ServiceState" ParameterType="%AID%_PT-WeatherChannelServiceState" Offset="0" BitOffset="0" Text="Status" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%201" Name="CH%C%WindUnit" ParameterType="%AID%_PT-WeatherChannelSpeedUnit" Offset="0" BitOffset="5" Text="Einheit" Value="0" />
                 <!-- 7 bits free -->
               </Union>
 
+       
             </Parameters>
             <ParameterRefs>
               <!-- Kanal Name -->
@@ -86,42 +59,28 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_UP-%TT%%CC%001" />
               <!-- Ort -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_UP-%TT%%CC%002" />
-              <!-- Vorhersagezeit -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_UP-%TT%%CC%003" />
               <!-- Kategorie -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_UP-%TT%%CC%003" />
+              <!-- Vorhersagezeit -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_UP-%TT%%CC%004" />
+              <!-- Vorhersagezeitpunkt Stunde -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_UP-%TT%%CC%005" />
+              <!-- Vorhersagezeitpunkt Tag -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%006_R-%TT%%CC%00601" RefId="%AID%_UP-%TT%%CC%006" />
+              <!-- Kanal Deaktiviert zu Testzwecke -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" RefId="%AID%_UP-%TT%%CC%007" />
 
 
               <!-- Temperatur -->
               <!-- Temperatur Prognose Wert -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" RefId="%AID%_UP-%TT%%CC%101" />
-              <!-- Temperatur Type -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" RefId="%AID%_UP-%TT%%CC%102" />
               <!-- Temperatur Einheit -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%103_R-%TT%%CC%10301" RefId="%AID%_UP-%TT%%CC%103" />
-
-              <!-- Luft -->
-              <!-- Luft Art -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" RefId="%AID%_UP-%TT%%CC%201" />
-
+              <ParameterRef Id="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" RefId="%AID%_UP-%TT%%CC%102" />
+              
 
               <!-- Wind -->
-              <!-- Wind Type -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" RefId="%AID%_UP-%TT%%CC%301" />
               <!-- Wind Einheit -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" RefId="%AID%_UP-%TT%%CC%302" />
-
-              <!-- Niederschlag -->
-              <!-- Niederschlag Type -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%401_R-%TT%%CC%40101" RefId="%AID%_UP-%TT%%CC%401" />
-
-              <!-- Himmel -->
-              <!-- Himmel Type -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%501_R-%TT%%CC%50101" RefId="%AID%_UP-%TT%%CC%501" />
-
-              <!-- Dienst Status -->
-              <!-- Status -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%701_R-%TT%%CC%70101" RefId="%AID%_UP-%TT%%CC%701" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" RefId="%AID%_UP-%TT%%CC%201" />
 
             </ParameterRefs>
             <ComObjectTable>
@@ -168,65 +127,55 @@
               <!-- Anzahl der Kanäle -->
               <choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
                 <when test="&gt;=%C%">
-                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW" Text="Wert %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="map-marker-radius-outline" HelpContext="IW-Service" ShowInComObjectTree="false">
+                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW" Text="%C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="map-marker-radius-outline" HelpContext="IW-Service" ShowInComObjectTree="false">
 
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Prognose" UIHint="Headline" />
                     <!-- Kanal Name -->
-                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="IW-ChannelName" />
+                    <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="IW-ChannelName" />
 
                     <!-- Provider -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" />
-                    <!-- Ort -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" />
-                    <!-- Vorhersage Type -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
-                    <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert" UIHint="Headline" />
-                    <!-- Kategorie -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" />
-                    <choose ParamRefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401">
-                      <when test="1">
-                        <!-- Temperatur -->
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301">
-                          <when test="&gt;0">
-                            <!-- Nicht "Aktuell" -->
-                            <!-- Temperatur Prognose Wert -->
-                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" />
-                          </when>
-                        </choose>
-                        <!-- Temperatur Art -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" />
-                        <!-- Temperatur Einheit -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%103_R-%TT%%CC%10301" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%103_R-%TT%%CC%10301">
-                          <when test="0">
-                            <!-- Temperatur in °C -->
-                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
-                          </when>
+                    <ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" />
+                    <choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+                      <when test="&gt;0">
+                        <!-- Nicht deaktiviert -->
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" />
+                        <!-- Ort -->
+                        <ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" />
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Vorhersagezeit" UIHint="Headline" />
+                        <!-- Vorhersagezeit-->
+                        <ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401">
                           <when test="1">
-                            <!-- Temperatur in °F -->
-                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00002" />
-                          </when>
-                        </choose>
-                      </when>
-                      <when test="2">
-                        <!-- Luft -->
-                        <!-- Luft Art -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101">
-                          <when test="0">
-                            <!-- Luftdruck -->
-                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00004" />
-                          </when>
-                          <when test="1">
-                            <!-- Luftfeuchtigkeit -->
-                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00003" />
+                            <!-- Tagesprognose -->
+                            <!-- Vorhersagezeitpunkt Tag -->
+                            <ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%%CC%006_R-%TT%%CC%00601" />
                           </when>
                           <when test="2">
-                            <!-- Taupunkt -->
+                            <!-- Stundenprognose -->
+                            <!-- Vorhersagezeitpunkt Stunde -->
+                            <ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501" />
+                          </when>
+                        </choose>
+
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert" UIHint="Headline" />
+                        <!-- Kategorie -->
+                        <ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301">
+                          <when test="1 2">
+                            <!-- Temperatur / Temperatur Gefühlt -->
+                            <!-- Vorhersagezeit -->
+                            <choose ParamRefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401">
+                              <when test="&gt;0">
+                                <!-- Nicht "Aktuell" -->
+                                <!-- Temperatur Prognose Wert -->
+                                <ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" />
+                              </when>
+                            </choose>
                             <!-- Temperatur Einheit -->
-                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%103_R-%TT%%CC%10301" />
-                            <choose ParamRefId="%AID%_UP-%TT%%CC%103_R-%TT%%CC%10301">
+                            <ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" />
+                            <choose ParamRefId="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201">
                               <when test="0">
                                 <!-- Temperatur in °C -->
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
@@ -237,18 +186,34 @@
                               </when>
                             </choose>
                           </when>
-                        </choose>
-                      </when>
-                      <when test="3">
-                        <!-- Wind -->
-                        <!-- Wind Type -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101">
-                          <when test="0 1">
-                            <!-- Wind oder Windböen -->
+                          <when test="3">
+                            <!-- Luftdruck -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00004" />
+                          </when>
+                          <when test="4">
+                            <!-- Luftfeuchtigkeit -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00003" />
+                          </when>
+                          <when test="5">
+                            <!-- Taupunkt -->
+                            <!-- Temperatur Einheit -->
+                            <ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" />
+                            <choose ParamRefId="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201">
+                              <when test="0">
+                                <!-- Temperatur in °C -->
+                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
+                              </when>
+                              <when test="1">
+                                <!-- Temperatur in °F -->
+                                <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00002" />
+                              </when>
+                            </choose>
+                          </when>
+                          <when test="6 7">
+                            <!-- Wind / Windböen -->
                             <!-- Wind Einheit -->
-                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" />
-                            <choose ParamRefId="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201">
+                            <ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" />
+                            <choose ParamRefId="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101">
                               <when test="0">
                                 <!-- Wind in m/s -->
                                 <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00005" />
@@ -259,64 +224,43 @@
                               </when>
                             </choose>
                           </when>
-                          <when test="2">
+                          <when test="8">
                             <!-- Windrichtung -->
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00015" />
                           </when>
-                        </choose>
-                      </when>
-                      <when test="4">
-                        <!-- Niederschlag -->
-                        <!-- Niederschlag Type -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%401_R-%TT%%CC%40101" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%401_R-%TT%%CC%40101">
-                          <when test="0">
+                          <when test="9">
                             <!-- Regen -->
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00007" />
                           </when>
-                          <when test="1">
+                          <when test="10">
                             <!-- Schnee -->
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00008" />
                           </when>
-                           <when test="2">
+                          <when test="11">
                             <!-- Niederschlagswahrscheinlichkeit -->
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00010" />
                           </when>
-                        </choose>
-
-                      </when>
-                      <when test="5">
-                        <!-- Himmel -->
-                        <!-- Himmel Type -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%501_R-%TT%%CC%50101" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%501_R-%TT%%CC%50101">
-                          <when test="0">
+                          <when test="12">
                             <!-- Wolken -->
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00010" />
                           </when>
-                          <when test="1">
+                          <when test="13">
                             <!-- Sichtweite -->
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00011" />
                           </when>
-                          <when test="2">
+                          <when test="14">
                             <!-- UV Index -->
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00009" />
                           </when>
-                        </choose>
-                      </when>
-                      <when test="6">
-                        <!-- Beschreibung -->
-                        <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00012" />
-                      </when>
-                      <when test="7">
-                        <!-- Dienst Status -->
-                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%701_R-%TT%%CC%70101" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%701_R-%TT%%CC%70101">
-                          <when test="0">
+                          <when test="15">
+                            <!-- Beschreibung -->
+                            <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00012" />
+                          </when>
+                          <when test="16">
                             <!-- Fehler -->
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00013" />
                           </when>
-                          <when test="1">
+                          <when test="17">
                             <!-- HTTP Status -->
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00014" />
                           </when>
