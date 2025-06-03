@@ -40,10 +40,10 @@ KO's für
 
 ## Hardware Unterstützung
 
-|Prozessor | Status | Anmerkung                  |
-|----------|--------|----------------------------|
-|RP2040    | Beta   |                            |
-|ESP32     | Beta   |                            |
+|Prozessor | Status | Anmerkung                     |
+|----------|--------|-------------------------------|
+|RP2040    | Beta   | Keine Unterstützung für HTTPS |
+|ESP32     | Beta   |                               |
 
 Getestete Hardware:
 - [OpenKNX Reg1-ETH](https://github.com/OpenKNX/OpenKNX/wiki/REG1-Eth)
