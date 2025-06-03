@@ -111,8 +111,8 @@ Siehe https://openweathermap.org/price
 
 ### Open-Meteo
 
-[Open-Meteo](https://open-meteo.com/) ist eine "Open-Source-Wetter-API" und bietet für nicht-kommerzielle Nutzung einen Zugang ohne API-Key.
-Dieser ist auf maximal 10.000 Aufrufe pro Tag beschränkt (Stand 2024-08-11), 
+[Open-Meteo](https://open-meteo.com/) ist eine "Open-Source-Wetter-API" und bietet für nicht-kommerzielle Nutzung einen Zugang ohne API-Key ("Free-API").
+Dieser ist auf maximal 10.000 gewichtete Aufrufe ("API calls") pro Tag beschränkt (Stand 2025-06-01, entspricht mit etwa 3.000 Aktualisierungen in Summe für alle Orte deutlich mehr als zu erwarten);
 Nutzungsbedingungen siehe https://open-meteo.com/en/terms (nur englisch).
 
 
