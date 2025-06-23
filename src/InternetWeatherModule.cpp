@@ -15,11 +15,6 @@ const std::string InternetWeatherModule::name()
 
 void InternetWeatherModule::showInformations()
 {
-#ifdef MODULE_InternetWeatherModule_Version
-    openknx.logger.logWithPrefixAndValues(logPrefix(), "Internet Weather %s", MODULE_InternetWeatherModule_Version);
-#else
-    openknx.logger.logWithPrefix(logPrefix(), "Internet Weather");
-#endif  
 }
 
 const std::string InternetWeatherModule::version()
