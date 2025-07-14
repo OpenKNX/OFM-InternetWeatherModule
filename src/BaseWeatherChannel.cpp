@@ -357,7 +357,7 @@ void BaseWeatherChannel::updateDayForecastKo(ForecastDayWheatherDataWithDescript
     logDebugP("Probability of precipitation: %d %%", (int)fd.probabilityOfPrecipitation_percent);
     setValueCompare(koOffset + IW_KoCHTodayProbabilityOfPrecipitation, fd.probabilityOfPrecipitation_percent, DPT_Scaling);
 
-    updateUviKo((knx.getGroupObject(IW_KoCalcNumber(IW_KoCHTodayUVI))), fd.uvi_unitOne);
+    updateUviKo((knx.getGroupObject(IW_KoCalcNumber(koOffset + IW_KoCHTodayUVI))), fd.uvi_unitOne);
 
     logDebugP("Clouds                      : %d %%", (int)fd.cloudsCover_percent);
     setValueCompare(koOffset + IW_KoCHTodayClouds, fd.cloudsCover_percent, DPT_Scaling);
