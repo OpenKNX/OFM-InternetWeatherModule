@@ -1,4 +1,8 @@
-# (in Vorbereitung) v0.4
+# (2025-07-25) v0.4.1 "Fix UVI Tageswerte"
+
+* Fix #8: UV-Index heute und morgen war fehlerhaft (Im KO für heute wurden der Wert für morgen ausgegeben, das KO für morgen wurde nicht beschrieben)
+
+# (2025-07-14) v0.4
 
 ***Update-Hinweis:*** Falls Open-Meteo als Wetterdienst verwendet wird, 
 muss beim Update von früheren Versionen die Nutzung/Lizenz gewählt werden,
