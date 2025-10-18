@@ -1,6 +1,12 @@
+# (2025-10-18) v0.4.2 "OpenKNX Update"
+
+* Update: Aktualisierung zur Verwendung mit Common 1.5 und Producer 3.11.0
+
+
 # (2025-07-25) v0.4.1 "Fix UVI Tageswerte"
 
 * Fix #8: UV-Index heute und morgen war fehlerhaft (Im KO für heute wurden der Wert für morgen ausgegeben, das KO für morgen wurde nicht beschrieben)
+
 
 # (2025-07-14) v0.4
 
