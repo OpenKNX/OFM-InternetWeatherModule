@@ -38,6 +38,11 @@ KO's für
 - UV-Index
 - Wolken
 
+## Release Notes
+
+- 0.5.0 Feature: Gruppenobjekte umbenannt
+- 0.5.0 Fix: Fehler im Speicherlayout behoben
+
 ## Hardware Unterstützung
 
 |Prozessor | Status | Anmerkung                     |

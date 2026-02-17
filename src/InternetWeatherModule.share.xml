@@ -139,7 +139,7 @@
 						</ParameterRefs>
 						<ComObjectTable>
 							<!-- Refresh Weather Data -->
-							<ComObject Id="%AID%_O-%TT%00001" Name="RefreshWeatherData" Text="Wetterdaten aktualisieren" Number="0" FunctionText="Wetterdaten aktualisieren" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%00001" Name="RefreshWeatherData" Text="Wetterdaten aktualisieren" Number="0" FunctionText="Wetter: Eingang, Auslöser" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 						</ComObjectTable>
 						<ComObjectRefs>
 							<!-- Refresh Weather Data -->
