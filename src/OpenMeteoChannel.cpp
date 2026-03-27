@@ -170,9 +170,16 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWeatherData& currentWeather, Foreca
     },
     */
 
-    // find the index of the following hour
-    const uint32_t curTimestamp = current["time"];
-    JsonArray hourlyTimes = hourly["time"];
+    const uint32_t hour = findFollowingHourIndex(hourly["time"], current["time"]);
+    fillForecast(hourly, hour + 0, hour1Weather);
+    fillForecast(hourly, hour + 1, hour2Weather);
+
+    return httpStatus;
+}
+
+/** find the index of the following hour */
+uint32_t OpenMeteoChannel::findFollowingHourIndex(const JsonArray& hourlyTimes, const uint32_t curTimestamp)
+{
     int hour = 0;
     for (JsonVariant t : hourlyTimes)
     {
@@ -183,11 +190,7 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWeatherData& currentWeather, Foreca
         }
         hour++;
     }
-
-    fillForecast(hourly, hour + 0, hour1Weather);
-    fillForecast(hourly, hour + 1, hour2Weather);
-
-    return httpStatus;
+    return hour;
 }
 
 void OpenMeteoChannel::fillForecast(JsonObject& json, CurrentWeatherData& wheater)
