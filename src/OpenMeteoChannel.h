@@ -6,6 +6,7 @@ class OpenMeteoChannel : public BaseWeatherChannel
   private:
     String createUrlPrefix(const char* urlBase, const char* urlPath);
     int16_t requestToJson(String url, JsonDocument& doc);
+    uint32_t findFollowingHourIndex(const JsonArray& hourlyTimes, const uint32_t curTimestamp);
 
     float avg(JsonArray& arr, int begin, int n);
     void fillForecast(JsonObject& json, JsonObject& jsonHourly, int vi, ForecastDayWheatherData& wheater);
