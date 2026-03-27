@@ -16,10 +16,8 @@ const std::string OpenMeteoChannel::name()
     return "OpenMeteo";
 }
 
-int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, ForecastDayWheatherData& todayWeather, ForecastDayWheatherData& tomorrowWeather, ForecastHourWheatherData& hour1Weather, ForecastHourWheatherData& hour2Weather)
+String OpenMeteoChannel::createUrlPrefix(const char* urlBase, const char* urlPath)
 {
-    // TODO check using csv-result
-
     // <Enumeration Text="Bitte wählen..."                  Value="0" Id="%ENID%" />
     // => will prevent creation of an open-meteo-channel
 
@@ -27,16 +25,19 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     // <Enumeration Text="API Subscription"                 Value="2" Id="%ENID%" />
     // <Enumeration Text="Selbst gehostet"                  Value="3" Id="%ENID%" />
 
-    String url = OpenMeteoUrl;
+    String url = urlBase;
     if (ParamIW_OpenMeteo_UsageLicense == 2 || ParamIW_OpenMeteo_UsageLicense == 3)
     {
         // usage with api-key or self hosted
         url = String(ParamIW_OpenMeteo_ServerURL, 80);
     }
-    url += OpenMeteoPath;
+    url += urlPath;
 
     // TODO set timezone, when implemented in common
     url += "?timezone=Europe%2FBerlin";
+
+    // allow easy finding of hour for forcast
+    url += "&timeformat=unixtime";
 
     if (ParamIW_OpenMeteo_UsageLicense == 2)
     {
@@ -45,12 +46,21 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
         // TODO CHECK: no URL-encoding, expected to not contain any special characters
         // TODO use new producer string-parameter macro
         url += String(ParamIW_OpenMeteo_APIKey, 40);
-    }    
+    }
 
     url += "&latitude=";
     url += ParamIW_CHWeatherLocationType == 0 ? ParamBASE_Latitude : ParamIW_CHLatitude;
     url += "&longitude=";
     url += ParamIW_CHWeatherLocationType == 0 ? ParamBASE_Longitude : ParamIW_CHLongitude;
+
+    return url;
+}
+
+int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, ForecastDayWheatherData& todayWeather, ForecastDayWheatherData& tomorrowWeather, ForecastHourWheatherData& hour1Weather, ForecastHourWheatherData& hour2Weather)
+{
+    // TODO check using csv-result
+
+    String url = createUrlPrefix(OpenMeteoUrl, OpenMeteoPath);
 
     url += "&current=";
     // TODO select based on configuration?
@@ -71,9 +81,6 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
 
     url += "&daily=";
     url += "temperature_2m_min,temperature_2m_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant,rain_sum,snowfall_sum,precipitation_probability_max,uv_index_max";
-
-    // allow easy finding of hour for forcast
-    url += "&timeformat=unixtime";
 
     // depends on forecast length, current day is included in day count
     url += "&forecast_days=2";
