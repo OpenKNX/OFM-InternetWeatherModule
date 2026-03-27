@@ -1,9 +1,10 @@
 #include "OpenMeteoChannel.h"
 #ifdef ARDUINO_ARCH_RP2040
-#define OpenMeteoUrl "http://api.open-meteo.com/v1/forecast"
+#define OpenMeteoUrl "http://api.open-meteo.com"
 #else
-#define OpenMeteoUrl "https://api.open-meteo.com/v1/forecast"
+#define OpenMeteoUrl "https://api.open-meteo.com"
 #endif
+#define OpenMeteoPath "/v1/forecast"
 
 OpenMeteoChannel::OpenMeteoChannel(uint8_t index)
     : BaseWeatherChannel(index)
@@ -31,8 +32,8 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     {
         // usage with api-key or self hosted
         url = String(ParamIW_OpenMeteo_ServerURL, 80);
-        url += "/v1/forecast";
     }
+    url += OpenMeteoPath;
 
     // TODO set timezone, when implemented in common
     url += "?timezone=Europe%2FBerlin";
