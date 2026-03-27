@@ -1,3 +1,9 @@
+# (2026-02-17) v0.5.0 "Fix und KO-Benennung"
+
+* Fix: Fehler im Speicherlayout behoben
+* Feature: Gruppenobjekte umbenannt
+
+
 # (2025-10-18) v0.4.2 "OpenKNX Update"
 
 * Update: Aktualisierung zur Verwendung mit Common 1.5 und Producer 3.11.0

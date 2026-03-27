@@ -40,8 +40,8 @@ KO's für
 
 ## Release Notes
 
-- 0.5.0 Feature: Gruppenobjekte umbenannt
-- 0.5.0 Fix: Fehler im Speicherlayout behoben
+Änderungen in Releases siehe [Changelog](CHANGELOG.md) 
+
 
 ## Hardware Unterstützung
 
