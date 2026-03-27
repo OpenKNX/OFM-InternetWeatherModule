@@ -4,6 +4,8 @@
 class OpenMeteoChannel : public BaseWeatherChannel
 {
   private:
+    String createUrlPrefix(const char* urlBase, const char* urlPath);
+
     float avg(JsonArray& arr, int begin, int n);
     void fillForecast(JsonObject& json, JsonObject& jsonHourly, int vi, ForecastDayWeatherData& wheater);
     void fillForecast(JsonObject& json, CurrentWeatherData& wheater);
