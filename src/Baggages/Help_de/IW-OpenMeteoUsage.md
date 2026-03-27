@@ -5,6 +5,6 @@
 ***Wichtig:*** Ohne eine Angabe kann Open-Meteo nicht verwendet werden!
 
 * **Bitte wählen...** - Vorgabewert, solange noch keine explizite Auswahl getroffen wurde.
-* **Nicht kommerziell ('Free API')"** - Zur ausschließlich nicht-kommerziellen Nutzung unter Einhaltung der im Rahmen des anonymen Zugriffs der erlaubten Abfrageanzahl.
+* **Nicht kommerziell ('Free API')** - Zur ausschließlich nicht-kommerziellen Nutzung unter Einhaltung der im Rahmen des anonymen Zugriffs der erlaubten Abfrageanzahl.
 * **API Subscription** - Zur kommerziellen Nutzung, entsprechend bestehendem Abo.
 * **Selbst gehostet** - Falls ein eigener Server betrieben wird, über den die Wetterdaten abgerufen werden können.
