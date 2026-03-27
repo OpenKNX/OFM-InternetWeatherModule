@@ -42,7 +42,8 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
         // with api-key, required for commercial usage
         url += "&appid=";
         // TODO CHECK: no URL-encoding, expected to not contain any special characters
-        url = String(ParamIW_OpenMeteo_APIKey, 40);
+        // TODO use new producer string-parameter macro
+        url += String(ParamIW_OpenMeteo_APIKey, 40);
     }    
 
     url += "&latitude=";

@@ -1,3 +1,8 @@
+# (upcoming) v0.5.1
+
+* Fix: Open-Meteo API hatte die komplette Basis-URL überschrieben
+
+
 # (2026-02-17) v0.5.0 "Fix und KO-Benennung"
 
 * Fix: Fehler im Speicherlayout behoben
