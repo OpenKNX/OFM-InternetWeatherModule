@@ -56,6 +56,38 @@ String OpenMeteoChannel::createUrlPrefix(const char* urlBase, const char* urlPat
     return url;
 }
 
+int16_t OpenMeteoChannel::requestToJson(String url, JsonDocument& doc)
+{
+#ifdef OPENKNX_DEBUG
+    const size_t urlLen = url.length();
+    const size_t lineLen = 100;
+    for (size_t i = 0; i < urlLen; i += lineLen)
+    {
+        logDebugP("Call URL: %s", url.substring(i, std::min(i + lineLen, urlLen)).c_str());
+    }
+#endif
+
+    HTTPClient http;
+#ifdef ARDUINO_ARCH_RP2040
+    if (url.startsWith("https://"))
+        http.setInsecure();
+#endif
+    http.begin(url);
+
+    // Send HTTP GET request
+    auto httpStatus = http.GET();
+    if (httpStatus != 200)
+    {
+        http.end();
+        return httpStatus;
+    }
+
+    deserializeJson(doc, http.getString());
+    http.end();
+
+    return httpStatus;
+}
+
 int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, ForecastDayWheatherData& todayWeather, ForecastDayWheatherData& tomorrowWeather, ForecastHourWheatherData& hour1Weather, ForecastHourWheatherData& hour2Weather)
 {
     // TODO check using csv-result
@@ -85,33 +117,12 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     // depends on forecast length, current day is included in day count
     url += "&forecast_days=2";
 
-#ifdef OPENKNX_DEBUG
-    const size_t urlLen = url.length();
-    const size_t lineLen = 100;
-    for (size_t i = 0; i < urlLen; i += lineLen)
-    {
-        logDebugP("Call URL: %s", url.substring(i, std::min(i + lineLen, urlLen)).c_str());
-    }
-#endif
-
-    HTTPClient http;
-#ifdef ARDUINO_ARCH_RP2040
-    if (url.startsWith("https://"))
-        http.setInsecure();
-#endif
-    http.begin(url);
-
-    // Send HTTP GET request
-    auto httpStatus = http.GET();
+    JsonDocument doc;
+    int16_t httpStatus = requestToJson(url, doc);
     if (httpStatus != 200)
     {
-        http.end();
         return httpStatus;
     }
-
-    JsonDocument doc;
-    deserializeJson(doc, http.getString());
-    http.end();
 
     JsonObject current = doc["current"];
     fillForecast(current, currentWeather);
