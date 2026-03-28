@@ -21,7 +21,7 @@
                 <Parameter Offset="1" BitOffset="0" Id="%AID%_UP-%TT%%CC%003" Name="CH%C%Category" ParameterType="%AID%_PT-WeatherChannelCategory" Text="Parameter" Value="1" />
                 <!-- Vorhersagezeit -->
                 <Parameter Offset="2" BitOffset="0" Id="%AID%_UP-%TT%%CC%004" Name="CH%C%ForecastTime" ParameterType="%AID%_PT-WeatherChannelForecastTimeType" Text="Zeitspanne" Value="0" />
-                
+
                 <!-- Vorhersagezeitpunkt Stunde -->
                 <Parameter Offset="3" BitOffset="0" Id="%AID%_UP-%TT%%CC%005" Name="CH%C%ForecastHour" ParameterType="%AID%_PT-WeatherChannelForecastTypeHour" Text="Zeit" Value="0" />
                 <!-- Vorhersagezeitpunkt Tag -->
@@ -49,7 +49,7 @@
                 <!-- 7 bits free -->
               </Union>
 
-       
+
             </Parameters>
             <ParameterRefs>
               <!-- Kanal Name -->
@@ -76,7 +76,7 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" RefId="%AID%_UP-%TT%%CC%101" />
               <!-- Temperatur Einheit -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" RefId="%AID%_UP-%TT%%CC%102" />
-              
+
 
               <!-- Wind -->
               <!-- Wind Einheit -->
@@ -119,7 +119,7 @@
               <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00014" RefId="%AID%_O-%TT%%CC%000" ObjectSize="2 Bytes" DatapointType="DPST-7-1" Text="%C%" FunctionText="{{0:-}} Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
               <!-- Messwert Windrichtung -->
               <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00015" RefId="%AID%_O-%TT%%CC%000" ObjectSize="1 Byte" DatapointType="DPST-5-3" Text="%C%" FunctionText="{{0:-}} Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-            
+
             </ComObjectRefs>
           </Static>
           <Dynamic>
@@ -136,6 +136,36 @@
                     <!-- Provider -->
                     <ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" />
                     <choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+                      <!-- Open-Meteo -->
+                      <when test="2">
+                        <choose ParamRefId="%AID%_UP-%TT%00020_R-%TT%0002001">
+                          <when test="0">
+                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Nutzung/Lizenz muss ausgewählt werden zur Verwendung von Open-Meteo!&#10;Hinweis: Die Einstellung kann auf der Seite 'Basiseinstellungen' vorgenommen werden." UIHint="Error"/>
+                          </when>
+                          <when default="true">
+                            <!-- 2024-08-01/2025-05-30: Free-API erlaubt Maximal 10000 API-Aufrufe pro Tag, 5000 pro Stunde und 600 pro Minute.
+                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Maximal insgesamt erlaubte API-Aufrufe beachten!" UIHint="Information" />
+                             -->
+
+                            <!--
+                            [ https://open-meteo.com/en/license ]:
+                            """
+                            License
+                            API data are offered under Attribution 4.0 International (CC BY 4.0)
+
+                            You are free to share: copy and redistribute the material in any medium or format and adapt: remix, transform, and build upon the material.
+
+                            Attribution: You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+
+                            You must include a link next to any location, Open-Meteo data are displayed like:
+
+                            <a href="https://open-meteo.com/">Weather data by Open-Meteo.com</a>
+                            """
+                            -->
+                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Weather data by Open-Meteo.com (https://open-meteo.com/)&#10;&#10;Creative-Commons-Lizenz: Attribution 4.0 International (CC BY 4.0)&#10;Datenquellen und genaue Nutzungsbedingungen siehe https://open-meteo.com/en/license" UIHint="Information" />
+                          </when>
+                        </choose>
+                      </when>
                       <when test="&gt;0">
                         <!-- Nicht deaktiviert -->
                         <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" />

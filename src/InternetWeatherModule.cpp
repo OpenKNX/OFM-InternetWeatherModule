@@ -13,6 +13,10 @@ const std::string InternetWeatherModule::name()
     return "InternetWeather";
 }
 
+void InternetWeatherModule::showInformations()
+{
+}
+
 const std::string InternetWeatherModule::version()
 {
 #ifdef MODULE_InternetWeatherModule_Version
@@ -30,6 +34,16 @@ OpenKNX::Channel* InternetWeatherModule::createChannel(uint8_t _channelIndex /* 
         case 1:
             return new OpenWeatherMapChannel(_channelIndex);
         case 2:
+            // <Enumeration Text="Bitte wählen..."                  Value="0" Id="%ENID%" />
+            // => prevent creation of an open-meteo-channel
+            if (ParamIW_OpenMeteo_UsageLicense == 0)
+            {
+                logInfoP("Open-Meteo selected, but no license. Disable channel!");
+                return nullptr;
+            }
+            // <Enumeration Text="Nicht kommerziell ('Free API')"   Value="1" Id="%ENID%" />
+            // <Enumeration Text="API Subscription"                 Value="2" Id="%ENID%" />
+            // <Enumeration Text="Selbst gehostet"                  Value="3" Id="%ENID%" />
             return new OpenMeteoChannel(_channelIndex);
          default:
             return nullptr;

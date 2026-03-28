@@ -94,7 +94,6 @@ class BaseWeatherChannel : public OpenKNX::Channel
     ForecastDayWheatherDataWithDescription _today = ForecastDayWheatherDataWithDescription();
     ForecastDayWheatherDataWithDescription _tomorrow = ForecastDayWheatherDataWithDescription();
     void buildDescription(char* description, float rain, float snow, uint8_t clouds, const char* prefix);
-    void updateUviKo(GroupObject& groupObject, float uviFloatValue);
     void updateDayForecastKo(ForecastDayWheatherDataWithDescription& day, int koOffset);
     void fetchData();
 

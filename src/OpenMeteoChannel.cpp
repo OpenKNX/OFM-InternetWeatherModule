@@ -19,12 +19,32 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
 {
     // TODO check using csv-result
 
+    // <Enumeration Text="Bitte wählen..."                  Value="0" Id="%ENID%" />
+    // => will prevent creation of an open-meteo-channel
+
+    // <Enumeration Text="Nicht kommerziell ('Free API')"   Value="1" Id="%ENID%" />
+    // <Enumeration Text="API Subscription"                 Value="2" Id="%ENID%" />
+    // <Enumeration Text="Selbst gehostet"                  Value="3" Id="%ENID%" />
+
     String url = OpenMeteoUrl;
-    // TODO add optional key, check combination with other endpoint required
-    // url += "&appid=";
-    // url += (const char*)ParamIW_APIKey;
-    // TODO set timezone
+    if (ParamIW_OpenMeteo_UsageLicense == 2 || ParamIW_OpenMeteo_UsageLicense == 3)
+    {
+        // usage with api-key or self hosted
+        url = String(ParamIW_OpenMeteo_ServerURL, 80);
+        url += "/v1/forecast";
+    }
+
+    // TODO set timezone, when implemented in common
     url += "?timezone=Europe%2FBerlin";
+
+    if (ParamIW_OpenMeteo_UsageLicense == 2)
+    {
+        // with api-key, required for commercial usage
+        url += "&appid=";
+        // TODO CHECK: no URL-encoding, expected to not contain any special characters
+        url = String(ParamIW_OpenMeteo_APIKey, 40);
+    }    
+
     url += "&latitude=";
     url += ParamIW_CHWeatherLocationType == 0 ? ParamBASE_Latitude : ParamIW_CHLatitude;
     url += "&longitude=";
@@ -140,6 +160,7 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, Forec
     {
         if (t > curTimestamp)
         {
+            // found first hour after current hour
             break;
         }
         hour++;

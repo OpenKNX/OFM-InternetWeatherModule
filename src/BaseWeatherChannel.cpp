@@ -167,12 +167,6 @@ void BaseWeatherChannel::setValueCompare(uint goNumber, const KNXValue& value, c
     setValueCompare(groupObject, value, type);
 }
 
-void BaseWeatherChannel::updateUviKo(GroupObject& groupObject, float uviFloatValue)
-{
-    logDebugP("UVI: %f", uviFloatValue);
-    setValueCompare(groupObject, (uint8_t)(max((uint8_t)0, min((uint8_t)round(uviFloatValue), (uint8_t)255))), DPT_DecimalFactor);
-}
-
 void BaseWeatherChannel::fetchData()
 {
     CurrentWheatherData current = CurrentWheatherData();
@@ -218,7 +212,8 @@ void BaseWeatherChannel::fetchData()
         setValueCompare(KoIW_CHCurrentRain, current.rain_mm, DPT_Rain_Amount);
         logDebugP("Snow                  : %.2f mm/m²", current.snow_mm);
         setValueCompare(KoIW_CHCurrentSnow, current.snow_mm, DPT_Length_mm);
-        updateUviKo(KoIW_CHCurrentUVI, current.uvi_unitOne);
+        logDebugP("UVI                   : %f", current.uvi_unitOne);
+        setValueCompare(KoIW_CHCurrentUVI, current.uvi_unitOne, DPT_Value_Tempd); // Workaround: no type for DPT 9.031 "coefficent", using temperature-difference instead
         logDebugP("Clouds                : %d %%", (int)current.cloudsCover_percent);
         setValueCompare(KoIW_CHCurrentClouds, current.cloudsCover_percent, DPT_Scaling);
         logIndentDown();
@@ -271,7 +266,8 @@ void BaseWeatherChannel::fetchData()
         setValueCompare(KoIW_CHHour1Snow, hour1.snow_mm, DPT_Length_mm);
         logDebugP("Probability of precipitation: %d %%", (int)hour1.probabilityOfPrecipitation_percent);
         setValueCompare(KoIW_CHHour1ProbabilityOfPrecipitation, hour1.probabilityOfPrecipitation_percent, DPT_Scaling);
-        updateUviKo(KoIW_CHHour1UVI, hour1.uvi_unitOne);
+        logDebugP("UVI                         : %f", hour1.uvi_unitOne);
+        setValueCompare(KoIW_CHHour1UVI, hour1.uvi_unitOne, DPT_Value_Tempd); // Workaround: no type for DPT 9.031 "coefficent", using temperature-difference instead
         logDebugP("Clouds                      : %d %%", (int)hour1.cloudsCover_percent);
         setValueCompare(KoIW_CHHour1Clouds, hour1.cloudsCover_percent, DPT_Scaling);
         logIndentDown();
@@ -303,7 +299,8 @@ void BaseWeatherChannel::fetchData()
         setValueCompare(KoIW_CHHour2Snow, hour2.snow_mm, DPT_Length_mm);
         logDebugP("Probability of precipitation: %d %%", (int)hour2.probabilityOfPrecipitation_percent);
         setValueCompare(KoIW_CHHour2ProbabilityOfPrecipitation, hour2.probabilityOfPrecipitation_percent, DPT_Scaling);
-        updateUviKo(KoIW_CHHour2UVI, hour2.uvi_unitOne);
+        logDebugP("UVI                         : %f", hour2.uvi_unitOne);
+        setValueCompare(KoIW_CHHour2UVI, hour2.uvi_unitOne, DPT_Value_Tempd); // Workaround: no type for DPT 9.031 "coefficent", using temperature-difference instead
         logDebugP("Clouds                      : %d %%", (int)hour2.cloudsCover_percent);
         setValueCompare(KoIW_CHHour2Clouds, hour2.cloudsCover_percent, DPT_Scaling);
         logIndentDown();
@@ -356,9 +353,8 @@ void BaseWeatherChannel::updateDayForecastKo(ForecastDayWheatherDataWithDescript
     setValueCompare(koOffset + IW_KoCHTodaySnow, fd.snow_mm, DPT_Length_mm);
     logDebugP("Probability of precipitation: %d %%", (int)fd.probabilityOfPrecipitation_percent);
     setValueCompare(koOffset + IW_KoCHTodayProbabilityOfPrecipitation, fd.probabilityOfPrecipitation_percent, DPT_Scaling);
-
-    updateUviKo((knx.getGroupObject(IW_KoCalcNumber(IW_KoCHTodayUVI))), fd.uvi_unitOne);
-
+    logDebugP("UVI                         : %f", fd.uvi_unitOne);
+    setValueCompare(koOffset + IW_KoCHTodayUVI, fd.uvi_unitOne, DPT_Value_Tempd); // Workaround: no type for DPT 9.031 "coefficent", using temperature-difference instead
     logDebugP("Clouds                      : %d %%", (int)fd.cloudsCover_percent);
     setValueCompare(koOffset + IW_KoCHTodayClouds, fd.cloudsCover_percent, DPT_Scaling);
     logIndentDown();
