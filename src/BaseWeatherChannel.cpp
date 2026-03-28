@@ -169,9 +169,9 @@ void BaseWeatherChannel::setValueCompare(uint goNumber, const KNXValue& value, c
 
 void BaseWeatherChannel::fetchData()
 {
-    CurrentWheatherData current = CurrentWheatherData();
-    ForecastHourWheatherData hour1 = ForecastHourWheatherData();
-    ForecastHourWheatherData hour2 = ForecastHourWheatherData();
+    CurrentWeatherData current = CurrentWeatherData();
+    ForecastHourWeatherData hour1 = ForecastHourWeatherData();
+    ForecastHourWeatherData hour2 = ForecastHourWeatherData();
 
     int16_t httpStatus = fillWeather(current, _today, _tomorrow, hour1, hour2);
     KoIW_CHHTTPStatus.value(httpStatus, DPT_Value_2_Count);
@@ -307,7 +307,7 @@ void BaseWeatherChannel::fetchData()
     }
 }
 
-void BaseWeatherChannel::updateDayForecastKo(ForecastDayWheatherDataWithDescription& fd, int koOffset)
+void BaseWeatherChannel::updateDayForecastKo(ForecastDayWeatherDataWithDescription& fd, int koOffset)
 {
     logIndentUp();
     logDebugP("Description: %s", fd.description);
