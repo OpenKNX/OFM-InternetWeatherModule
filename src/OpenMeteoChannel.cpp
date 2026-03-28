@@ -1,10 +1,13 @@
 #include "OpenMeteoChannel.h"
 #ifdef ARDUINO_ARCH_RP2040
 #define OpenMeteoUrl "http://api.open-meteo.com"
+#define OpenMeteoPollenUrl "http://air-quality-api.open-meteo.com"
 #else
 #define OpenMeteoUrl "https://api.open-meteo.com"
+#define OpenMeteoPollenUrl "https://air-quality-api.open-meteo.com"
 #endif
 #define OpenMeteoPath "/v1/forecast"
+#define OpenMeteoPollenPath "/v1/air-quality"
 
 OpenMeteoChannel::OpenMeteoChannel(uint8_t index)
     : BaseWeatherChannel(index)
@@ -175,6 +178,92 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWeatherData& currentWeather, Foreca
     const uint32_t hour = findFollowingHourIndex(hourly["time"], current["time"]);
     fillForecast(hourly, hour + 0, hour1Weather);
     fillForecast(hourly, hour + 1, hour2Weather);
+
+    return httpStatus;
+}
+
+int16_t OpenMeteoChannel::fillPollen()
+{
+    String url = createUrlPrefix(OpenMeteoPollenUrl, OpenMeteoPollenPath);
+
+    // https://air-quality-api.open-meteo.com/v1/air-quality?latitude=...&longitude=...
+
+    url += "&current=";
+    url += "alder_pollen,birch_pollen,grass_pollen,mugwort_pollen,olive_pollen,ragweed_pollen,dust,european_aqi,us_aqi";
+    url += "&hourly=";
+    url += "alder_pollen,birch_pollen,grass_pollen,mugwort_pollen,olive_pollen,ragweed_pollen,dust,european_aqi,us_aqi";
+
+    // available forecast length 4 days in europe, current day is included in day count
+    // @see https://open-meteo.com/en/docs/air-quality-api#hourly_weather_variables
+    url += "&forecast_days=4";
+
+    JsonDocument doc;
+    int16_t httpStatus = requestToJson(url, doc);
+    if (httpStatus != 200)
+    {
+        return httpStatus;
+    }
+
+    JsonObject current = doc["current"];
+    // TODO: fillPollen(current, currentPollen);
+    /*
+        "current": {
+            "time": 1774717200,
+            "interval": 3600,
+            "alder_pollen": 0.1,
+            "birch_pollen": 2.4,
+            "grass_pollen": 0.0,
+            "mugwort_pollen": 0.0,
+            "olive_pollen": 0.0,
+            "ragweed_pollen": 0.0,
+            "dust": 0.0,
+            "european_aqi": 28,
+            "us_aqi": 34
+        },
+        "hourly_units": {
+            "time": "unixtime",
+            "alder_pollen": "grains/m³",
+            "birch_pollen": "grains/m³",
+            "grass_pollen": "grains/m³",
+            "mugwort_pollen": "grains/m³",
+            "olive_pollen": "grains/m³",
+            "ragweed_pollen": "grains/m³",
+            "dust": "μg/m³",
+            "european_aqi": "EAQI",
+            "us_aqi": "USAQI"
+        },
+    */
+
+    JsonObject hourly = doc["hourly"];
+
+    const uint32_t hour = findFollowingHourIndex(hourly["time"], current["time"]);
+    // TODO: fillPollenForecasts(...);
+    /*
+        "hourly_units": {
+            "time": "unixtime",
+            "alder_pollen": "grains/m³",
+            "birch_pollen": "grains/m³",
+            "grass_pollen": "grains/m³",
+            "mugwort_pollen": "grains/m³",
+            "olive_pollen": "grains/m³",
+            "ragweed_pollen": "grains/m³",
+            "dust": "μg/m³",
+            "european_aqi": "EAQI",
+            "us_aqi": "USAQI"
+        },
+        "hourly": {
+            "time": [1774652400, 1774656000, ..., 1774904400, 1774908000],
+            "alder_pollen": [..., 0.5, 0.8, ...],
+            "birch_pollen": [..., 173.0, 170.4, ...],
+            "grass_pollen": [..., 0.1, 0.1, ...],
+            "mugwort_pollen": [0.0, 0.0, ..., 0.0, 0.0],
+            "olive_pollen": [0.0, 0.0, ..., 0.0, 0.0],
+            "ragweed_pollen": [0.0, 0.0, ..., 0.0, 0.0],
+            "dust": [0.0, 0.0, ..., 0.0, 0.0],
+            "european_aqi": [..., 37, 36, ...],
+            "us_aqi": [..., 40, 41, ...]
+        }
+    */
 
     return httpStatus;
 }

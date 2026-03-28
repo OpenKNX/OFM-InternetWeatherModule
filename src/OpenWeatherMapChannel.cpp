@@ -61,6 +61,12 @@ int16_t OpenWeatherMapChannel::fillWeather(CurrentWeatherData& currentWeather, F
     return httpStatus;
 }
 
+int16_t OpenWeatherMapChannel::fillPollen()
+{
+    // TODO: clean architecture for not supported features
+    return 500;
+}
+
 void OpenWeatherMapChannel::fillForecast(JsonObject& json, CurrentWeatherData& wheater)
 {
     wheater.temperature_C = json["temp"];                  // 22.34

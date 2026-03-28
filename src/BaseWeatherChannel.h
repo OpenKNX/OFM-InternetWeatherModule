@@ -100,6 +100,7 @@ class BaseWeatherChannel : public OpenKNX::Channel
   protected:
     BaseWeatherChannel(uint8_t index);
     virtual int16_t fillWeather(CurrentWeatherData& currentWeather, ForecastDayWeatherData& todayWeather, ForecastDayWeatherData& tomorrowWeather, ForecastHourWeatherData& hour1Weather, ForecastHourWeatherData& hour2Weather) = 0;
+    virtual int16_t fillPollen() = 0;
     void setValueCompare(GroupObject& groupObject, const KNXValue& value, const Dpt& type);
     void setValueCompare(uint goNumber, const KNXValue& value, const Dpt& type);
 
