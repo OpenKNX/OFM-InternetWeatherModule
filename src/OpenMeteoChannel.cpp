@@ -88,7 +88,7 @@ int16_t OpenMeteoChannel::requestToJson(String url, JsonDocument& doc)
     return httpStatus;
 }
 
-int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, ForecastDayWheatherData& todayWeather, ForecastDayWheatherData& tomorrowWeather, ForecastHourWheatherData& hour1Weather, ForecastHourWheatherData& hour2Weather)
+int16_t OpenMeteoChannel::fillWeather(CurrentWeatherData& currentWeather, ForecastDayWeatherData& todayWeather, ForecastDayWeatherData& tomorrowWeather, ForecastHourWeatherData& hour1Weather, ForecastHourWeatherData& hour2Weather)
 {
     // TODO check using csv-result
 
@@ -195,7 +195,7 @@ uint32_t OpenMeteoChannel::findFollowingHourIndex(const JsonArray& hourlyTimes, 
     return hour;
 }
 
-void OpenMeteoChannel::fillForecast(JsonObject& json, CurrentWheatherData& wheater)
+void OpenMeteoChannel::fillForecast(JsonObject& json, CurrentWeatherData& wheater)
 {
     wheater.temperature_C          = json["temperature_2m"];
     wheater.temperatureFeelsLike_C = json["apparent_temperature"];
@@ -216,7 +216,7 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, CurrentWheatherData& wheat
     // * Weather Code    [0..100] - see end of https://open-meteo.com/en/docs
 }
 
-void OpenMeteoChannel::fillForecast(JsonObject& json, int vi, ForecastHourWheatherData& wheater)
+void OpenMeteoChannel::fillForecast(JsonObject& json, int vi, ForecastHourWeatherData& wheater)
 {
     // same as for current, but value-arrays instead of values
     wheater.temperature_C                      = json["temperature_2m"][vi];
@@ -244,7 +244,7 @@ float OpenMeteoChannel::avg(JsonArray& arr, int begin, int n)
     return sum / n;
 }
 
-void OpenMeteoChannel::fillForecast(JsonObject& json, JsonObject& jsonHourly, int vi, ForecastDayWheatherData& wheater)
+void OpenMeteoChannel::fillForecast(JsonObject& json, JsonObject& jsonHourly, int vi, ForecastDayWeatherData& wheater)
 {
     const int vih = 24 * vi;
     const int vihNight = vih +  0;

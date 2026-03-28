@@ -21,7 +21,7 @@
 #define IW_KoOffset_Forecast (IW_KoCHForecastDescription - IW_KoCHTodayDescription)
 
 
-struct CurrentWheatherData
+struct CurrentWeatherData
 {
     float temperature_C = 0;
     float temperatureFeelsLike_C = 0;
@@ -36,7 +36,7 @@ struct CurrentWheatherData
     uint8_t cloudsCover_percent = 0;
 };
 
-struct ForecastHourWheatherData
+struct ForecastHourWeatherData
 {
     float temperature_C = 0;
     float temperatureFeelsLike_C = 0;
@@ -53,7 +53,7 @@ struct ForecastHourWheatherData
 };
 
 
-struct ForecastDayWheatherData
+struct ForecastDayWeatherData
 {
     float temperatureMin_C = 0;
     float temperatureMax_C = 0;
@@ -79,7 +79,7 @@ struct ForecastDayWheatherData
     uint8_t cloudsCover_percent = 0;
 };
 
-struct ForecastDayWheatherDataWithDescription : ForecastDayWheatherData
+struct ForecastDayWeatherDataWithDescription : ForecastDayWeatherData
 {
     char description[15] = {0};
 };
@@ -91,15 +91,15 @@ class BaseWeatherChannel : public OpenKNX::Channel
     unsigned long _lastApiCall = 0;
     unsigned long _updateIntervalInMs = 0;
     bool _available = false;
-    ForecastDayWheatherDataWithDescription _today = ForecastDayWheatherDataWithDescription();
-    ForecastDayWheatherDataWithDescription _tomorrow = ForecastDayWheatherDataWithDescription();
+    ForecastDayWeatherDataWithDescription _today = ForecastDayWeatherDataWithDescription();
+    ForecastDayWeatherDataWithDescription _tomorrow = ForecastDayWeatherDataWithDescription();
     void buildDescription(char* description, float rain, float snow, uint8_t clouds, const char* prefix);
-    void updateDayForecastKo(ForecastDayWheatherDataWithDescription& day, int koOffset);
+    void updateDayForecastKo(ForecastDayWeatherDataWithDescription& day, int koOffset);
     void fetchData();
 
   protected:
     BaseWeatherChannel(uint8_t index);
-    virtual int16_t fillWeather(CurrentWheatherData& currentWeather, ForecastDayWheatherData& todayWeather, ForecastDayWheatherData& tomorrowWeather, ForecastHourWheatherData& hour1Weather, ForecastHourWheatherData& hour2Weather) = 0;
+    virtual int16_t fillWeather(CurrentWeatherData& currentWeather, ForecastDayWeatherData& todayWeather, ForecastDayWeatherData& tomorrowWeather, ForecastHourWeatherData& hour1Weather, ForecastHourWeatherData& hour2Weather) = 0;
     void setValueCompare(GroupObject& groupObject, const KNXValue& value, const Dpt& type);
     void setValueCompare(uint goNumber, const KNXValue& value, const Dpt& type);
 
