@@ -1,6 +1,7 @@
 # (upcoming) v0.5.1
 
 * Fix: Open-Meteo API hatte die komplette Basis-URL überschrieben
+* Update: Minimalversion von ArduinoJson auf 7.4.3 erhöht (diese wird aktuell genutzt)
 
 
 # (2026-02-17) v0.5.0 "Fix und KO-Benennung"

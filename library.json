@@ -2,7 +2,7 @@
     "name": "OFM-InternetWeatherModule",
     "version": "0.5.1",
     "dependencies": {
-        "bblanchon/ArduinoJson": "^7.0.4"
+        "bblanchon/ArduinoJson": "^7.4.3"
     },
     "description": "Internet Weather Service",
     "homepage": "https://openknx.de",
