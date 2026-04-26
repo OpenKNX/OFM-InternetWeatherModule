@@ -1,6 +1,7 @@
 # (upcoming) v0.5.1
 
 * Fix: Open-Meteo API hatte die komplette Basis-URL überschrieben
+* Fix: KO Morning feels like temperature was filled with evening feels like temperature 
 
 
 # (2026-02-17) v0.5.0 "Fix und KO-Benennung"
