@@ -328,7 +328,7 @@ void BaseWeatherChannel::updateDayForecastKo(ForecastDayWeatherDataWithDescripti
     logDebugP("max                       : %7.3f °C", fd.temperatureMax_C);
     setValueCompare(koOffset + IW_KoCHTodayTemperaturMax, fd.temperatureMax_C, DPT_Value_Temp);
     logDebugP("morning feels like        : %7.3f °C", fd.temperatureFeelsLikeMorning_C);
-    setValueCompare(koOffset + IW_KoCHTodayTemperaturMorningFeelsLike, fd.temperatureFeelsLikeEvening_C, DPT_Value_Temp);
+    setValueCompare(koOffset + IW_KoCHTodayTemperaturMorningFeelsLike, fd.temperatureFeelsLikeMorning_C, DPT_Value_Temp);
     logDebugP("day feels like            : %7.3f °C", fd.temperatureFeelsLikeDay_C);
     setValueCompare(koOffset + IW_KoCHTodayTemperaturDayFeelsLike, fd.temperatureFeelsLikeDay_C, DPT_Value_Temp);
     logDebugP("evening feels like        : %7.3f °C", fd.temperatureFeelsLikeEvening_C);

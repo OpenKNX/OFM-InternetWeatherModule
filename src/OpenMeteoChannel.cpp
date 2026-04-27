@@ -47,8 +47,7 @@ String OpenMeteoChannel::createUrlPrefix(const char* urlBase, const char* urlPat
         // with api-key, required for commercial usage
         url += "&appid=";
         // TODO CHECK: no URL-encoding, expected to not contain any special characters
-        // TODO use new producer string-parameter macro
-        url += String(ParamIW_OpenMeteo_APIKey, 40);
+        url += ParamIW_OpenMeteo_APIKeyStr;
     }
 
     url += "&latitude=";

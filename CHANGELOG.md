@@ -1,6 +1,7 @@
 # (upcoming) v0.5.1
 
 * Fix: Open-Meteo API hatte die komplette Basis-URL überschrieben
+* Fix: KO Morning feels like temperature was filled with evening feels like temperature 
 * Update: Minimalversion von ArduinoJson auf 7.4.3 erhöht (diese wird aktuell genutzt)
 
 
