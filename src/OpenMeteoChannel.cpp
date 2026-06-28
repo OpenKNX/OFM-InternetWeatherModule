@@ -47,7 +47,7 @@ String OpenMeteoChannel::createUrlPrefix(const char* urlBase, const char* urlPat
         // with api-key, required for commercial usage
         url += "&appid=";
         // TODO CHECK: no URL-encoding, expected to not contain any special characters
-        url += ParamIW_OpenMeteo_APIKeyStr;
+        url += ParamIW_OpenMeteo_APIKeyStr.c_str();
     }
 
     url += "&latitude=";
@@ -78,15 +78,14 @@ int16_t OpenMeteoChannel::requestToJson(String url, JsonDocument& doc)
 
     // Send HTTP GET request
     auto httpStatus = http.GET();
-    if (httpStatus != 200)
+    if (httpStatus == 200)
     {
-        http.end();
-        return httpStatus;
+        deserializeJson(doc, http.getString());
     }
-
-    deserializeJson(doc, http.getString());
+    else
+    {
+    }
     http.end();
-
     return httpStatus;
 }
 
