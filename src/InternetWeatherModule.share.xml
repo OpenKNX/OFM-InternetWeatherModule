@@ -43,21 +43,21 @@
 								</TypeRestriction>
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-WeatherChannelProvider" Name="WeatherChannelProvider">
-								<TypeRestriction Base="Value" SizeInBit="4" UIHint="DropDown">
+								<TypeRestriction Base="Value" SizeInBit="2">
 									<Enumeration Value="0" Id="%ENID%" Text="Deaktiviert"  />
 									<Enumeration Value="1" Id="%ENID%" Text="OpenWeatherMap" />
 									<Enumeration Value="2" Id="%ENID%" Text="Open-Meteo" />
 								</TypeRestriction>
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-WeatherChannelLocation" Name="WeatherChannelLocation">
-								<TypeRestriction Base="Value" SizeInBit="4" UIHint="DropDown">
+								<TypeRestriction Base="Value" SizeInBit="2">
 									<Enumeration Value="0" Id="%ENID%" Text="Gerätestandort" />
 									<Enumeration Value="1" Id="%ENID%" Text="Ort 1" />
 									<Enumeration Value="2" Id="%ENID%" Text="Ort 2" />
 								</TypeRestriction>
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-WeatherChannelCategory" Name="WeatherChannelCategory">
-								<TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Value="1" Id="%ENID%" Text="Temperatur"           />
 									<Enumeration Value="2" Id="%ENID%" Text="Temperatur Gefühlt"           />
 									<Enumeration Value="3" Id="%ENID%" Text="Luftdruck" />
@@ -78,20 +78,20 @@
 								</TypeRestriction>
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-WeatherChannelForecastTimeType" Name="WeatherChannelForecastTimeType">
-								<TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+								<TypeRestriction Base="Value" SizeInBit="2">
 									<Enumeration Value="0" Id="%ENID%" Text="Aktuell" />
 									<Enumeration Value="1" Id="%ENID%" Text="Tageswerte" />
 									<Enumeration Value="2" Id="%ENID%" Text="Stundenwerte" />
 								</TypeRestriction>
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-WeatherChannelForecastTypeHour" Name="WeatherChannelForecastTypeHour">
-								<TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+								<TypeRestriction Base="Value" SizeInBit="1">
 									<Enumeration Value="0" Id="%ENID%" Text="Aktuelle Stunde" />
 									<Enumeration Value="1" Id="%ENID%" Text="Nächste Stunde" />
 								</TypeRestriction>
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-WeatherChannelForecastTypeDay" Name="WeatherChannelForecastTypeDay">
-								<TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Value="0" Id="%ENID%" Text="Heute" />
 									<Enumeration Value="1" Id="%ENID%" Text="Morgen" />
 									<Enumeration Value="255" Id="%ENID%" Text="Umschaltbar Heute/Morgen" />
@@ -99,14 +99,14 @@
 							</ParameterType>
 
 							<ParameterType Id="%AID%_PT-WeatherChannelTempTime" Name="WeatherChannelTempTime">
-								<TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+								<TypeRestriction Base="Value" SizeInBit="3">
 									<Enumeration Value="0" Id="%ENID%" Text="Minimum" />
 									<Enumeration Value="1" Id="%ENID%" Text="Maximum" />
 									<Enumeration Value="2" Id="%ENID%" Text="Früh"    />
 									<Enumeration Value="3" Id="%ENID%" Text="Tag"     />
 									<Enumeration Value="4" Id="%ENID%" Text="Abend"   />
 									<Enumeration Value="5" Id="%ENID%" Text="Nacht"   />
-									</TypeRestriction>
+								</TypeRestriction>
 							</ParameterType>
 
 
