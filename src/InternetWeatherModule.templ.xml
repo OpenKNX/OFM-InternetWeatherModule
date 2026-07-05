@@ -9,10 +9,13 @@
           <Static>
             <Parameters>
               <!-- Kanal Name -->
-              <Parameter Id="%AID%_P-%TT%%CC%000" Name="CH%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
-              <Parameter Id="%AID%_P-%TT%%CC%901" Name="CH%C%Out1" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
-              <Parameter Id="%AID%_P-%TT%%CC%902" Name="CH%C%Out2" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
-              <Parameter Id="%AID%_P-%TT%%CC%903" Name="CH%C%Out3" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%000" Name="CH%C%Name"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%999" Name="CH%C%NameDisplay" ParameterType="%AID%_PT-Text45Byte" Text="Beschreibung (Anzeige)" Value="" Access="Read" op:configTransfer="never" />
+
+              <Parameter Id="%AID%_P-%TT%%CC%901" Name="CH%C%Out1"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%902" Name="CH%C%Out2"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%903" Name="CH%C%Out3"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
+
               <!-- Weather outputs -->
               <Union SizeInBit="96">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
@@ -57,6 +60,7 @@
             <ParameterRefs>
               <!-- Kanal Name -->
               <ParameterRef Id="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" RefId="%AID%_P-%TT%%CC%000" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" RefId="%AID%_P-%TT%%CC%999" />
               <ParameterRef Id="%AID%_P-%TT%%CC%901_R-%TT%%CC%90101" RefId="%AID%_P-%TT%%CC%901" />
               <ParameterRef Id="%AID%_P-%TT%%CC%902_R-%TT%%CC%90201" RefId="%AID%_P-%TT%%CC%902" />
               <ParameterRef Id="%AID%_P-%TT%%CC%903_R-%TT%%CC%90301" RefId="%AID%_P-%TT%%CC%903" />
@@ -80,6 +84,17 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" RefId="%AID%_UP-%TT%%CC%072" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" RefId="%AID%_UP-%TT%%CC%073" />
             </ParameterRefs>
+            <ParameterCalculations>
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0001" Language="JavaScript" Name="MarkInactive%CC%" LRTransformationFunc="BASE_MarkInactive" RLTransformationFunc="BASE_Nop">
+                <LParameters>
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"  AliasName="TextInput" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" AliasName="CheckboxInactive" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901"  AliasName="TextOutput" />
+                </RParameters>
+              </ParameterCalculation>
+            </ParameterCalculations>
             <ComObjectTable>
               <!-- 3 x Messwert -->
               <!-- TODO ensure non-overlapping IDs for clean migration from large-channels -->
@@ -152,7 +167,7 @@
               <!-- Anzahl der Kanäle -->
               <choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
                 <when test="&gt;=%C%">
-                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW" Text="%C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="map-marker-radius-outline" ShowInComObjectTree="false"><!-- TODO HelpContext="IW-Channel" -->
+                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW" Text="%C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" Icon="map-marker-radius-outline" ShowInComObjectTree="false"><!-- TODO HelpContext="IW-Channel" -->
 
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Wetter-Kanal" UIHint="Headline" />
                     <!-- Kanal Name -->
@@ -258,7 +273,7 @@
                         <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%903_R-%TT%%CC%90301" /><!-- TODO HelpContext="IW-ChannelName" -->
 
 
-                        <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IWKOs" Text="%C%: {{0}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Inline="true" ShowInComObjectTree="true">
+                        <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IWKOs" Text="%C%: {{0}}" TextParameterRefId="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" Inline="true" ShowInComObjectTree="true">
                           <!-- TODO by type! -->
                           <!-- TODO use xml-parts -->
                           <ComObjectRefRef RefId="%AID%_O-%TT%%CC%100_R-%TT%%CC%10001" />
