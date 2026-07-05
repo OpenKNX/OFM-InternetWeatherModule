@@ -45,8 +45,8 @@
 							<ParameterType Id="%AID%_PT-WeatherChannelProvider" Name="WeatherChannelProvider">
 								<TypeRestriction Base="Value" SizeInBit="2">
 									<Enumeration Value="0" Id="%ENID%" Text="Deaktiviert"  />
-									<Enumeration Value="1" Id="%ENID%" Text="OpenWeatherMap" />
 									<Enumeration Value="2" Id="%ENID%" Text="Open-Meteo" />
+									<Enumeration Value="1" Id="%ENID%" Text="OpenWeatherMap" />
 								</TypeRestriction>
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-WeatherChannelLocation" Name="WeatherChannelLocation">
@@ -390,10 +390,6 @@
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="OpenWeatherMap" UIHint="Headline" />
-								<!-- OpenWeatherMap API Key -->
-								<ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%00001_R-%TT%0000101" HelpContext="IW-OpenWeatherMapAPIKey" />
-
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Open-Meteo" UIHint="Headline" />
 								<ParameterRefRef RefId="%AID%_UP-%TT%00020_R-%TT%0002001" HelpContext="IW-OpenMeteoUsage" />
 								<choose ParamRefId="%AID%_UP-%TT%00020_R-%TT%0002001">
@@ -419,6 +415,10 @@
 										<ParameterRefRef RefId="%AID%_UP-%TT%00022_R-%TT%0002201" IndentLevel="1" HelpContext="IW-OpenMeteoServerBaseUrl" />
 									</when>
 								</choose>
+
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="OpenWeatherMap" UIHint="Headline" />
+								<!-- OpenWeatherMap API Key -->
+								<ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%00001_R-%TT%0000101" HelpContext="IW-OpenWeatherMapAPIKey" />
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
