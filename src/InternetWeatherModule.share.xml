@@ -141,66 +141,115 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<!-- TODO replace -->
-							<ParameterType Id="%AID%_PT-RelativeTimeOffset" Name="RelativeTimeOffset">
-								<TypeRestriction Base="Value" SizeInBit="5">
-									<Enumeration Id="%ENID%" Value="24" Text="-8" />
-									<Enumeration Id="%ENID%" Value="25" Text="-7" />
-									<Enumeration Id="%ENID%" Value="26" Text="-6" />
-									<Enumeration Id="%ENID%" Value="27" Text="-5" />
-									<Enumeration Id="%ENID%" Value="28" Text="-4" />
-									<Enumeration Id="%ENID%" Value="29" Text="-3" />
-									<Enumeration Id="%ENID%" Value="30" Text="-2" />
-									<Enumeration Id="%ENID%" Value="31" Text="-1" />
-									<Enumeration Id="%ENID%" Value="0"  Text="±0 Jetzt" />
-									<Enumeration Id="%ENID%" Value="1"  Text="+1" />
-									<Enumeration Id="%ENID%" Value="2"  Text="+2" />
-									<Enumeration Id="%ENID%" Value="3"  Text="+3" />
-									<Enumeration Id="%ENID%" Value="4"  Text="+4" />
-									<Enumeration Id="%ENID%" Value="5"  Text="+5" />
-									<Enumeration Id="%ENID%" Value="6"  Text="+6" />
-									<Enumeration Id="%ENID%" Value="7"  Text="+7" />
-									<Enumeration Id="%ENID%" Value="8"  Text="+8" />
-									<Enumeration Id="%ENID%" Value="9"  Text="+9" />
-									<Enumeration Id="%ENID%" Value="10" Text="+10" />
-									<Enumeration Id="%ENID%" Value="11" Text="+11" />
-									<Enumeration Id="%ENID%" Value="12" Text="+12" />
-									<Enumeration Id="%ENID%" Value="13" Text="+13" />
-									<Enumeration Id="%ENID%" Value="14" Text="+14" />
-									<!-- TODO add absolute times
-									<Enumeration Id="%ENID%" Value="0" Text="00:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="1" Text="01:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="2" Text="02:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="3" Text="03:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="4" Text="04:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="5" Text="05:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="6" Text="06:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="7" Text="07:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="8" Text="08:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="9" Text="09:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="10" Text="10:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="11" Text="11:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="12" Text="12:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="13" Text="13:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="14" Text="14:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="15" Text="15:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="16" Text="16:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="17" Text="17:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="18" Text="18:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="19" Text="19:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="20" Text="20:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="21" Text="21:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="22" Text="22:00 Uhr" />
-									<Enumeration Id="%ENID%" Value="23" Text="23:00 Uhr" />
+							<ParameterType Id="%AID%_PT-TimeOffsetDays" Name="TimeOffsetDays">
+								<TypeNumber SizeInBit="6" Type="signedInt" minInclusive="-28" maxInclusive="16" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-TimeOffsetHours" Name="TimeOffsetHours">
+								<TypeNumber SizeInBit="10" Type="signedInt" minInclusive="-360" maxInclusive="360" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-TimeOffset15Mins" Name="TimeOffset15Mins">
+								<TypeNumber SizeInBit="8" Type="signedInt" minInclusive="-72" maxInclusive="72" />
+							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-MeasurementGroup" Name="MeasurementGroup">
+								<TypeRestriction Base="Value" SizeInBit="8">
+									<Enumeration Id="%ENID%"  Value="0" Text="Deaktiviert" />
+									<Enumeration Id="%ENID%"  Value="1" Text="Zusammenfassung / Überblick / (Fehler-)Status" />
+									<Enumeration Id="%ENID%"  Value="2" Text="Temperatur" />
+									<Enumeration Id="%ENID%"  Value="3" Text="Niederschlag" />
+									<Enumeration Id="%ENID%"  Value="4" Text="Luftfeuchtigkeit" />
+									<Enumeration Id="%ENID%"  Value="5" Text="Luftdruck" />
+									<Enumeration Id="%ENID%"  Value="6" Text="Wind" />
+									<Enumeration Id="%ENID%"  Value="7" Text="Boden" />
+									<Enumeration Id="%ENID%"  Value="8" Text="Bewölkung" />
+									<Enumeration Id="%ENID%"  Value="9" Text="Sichtweite" />
+									<Enumeration Id="%ENID%" Value="10" Text="Solarstrahlung" />
+									<Enumeration Id="%ENID%" Value="11" Text="Partikel" />
+									<Enumeration Id="%ENID%" Value="12" Text="Gase" />
+									<Enumeration Id="%ENID%" Value="13" Text="Atmosphäre und Strahlung" />
+									<Enumeration Id="%ENID%" Value="14" Text="Pollen" />
+									<Enumeration Id="%ENID%" Value="15" Text="European Air Quality Index" />
+									<Enumeration Id="%ENID%" Value="16" Text="United States Air Quality Index" />
+									<Enumeration Id="%ENID%" Value="17" Text="Tageszeit und Tageslicht" />
+									<Enumeration Id="%ENID%" Value="18" Text="Sonstige Spezialwerte" />
+									<!--
+									<Enumeration Id="%ENID%" Value="19" Text="" />
+									<Enumeration Id="%ENID%" Value="20" Text="" />
+									<Enumeration Id="%ENID%" Value="21" Text="" />
+									<Enumeration Id="%ENID%" Value="22" Text="" />
+									<Enumeration Id="%ENID%" Value="23" Text="" />
+									<Enumeration Id="%ENID%" Value="24" Text="" />
+									<Enumeration Id="%ENID%" Value="25" Text="" />
+									<Enumeration Id="%ENID%" Value="26" Text="" />
+									<Enumeration Id="%ENID%" Value="27" Text="" />
+									<Enumeration Id="%ENID%" Value="28" Text="" />
+									<Enumeration Id="%ENID%" Value="29" Text="" />
+									<Enumeration Id="%ENID%" Value="30" Text="" />
+									<Enumeration Id="%ENID%" Value="31" Text="" />
+									<Enumeration Id="%ENID%" Value="32" Text="" />
+									<Enumeration Id="%ENID%" Value="33" Text="" />
+									<Enumeration Id="%ENID%" Value="34" Text="" />
+									<Enumeration Id="%ENID%" Value="35" Text="" />
 									-->
 								</TypeRestriction>
 							</ParameterType>
 
-							<!-- TODO check using 2nd level -->
+							<!--
+							24 bit: 0x TT00_0000 0000_0000 0000_0000
+							           ^- Type
+							[0x000000;0x3fffff] current    test="<0x400000"
+							[0x400000;0x7fffff] daily      default="true"
+							[0x800000;0xbfffff] hourly     /test=">=0x800000" test="<0xc00000"
+							[0xc00000;0xffffff] 15-minutes \                  default="true"
+							-->
 							<ParameterType Id="%AID%_PT-MeasurementValue" Name="MeasurementValue">
-								<TypeRestriction Base="Value" SizeInBit="6">
+								<!-- TODO check using full list? -->
+								<TypeNumber SizeInBit="24" Type="unsignedInt" minInclusive="0" maxInclusive="16777215" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-GroupOverview" Name="GroupOverview">
+								<TypeRestriction Base="Value" SizeInBit="24">
+									<Enumeration Id="%ENID%" Value="0" Text="Deaktiviert" />
+
+									<Enumeration Id="%ENID%"        Value="1" Text="OpenKNX Wetter-Text - Aktuell" />
+									<Enumeration Id="%ENID%"  Value="4194305" Text="OpenKNX Wetter-Text - Tageswerte" />
+									<Enumeration Id="%ENID%"  Value="8388609" Text="OpenKNX Wetter-Text - Stundenwerte" />
+									<Enumeration Id="%ENID%" Value="12582913" Text="OpenKNX Wetter-Text - 15-Minuten-Werte" />
+
+									<Enumeration Id="%ENID%"        Value="2" Text="Wetter-Code (WMO) - Aktuell" />
+									<Enumeration Id="%ENID%"  Value="4194306" Text="Wetter-Code (WMO) - Tageswerte" />
+									<Enumeration Id="%ENID%"  Value="8388610" Text="Wetter-Code (WMO) - Stundenwerte" />
+
+								</TypeRestriction>
+							</ParameterType>
+
+
+							<ParameterType Id="%AID%_PT-GroupTemperature" Name="GroupTemperature">
+								<TypeRestriction Base="Value" SizeInBit="24">
+									<Enumeration Id="%ENID%" Value="0" Text="Deaktiviert" />
+
 									<!-- Temperatur-Werte -->
-									<Enumeration Id="%ENID%" Value="0" Text="Temperatur (2 m)" />
+									<Enumeration Id="%ENID%"        Value="1" Text="Temperatur (2 m) - Aktuell" />
+									<!-- eration Id="%ENID%"  Value="4194305" Text="Temperatur (2 m) - Tageswerte" -->
+									<Enumeration Id="%ENID%"  Value="8388609" Text="Temperatur (2 m) - Stundenwerte" />
+									<Enumeration Id="%ENID%" Value="12582913" Text="Temperatur (2 m) - 15-Minuten-Werte" />
+									<Enumeration Id="%ENID%"  Value="4194306" Text="Temperatur (2 m) - Tage-Minimum" />
+									<Enumeration Id="%ENID%"  Value="4194307" Text="Temperatur (2 m) - Tage-Mittel" />
+									<Enumeration Id="%ENID%"  Value="4194308" Text="Temperatur (2 m) - Tage-Maximum" />
+
+									<!-- Temperatur-Werte -->
+									<Enumeration Id="%ENID%"        Value="5" Text="Gefühlte Temperatur (2 m) - Aktuell" />
+									<!-- eration Id="%ENID%"  Value="4194309" Text="Gefühlte Temperatur (2 m) - Tageswerte" -->
+									<Enumeration Id="%ENID%"  Value="8388613" Text="Gefühlte Temperatur (2 m) - Stundenwerte" />
+									<Enumeration Id="%ENID%" Value="12582917" Text="Gefühlte Temperatur (2 m) - 15-Minuten-Werte" />
+									<Enumeration Id="%ENID%"  Value="4194310" Text="Gefühlte Temperatur (2 m) - Tage-Minimum" />
+									<Enumeration Id="%ENID%"  Value="4194311" Text="Gefühlte Temperatur (2 m) - Tage-Mittel" />
+									<Enumeration Id="%ENID%"  Value="4194312" Text="Gefühlte Temperatur (2 m) - Tage-Maximum" />
+
+								</TypeRestriction>
+							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-GroupX" Name="GroupX">
+								<TypeRestriction Base="Value" SizeInBit="24">
 									<Enumeration Id="%ENID%" Value="1" Text="Gefühlte Temperatur (2 m)" />
 									<Enumeration Id="%ENID%" Value="2" Text="Taupunkt (2 m)" />
 									<Enumeration Id="%ENID%" Value="3" Text="Temperatur (80 m)" />
