@@ -302,11 +302,11 @@
 
                         <choose ParamRefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801">
                           <when test="0"><!-- hide for   Mode == "3 Werte mit identischer Zeit" -->
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Werte-Auswahl 1" UIHint="Headline" />
+                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert-Auswahl 1" UIHint="Headline" />
                             <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%901_R-%TT%%CC%90101" /><!-- TODO HelpContext="IW-ChannelName" -->
                           </when>
                           <when default="true">
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Werte-Auswahl" UIHint="Headline" />
+                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert-Auswahl" UIHint="Headline" />
                           </when>
                         </choose>
                         <!-- first value is present always -->
@@ -422,7 +422,7 @@
                           <when test="0"><!-- Mode == "3 Werte mit identischer Zeit" -->
                             <!-- Value (1) ALWAYS -->
                             <!-- Value (2) -->
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Werte-Auswahl 2" UIHint="Headline" />
+                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert-Auswahl 2" UIHint="Headline" />
                             <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%902_R-%TT%%CC%90201" /><!-- TODO HelpContext="IW-ChannelName" -->
                             <!-- b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
                             <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" />
@@ -436,7 +436,7 @@
                             <!-- END b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
 
                             <!-- Value (3) -->
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Werte-Auswahl 3" UIHint="Headline" />
+                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert-Auswahl 3" UIHint="Headline" />
                             <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%903_R-%TT%%CC%90301" /><!-- TODO HelpContext="IW-ChannelName" -->
                             <!-- b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
                             <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" />
