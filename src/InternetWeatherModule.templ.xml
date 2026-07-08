@@ -428,9 +428,39 @@
                             <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" />
                             <choose ParamRefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201">
                               <when test="0"><ParameterSeparator Id="%AID%_PS-nnn" Text="    Kategorie wählen für Auswahl von Messwert" /></when>
-                              <when test="1"><ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" /></when>
-                              <when test="2"><ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%202_R-%TT%%CC%20201" /></when>
-                              <when test="1 2" ><ParameterSeparator Id="%AID%_PS-nnn" Text="      PLATZHALTER: Prüfung selber Zeit-Typ wie 1" /></when>
+                              <when test="1"><!-- Group: Overview -->
+                                <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" />
+                                <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001" SourceParamRefRef="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" />
+                              </when>
+                              <when test="2"><!-- Group: Temperature -->
+                                <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%202_R-%TT%%CC%20201" />
+                                <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001" SourceParamRefRef="%AID%_UP-%TT%%CC%202_R-%TT%%CC%20201" />
+                              </when>
+                              <when test="1 2" >
+                                <!--
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="      PLATZHALTER: Prüfung selber Zeit-Typ wie 1" />
+                                -->
+                                <choose ParamRefId="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001">
+                                  <when test="&lt;4194304"><!-- current -->
+                                    <!-- IGNORE, Note: Will not be hidden for Disabled Value
+                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Aktuell - keine Zeitauswahl" UIHint="Information" />
+                                    -->
+                                  </when>
+                                  <when default="true">
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001">
+                                      <when test="&lt;8388608"><!-- daily -->
+                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%421_R-%TT%%CC%42101" />
+                                      </when>
+                                      <when default="true"><!-- hourly -->
+                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%422_R-%TT%%CC%42201" />
+                                      </when>
+                                      <when test="&gt;=12582912"><!-- 15-min -->
+                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%423_R-%TT%%CC%42301" />
+                                      </when>
+                                    </choose>
+                                  </when>
+                                </choose>
+                              </when>
                               <when default="true" ><ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert-Kategorie nicht implementiert" UIHint="Error" /></when>
                             </choose>
                             <!-- END b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
@@ -442,9 +472,39 @@
                             <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" />
                             <choose ParamRefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301">
                               <when test="0"><ParameterSeparator Id="%AID%_PS-nnn" Text="    Kategorie wählen für Auswahl von Messwert" /></when>
-                              <when test="1"><ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" /></when>
-                              <when test="2"><ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" /></when>
-                              <when test="1 2" ><ParameterSeparator Id="%AID%_PS-nnn" Text="      PLATZHALTER: Prüfung selber Zeit-Typ wie 1" /></when>
+                              <when test="1"><!-- Group: Overview -->
+                                <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" />
+                                <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" SourceParamRefRef="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" />
+                              </when>
+                              <when test="2"><!-- Group: Temperature -->
+                                <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" />
+                                <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" SourceParamRefRef="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" />
+                              </when>
+                              <when test="1 2" >
+                                <!--
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="      PLATZHALTER: Prüfung selber Zeit-Typ wie 1" />
+                                -->
+                                <choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
+                                  <when test="&lt;4194304"><!-- current -->
+                                    <!-- IGNORE, Note: Will not be hidden for Disabled Value
+                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Aktuell - keine Zeitauswahl" UIHint="Information" />
+                                    -->
+                                  </when>
+                                  <when default="true">
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
+                                      <when test="&lt;8388608"><!-- daily -->
+                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%431_R-%TT%%CC%43101" />
+                                      </when>
+                                      <when default="true"><!-- hourly -->
+                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%432_R-%TT%%CC%43201" />
+                                      </when>
+                                      <when test="&gt;=12582912"><!-- 15-min -->
+                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%433_R-%TT%%CC%43301" />
+                                      </when>
+                                    </choose>
+                                  </when>
+                                </choose>
+                              </when>
                               <when default="true" ><ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert-Kategorie nicht implementiert" UIHint="Error" /></when>
                             </choose>
                             <!-- END b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
