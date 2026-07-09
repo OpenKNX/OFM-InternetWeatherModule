@@ -15,7 +15,7 @@ const std::string OpenWeatherMapChannel::name()
     return "OpenWeatherMap";
 }
 
-int16_t OpenWeatherMapChannel::fillWeather(CurrentWheatherData& currentWeather, ForecastDayWheatherData& todayWeather, ForecastDayWheatherData& tomorrowWeather, ForecastHourWheatherData& hour1Weather, ForecastHourWheatherData& hour2Weather)
+int16_t OpenWeatherMapChannel::fillWeather(CurrentWeatherData& currentWeather, ForecastDayWeatherData& todayWeather, ForecastDayWeatherData& tomorrowWeather, ForecastHourWeatherData& hour1Weather, ForecastHourWeatherData& hour2Weather)
 {
     String url = OpenWeatherMapUrl;
     url += "&appid=";
@@ -61,7 +61,7 @@ int16_t OpenWeatherMapChannel::fillWeather(CurrentWheatherData& currentWeather, 
     return httpStatus;
 }
 
-void OpenWeatherMapChannel::fillForecast(JsonObject& json, CurrentWheatherData& wheater)
+void OpenWeatherMapChannel::fillForecast(JsonObject& json, CurrentWeatherData& wheater)
 {
     wheater.temperature_C = json["temp"];                  // 22.34
     wheater.temperatureFeelsLike_C = json["feels_like"];   // 21.95
@@ -78,13 +78,13 @@ void OpenWeatherMapChannel::fillForecast(JsonObject& json, CurrentWheatherData& 
     wheater.cloudsCover_percent = json["clouds"];                           // 40
 }
 
-void OpenWeatherMapChannel::fillForecast(JsonObject& json, ForecastHourWheatherData& wheater)
+void OpenWeatherMapChannel::fillForecast(JsonObject& json, ForecastHourWeatherData& wheater)
 {
-    fillForecast(json, (CurrentWheatherData&) wheater);
+    fillForecast(json, (CurrentWeatherData&) wheater);
     wheater.probabilityOfPrecipitation_percent = round(100. * (float) json["pop"]);    // 0.70
 }
 
-void OpenWeatherMapChannel::fillForecast(JsonObject& json, ForecastDayWheatherData& wheater)
+void OpenWeatherMapChannel::fillForecast(JsonObject& json, ForecastDayWeatherData& wheater)
 {
     JsonObject tempObject = json["temp"];
     wheater.temperatureDay_C = tempObject["day"];     // 21.95
