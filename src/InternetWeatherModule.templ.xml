@@ -293,7 +293,7 @@
               <ParameterBlock Id="" Name="ChannelDefinition">
                <choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
                 <when test="!=0">
-                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW" Text="%C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" Icon="map-marker-radius-outline" ShowInComObjectTree="false"><!-- TODO HelpContext="IW-Channel" -->
+                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW" Text="%C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" Icon="map-marker-radius-outline" ShowInComObjectTree="true"><!-- TODO HelpContext="IW-Channel" -->
 
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Wetter-Kanal" UIHint="Headline" />
                     <!-- Kanal Name -->
@@ -340,219 +340,223 @@
 
 
                         <!-- b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Wetter-Wert A" UIHint="Headline" />
-                        <!-- Bezeichnung Wert A -->
-                        <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%901_R-%TT%%CC%90101" /><!-- TODO HelpContext="IW-ChannelName" -->
-                        <!-- Kategorie -->
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101">
-                          <!-- when test="0"><ParameterSeparator Id="%AID%_PS-nnn" Text="    Kategorie wählen für Auswahl von Messwert" /></when -->
-                          <when test="1"><!-- Kategorie == Überblick -->
-                            <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" />
-                            <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001" SourceParamRefRef="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" />
-                          </when>
-                          <when test="2"><!-- Kategorie == Temperatur -->
-                            <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" />
-                            <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001" SourceParamRefRef="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" />
-                          </when>
-                          <!-- TODO add more categories and remove --><when test="&gt;2"><ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert-Kategorie nicht implementiert" UIHint="Error" /></when>
-                          <when test="&gt;0">
-                            <choose ParamRefId="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001">
-                              <when test="&lt;4194304">
-                                <!-- current -->
-                                <!-- IGNORE, Note: Will not be hidden for Disabled Value
-                                -->
-                              </when>
-                              <when default="true">
-                                <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101" />
+                        <ParameterBlock Id="%AID%_PB-nnn" Name="W%C%OutputA" Text="Wetter A: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%901_R-%TT%%CC%90101" Icon="chevron-left-circle-outline" HelpContext="Empty">
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Wetter-Wert A" UIHint="Headline" />
+                          <!-- Bezeichnung Wert A -->
+                          <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%901_R-%TT%%CC%90101" /><!-- TODO HelpContext="IW-ChannelName" -->
+                          <!-- Kategorie -->
+                          <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" />
+                          <choose ParamRefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101">
+                            <!-- when test="0"><ParameterSeparator Id="%AID%_PS-nnn" Text="    Kategorie wählen für Auswahl von Messwert" /></when -->
+                            <when test="1"><!-- Kategorie == Überblick -->
+                              <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" />
+                              <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001" SourceParamRefRef="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" />
+                            </when>
+                            <when test="2"><!-- Kategorie == Temperatur -->
+                              <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" />
+                              <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001" SourceParamRefRef="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" />
+                            </when>
+                            <!-- TODO add more categories and remove --><when test="&gt;2"><ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert-Kategorie nicht implementiert" UIHint="Error" /></when>
+                            <when test="&gt;0">
+                              <choose ParamRefId="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001">
+                                <when test="&lt;4194304">
+                                  <!-- current -->
+                                  <!-- IGNORE, Note: Will not be hidden for Disabled Value
+                                  -->
+                                </when>
+                                <when default="true">
+                                  <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101" />
 
-                                <choose ParamRefId="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001">
-                                  <when test="&lt;8388608">
-                                    <!-- daily -->
-                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%411_R-%TT%%CC%41101" />
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101">
-                                      <when test="1">
-                                        <!-- TODO check using other offset -->
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%511_R-%TT%%CC%51101" />
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101" />
-                                      </when>
-                                    </choose>
-                                  </when>
-                                  <when default="true">
-                                    <!-- hour -->
-                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%412_R-%TT%%CC%41201" />
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101">
-                                      <when test="1">
-                                        <!-- TODO check using other offset -->
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%512_R-%TT%%CC%51201" />
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101" />
-                                      </when>
-                                    </choose>
-                                  </when>
-                                  <when test="&gt;=12582912">
-                                    <!-- 15-min -->
-                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%413_R-%TT%%CC%41301" />
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101">
-                                      <when test="1">
-                                        <!-- TODO check using other offset -->
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%513_R-%TT%%CC%51301" />
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101" />
-                                      </when>
-                                    </choose>
-                                  </when>
-                                </choose>
-                              </when>
-                            </choose>
-                          </when>
-                        </choose>
-                        <!-- END b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
-
-
-                        <!-- b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Wetter-Wert B" UIHint="Headline" />
-                        <!-- Bezeichnung Wert A -->
-                        <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%902_R-%TT%%CC%90201" /><!-- TODO HelpContext="IW-ChannelName" -->
-                        <!-- Kategorie -->
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201">
-                          <!-- when test="0"><ParameterSeparator Id="%AID%_PS-nnn" Text="    Kategorie wählen für Auswahl von Messwert" /></when -->
-                          <when test="1"><!-- Kategorie == Überblick -->
-                            <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" />
-                            <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001" SourceParamRefRef="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" />
-                          </when>
-                          <when test="2"><!-- Kategorie == Temperatur -->
-                            <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%202_R-%TT%%CC%20201" />
-                            <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001" SourceParamRefRef="%AID%_UP-%TT%%CC%202_R-%TT%%CC%20201" />
-                          </when>
-                          <!-- TODO add more categories and remove --><when test="&gt;2"><ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert-Kategorie nicht implementiert" UIHint="Error" /></when>
-                          <when test="&gt;0">
-                            <choose ParamRefId="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001">
-                              <when test="&lt;4194304">
-                                <!-- current -->
-                                <!-- IGNORE, Note: Will not be hidden for Disabled Value
-                                -->
-                              </when>
-                              <when default="true">
-                                <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201" />
-
-                                <choose ParamRefId="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001">
-                                  <when test="&lt;8388608">
-                                    <!-- daily -->
-                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%421_R-%TT%%CC%42101" />
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201">
-                                      <when test="1">
-                                        <!-- TODO check using other offset -->
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%521_R-%TT%%CC%52101" />
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" />
-                                      </when>
-                                    </choose>
-                                  </when>
-                                  <when default="true">
-                                    <!-- hour -->
-                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%422_R-%TT%%CC%42201" />
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201">
-                                      <when test="1">
-                                        <!-- TODO check using other offset -->
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%522_R-%TT%%CC%52201" />
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" />
-                                      </when>
-                                    </choose>
-                                  </when>
-                                  <when test="&gt;=12582912">
-                                    <!-- 15-min -->
-                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%423_R-%TT%%CC%42301" />
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201">
-                                      <when test="1">
-                                        <!-- TODO check using other offset -->
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%523_R-%TT%%CC%52301" />
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" />
-                                      </when>
-                                    </choose>
-                                  </when>
-                                </choose>
-                              </when>
-                            </choose>
-                          </when>
-                        </choose>
-                        <!-- END b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
-
-
-                        <!-- b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Wetter-Wert C" UIHint="Headline" />
-                        <!-- Bezeichnung -->
-                        <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%903_R-%TT%%CC%90301" /><!-- TODO HelpContext="IW-ChannelName" -->
-                        <!-- Kategorie -->
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301">
-                          <!-- when test="0"><ParameterSeparator Id="%AID%_PS-nnn" Text="    Kategorie wählen für Auswahl von Messwert" /></when -->
-                          <when test="1"><!-- Kategorie == Überblick -->
-                            <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" />
-                            <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" SourceParamRefRef="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" />
-                          </when>
-                          <when test="2"><!-- Kategorie == Temperatur -->
-                            <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" />
-                            <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" SourceParamRefRef="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" />
-                          </when>
-                          <!-- TODO add more categories and remove --><when test="&gt;2"><ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert-Kategorie nicht implementiert" UIHint="Error" /></when>
-                          <when test="&gt;0">
-                            <choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
-                              <when test="&lt;4194304">
-                                <!-- current -->
-                                <!-- IGNORE, Note: Will not be hidden for Disabled Value
-                                -->
-                              </when>
-                              <when default="true">
-                                <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301" />
-
-                                <choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
-                                  <when test="&lt;8388608">
-                                    <!-- daily -->
-                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%431_R-%TT%%CC%43101" />
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301">
-                                      <when test="1">
-                                        <!-- TODO check using other offset -->
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%531_R-%TT%%CC%53101" />
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" />
-                                      </when>
-                                    </choose>
-                                  </when>
-                                  <when default="true">
-                                    <!-- hour -->
-                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%432_R-%TT%%CC%43201" />
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301">
-                                      <when test="1">
-                                        <!-- TODO check using other offset -->
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%532_R-%TT%%CC%53201" />
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" />
-                                      </when>
-                                    </choose>
-                                  </when>
-                                  <when test="&gt;=12582912">
-                                    <!-- 15-min -->
-                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%433_R-%TT%%CC%43301" />
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301">
-                                      <when test="1">
-                                        <!-- TODO check using other offset -->
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%533_R-%TT%%CC%53301" />
-                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" />
-                                      </when>
-                                    </choose>
-                                  </when>
-                                </choose>
-                              </when>
-                            </choose>
-                          </when>
-                        </choose>
-                        <!-- END b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
-
-
-                        <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IWKOs" Text="%C%: {{0}}" TextParameterRefId="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" Inline="true" ShowInComObjectTree="true">
-                          <!-- TODO by type! -->
-                          <!-- TODO use xml-parts -->
+                                  <choose ParamRefId="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001">
+                                    <when test="&lt;8388608">
+                                      <!-- daily -->
+                                      <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%411_R-%TT%%CC%41101" />
+                                      <choose ParamRefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101">
+                                        <when test="1">
+                                          <!-- TODO check using other offset -->
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%511_R-%TT%%CC%51101" />
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101" />
+                                        </when>
+                                      </choose>
+                                    </when>
+                                    <when default="true">
+                                      <!-- hour -->
+                                      <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%412_R-%TT%%CC%41201" />
+                                      <choose ParamRefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101">
+                                        <when test="1">
+                                          <!-- TODO check using other offset -->
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%512_R-%TT%%CC%51201" />
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101" />
+                                        </when>
+                                      </choose>
+                                    </when>
+                                    <when test="&gt;=12582912">
+                                      <!-- 15-min -->
+                                      <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%413_R-%TT%%CC%41301" />
+                                      <choose ParamRefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101">
+                                        <when test="1">
+                                          <!-- TODO check using other offset -->
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%513_R-%TT%%CC%51301" />
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101" />
+                                        </when>
+                                      </choose>
+                                    </when>
+                                  </choose>
+                                </when>
+                              </choose>
+                            </when>
+                          </choose>
+                          <!-- TODO KO type -->
                           <ComObjectRefRef RefId="%AID%_O-%TT%%CC%100_R-%TT%%CC%10001" />
+                        </ParameterBlock>
+                        <!-- END b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
+
+
+                        <!-- b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
+                        <ParameterBlock Id="%AID%_PB-nnn" Name="W%C%OutputB" Text="Wetter B: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%902_R-%TT%%CC%90201" Icon="chevron-left-circle-outline" HelpContext="Empty">
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Wetter-Wert B" UIHint="Headline" />
+                          <!-- Bezeichnung Wert A -->
+                          <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%902_R-%TT%%CC%90201" /><!-- TODO HelpContext="IW-ChannelName" -->
+                          <!-- Kategorie -->
+                          <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" />
+                          <choose ParamRefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201">
+                            <!-- when test="0"><ParameterSeparator Id="%AID%_PS-nnn" Text="    Kategorie wählen für Auswahl von Messwert" /></when -->
+                            <when test="1"><!-- Kategorie == Überblick -->
+                              <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" />
+                              <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001" SourceParamRefRef="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" />
+                            </when>
+                            <when test="2"><!-- Kategorie == Temperatur -->
+                              <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%202_R-%TT%%CC%20201" />
+                              <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001" SourceParamRefRef="%AID%_UP-%TT%%CC%202_R-%TT%%CC%20201" />
+                            </when>
+                            <!-- TODO add more categories and remove --><when test="&gt;2"><ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert-Kategorie nicht implementiert" UIHint="Error" /></when>
+                            <when test="&gt;0">
+                              <choose ParamRefId="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001">
+                                <when test="&lt;4194304">
+                                  <!-- current -->
+                                  <!-- IGNORE, Note: Will not be hidden for Disabled Value
+                                  -->
+                                </when>
+                                <when default="true">
+                                  <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201" />
+
+                                  <choose ParamRefId="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001">
+                                    <when test="&lt;8388608">
+                                      <!-- daily -->
+                                      <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%421_R-%TT%%CC%42101" />
+                                      <choose ParamRefId="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201">
+                                        <when test="1">
+                                          <!-- TODO check using other offset -->
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%521_R-%TT%%CC%52101" />
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" />
+                                        </when>
+                                      </choose>
+                                    </when>
+                                    <when default="true">
+                                      <!-- hour -->
+                                      <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%422_R-%TT%%CC%42201" />
+                                      <choose ParamRefId="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201">
+                                        <when test="1">
+                                          <!-- TODO check using other offset -->
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%522_R-%TT%%CC%52201" />
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" />
+                                        </when>
+                                      </choose>
+                                    </when>
+                                    <when test="&gt;=12582912">
+                                      <!-- 15-min -->
+                                      <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%423_R-%TT%%CC%42301" />
+                                      <choose ParamRefId="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201">
+                                        <when test="1">
+                                          <!-- TODO check using other offset -->
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%523_R-%TT%%CC%52301" />
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" />
+                                        </when>
+                                      </choose>
+                                    </when>
+                                  </choose>
+                                </when>
+                              </choose>
+                            </when>
+                          </choose>
+                          <!-- TODO KO type -->
                           <ComObjectRefRef RefId="%AID%_O-%TT%%CC%101_R-%TT%%CC%10101" />
+                        </ParameterBlock>
+                        <!-- END b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
+
+
+                        <!-- b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
+                        <ParameterBlock Id="%AID%_PB-nnn" Name="W%C%OutputA" Text="Wetter C: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%903_R-%TT%%CC%90301" Icon="chevron-left-circle-outline" HelpContext="Empty">
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Wetter-Wert C" UIHint="Headline" />
+                          <!-- Bezeichnung -->
+                          <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%903_R-%TT%%CC%90301" /><!-- TODO HelpContext="IW-ChannelName" -->
+                          <!-- Kategorie -->
+                          <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" />
+                          <choose ParamRefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301">
+                            <!-- when test="0"><ParameterSeparator Id="%AID%_PS-nnn" Text="    Kategorie wählen für Auswahl von Messwert" /></when -->
+                            <when test="1"><!-- Kategorie == Überblick -->
+                              <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" />
+                              <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" SourceParamRefRef="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" />
+                            </when>
+                            <when test="2"><!-- Kategorie == Temperatur -->
+                              <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" />
+                              <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" SourceParamRefRef="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" />
+                            </when>
+                            <!-- TODO add more categories and remove --><when test="&gt;2"><ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert-Kategorie nicht implementiert" UIHint="Error" /></when>
+                            <when test="&gt;0">
+                              <choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
+                                <when test="&lt;4194304">
+                                  <!-- current -->
+                                  <!-- IGNORE, Note: Will not be hidden for Disabled Value
+                                  -->
+                                </when>
+                                <when default="true">
+                                  <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301" />
+
+                                  <choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
+                                    <when test="&lt;8388608">
+                                      <!-- daily -->
+                                      <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%431_R-%TT%%CC%43101" />
+                                      <choose ParamRefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301">
+                                        <when test="1">
+                                          <!-- TODO check using other offset -->
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%531_R-%TT%%CC%53101" />
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" />
+                                        </when>
+                                      </choose>
+                                    </when>
+                                    <when default="true">
+                                      <!-- hour -->
+                                      <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%432_R-%TT%%CC%43201" />
+                                      <choose ParamRefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301">
+                                        <when test="1">
+                                          <!-- TODO check using other offset -->
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%532_R-%TT%%CC%53201" />
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" />
+                                        </when>
+                                      </choose>
+                                    </when>
+                                    <when test="&gt;=12582912">
+                                      <!-- 15-min -->
+                                      <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%433_R-%TT%%CC%43301" />
+                                      <choose ParamRefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301">
+                                        <when test="1">
+                                          <!-- TODO check using other offset -->
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%533_R-%TT%%CC%53301" />
+                                          <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" />
+                                        </when>
+                                      </choose>
+                                    </when>
+                                  </choose>
+                                </when>
+                              </choose>
+                            </when>
+                          </choose>
+                          <!-- TODO KO type -->
                           <ComObjectRefRef RefId="%AID%_O-%TT%%CC%102_R-%TT%%CC%10201" />
                         </ParameterBlock>
+                        <!-- END b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
+
 
                       </when>
                     </choose>
