@@ -12,9 +12,9 @@
               <Parameter Id="%AID%_P-%TT%%CC%000" Name="CH%C%Name"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
               <Parameter Id="%AID%_P-%TT%%CC%999" Name="CH%C%NameDisplay" ParameterType="%AID%_PT-Text45Byte" Text="Beschreibung (Anzeige)" Value="" Access="Read" op:configTransfer="never" />
 
-              <Parameter Id="%AID%_P-%TT%%CC%901" Name="CH%C%Out1"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
-              <Parameter Id="%AID%_P-%TT%%CC%902" Name="CH%C%Out2"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
-              <Parameter Id="%AID%_P-%TT%%CC%903" Name="CH%C%Out3"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%901" Name="CH%C%Out1"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung    (A)"     Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%902" Name="CH%C%Out2"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung    (B)"     Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%903" Name="CH%C%Out3"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung    (C)"     Value="" />
 
               <!-- Weather outputs -->
               <Union SizeInBit="96">
@@ -34,8 +34,10 @@
                 <!-- 1 Bit unused -->
 
                 <!-- Offset [1;2[ -->
-                <Parameter Offset="1" BitOffset="0" Id="%AID%_UP-%TT%%CC%008" Name="CH%C%ValueMode" ParameterType="%AID%_PT-ValueMode" Text="Nutzung" Value="0" />
-                <!-- 6 Bit unused -->
+                <Parameter Offset="1" BitOffset="0" Id="%AID%_UP-%TT%%CC%041" Name="CH%C%MeasurementType1"  ParameterType="%AID%_PT-ValueModeSimple"  Text="Typ   (A)"       Value="0" />
+                <Parameter Offset="1" BitOffset="1" Id="%AID%_UP-%TT%%CC%042" Name="CH%C%MeasurementType2"  ParameterType="%AID%_PT-ValueModeSimple"  Text="Typ   (B)"       Value="0" />
+                <Parameter Offset="1" BitOffset="2" Id="%AID%_UP-%TT%%CC%043" Name="CH%C%MeasurementType3"  ParameterType="%AID%_PT-ValueModeSimple"  Text="Typ   (C)"       Value="0" />
+                <!-- 5 Bit unused -->
 
                 <!-- Offset [2;8[: TimeSelection_* -->
                 <!--
@@ -45,74 +47,88 @@
                 -->
 
                 <!-- Offset [8;10[: MeasurementValue_* -->
-                <Parameter Offset="8" BitOffset="0" Id="%AID%_UP-%TT%%CC%031" Name="CH%C%MeasurementGroup1" ParameterType="%AID%_PT-MeasurementGroup" Text="Messwert-Kategorie" Value="0" />
-                <!-- 2 bit unused ? -->
-                <Parameter Offset="9" BitOffset="0" Id="%AID%_UP-%TT%%CC%032" Name="CH%C%MeasurementGroup2" ParameterType="%AID%_PT-MeasurementGroup" Text="Messwert-Kategorie 2" Value="0" />
-                <!-- 2 bit unused ? -->
-                <Parameter Offset="10" BitOffset="0" Id="%AID%_UP-%TT%%CC%033" Name="CH%C%MeasurementGroup3" ParameterType="%AID%_PT-MeasurementGroup" Text="Messwert-Kategorie 3" Value="0" />
-                <!-- 2 bit unused ? -->
+                <Parameter Offset="8" BitOffset="0" Id="%AID%_UP-%TT%%CC%031" Name="CH%C%MeasurementGroup1" ParameterType="%AID%_PT-MeasurementGroup" Text="Kategorie   (A)" Value="0" />
+                <Parameter Offset="9" BitOffset="0" Id="%AID%_UP-%TT%%CC%032" Name="CH%C%MeasurementGroup2" ParameterType="%AID%_PT-MeasurementGroup" Text="Kategorie   (B)" Value="0" />
+                <Parameter Offset="10" BitOffset="0" Id="%AID%_UP-%TT%%CC%033" Name="CH%C%MeasurementGroup3" ParameterType="%AID%_PT-MeasurementGroup" Text="Kategorie   (C)" Value="0" />
 
                 <!-- Offset 11: Aggregation_* -->
-                <Parameter Offset="11" BitOffset="0" Id="%AID%_UP-%TT%%CC%071" Name="CH%C%Aggregation1" ParameterType="%AID%_PT-Aggregation" Text="Aggregation 1" Value="0" />
-                <Parameter Offset="11" BitOffset="2" Id="%AID%_UP-%TT%%CC%072" Name="CH%C%Aggregation2" ParameterType="%AID%_PT-Aggregation" Text="Aggregation 2" Value="1" />
-                <Parameter Offset="11" BitOffset="4" Id="%AID%_UP-%TT%%CC%073" Name="CH%C%Aggregation3" ParameterType="%AID%_PT-Aggregation" Text="Aggregation 3" Value="2" />
+                <Parameter Offset="11" BitOffset="0" Id="%AID%_UP-%TT%%CC%071" Name="CH%C%Aggregation1" ParameterType="%AID%_PT-Aggregation" Text="Aggregation   (A)" Value="0" />
+                <Parameter Offset="11" BitOffset="2" Id="%AID%_UP-%TT%%CC%072" Name="CH%C%Aggregation2" ParameterType="%AID%_PT-Aggregation" Text="Aggregation   (B)" Value="1" />
+                <Parameter Offset="11" BitOffset="4" Id="%AID%_UP-%TT%%CC%073" Name="CH%C%Aggregation3" ParameterType="%AID%_PT-Aggregation" Text="Aggregation   (C)" Value="2" />
                 <!-- 2 bit unused -->
               </Union>
               <Union SizeInBit="32">
                 <Memory CodeSegment="%MID%" Offset="12" BitOffset="0" />
 
-                <!-- TODO check removal of *00 -->
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%100" Name="CH%C%MeasurementValue1"       ParameterType="%AID%_PT-MeasurementValue" Text="Messwert"   Value="0" Access="None" op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%101" Name="CH%C%MeasurementValue1Group1" ParameterType="%AID%_PT-GroupOverview"    Text="Messwert"   Value="0"               op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%102" Name="CH%C%MeasurementValue1Group2" ParameterType="%AID%_PT-GroupTemperature" Text="Messwert"   Value="0"               op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%100" Name="CH%C%MeasurementValue1"       ParameterType="%AID%_PT-MeasurementValue" Text="Messwert   (A)"   Value="0" Access="None" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%101" Name="CH%C%MeasurementValue1Group1" ParameterType="%AID%_PT-GroupOverview"    Text="Messwert   (A)"   Value="0"               op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%102" Name="CH%C%MeasurementValue1Group2" ParameterType="%AID%_PT-GroupTemperature" Text="Messwert   (A)"   Value="0"               op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
               <Union SizeInBit="32">
                 <Memory CodeSegment="%MID%" Offset="16" BitOffset="0" />
 
-                <!-- TODO check removal of *00 -->
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%200" Name="CH%C%MeasurementValue2"       ParameterType="%AID%_PT-MeasurementValue" Text="Messwert 2" Value="0" Access="None" op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%201" Name="CH%C%MeasurementValue2Group1" ParameterType="%AID%_PT-GroupOverview"    Text="Messwert 2" Value="0"               op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%202" Name="CH%C%MeasurementValue2Group2" ParameterType="%AID%_PT-GroupTemperature" Text="Messwert 2" Value="0"               op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%200" Name="CH%C%MeasurementValue2"       ParameterType="%AID%_PT-MeasurementValue" Text="Messwert   (B)"   Value="0" Access="None" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%201" Name="CH%C%MeasurementValue2Group1" ParameterType="%AID%_PT-GroupOverview"    Text="Messwert   (B)"   Value="0"               op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%202" Name="CH%C%MeasurementValue2Group2" ParameterType="%AID%_PT-GroupTemperature" Text="Messwert   (B)"   Value="0"               op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
               <Union SizeInBit="32">
                 <Memory CodeSegment="%MID%" Offset="20" BitOffset="0" />
 
-                <!-- TODO check removal of *00 -->
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%300" Name="CH%C%MeasurementValue3"       ParameterType="%AID%_PT-MeasurementValue" Text="Messwert 3" Value="0" Access="None" op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%301" Name="CH%C%MeasurementValue3Group1" ParameterType="%AID%_PT-GroupOverview"    Text="Messwert 3" Value="0"               op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%302" Name="CH%C%MeasurementValue3Group2" ParameterType="%AID%_PT-GroupTemperature" Text="Messwert 3" Value="0"               op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%300" Name="CH%C%MeasurementValue3"       ParameterType="%AID%_PT-MeasurementValue" Text="Messwert   (C)"   Value="0" Access="None" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%301" Name="CH%C%MeasurementValue3Group1" ParameterType="%AID%_PT-GroupOverview"    Text="Messwert   (C)"   Value="0"               op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%302" Name="CH%C%MeasurementValue3Group2" ParameterType="%AID%_PT-GroupTemperature" Text="Messwert   (C)"   Value="0"               op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
               <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="24" BitOffset="0" />
 
-                <!-- TODO check removal of *00 -->
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%411" Name="CH%C%TimeOffset1Days"         ParameterType="%AID%_PT-TimeOffsetDays"     Text="Offset"     Value="0" SuffixText="Tage"        op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%412" Name="CH%C%TimeOffset1Hours"        ParameterType="%AID%_PT-TimeOffsetHours"    Text="Offset"     Value="0" SuffixText="Stunden"     op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%413" Name="CH%C%TimeOffset1QHours"       ParameterType="%AID%_PT-TimeOffset15Mins"   Text="Offset"     Value="0" SuffixText="1/4 Stunden" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%411" Name="CH%C%TimeOffset1Days"         ParameterType="%AID%_PT-TimeOffsetDays"     Text="Offset   (A)"     Value="0" SuffixText="Tage"        op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%412" Name="CH%C%TimeOffset1Hours"        ParameterType="%AID%_PT-TimeOffsetHours"    Text="Offset   (A)"     Value="0" SuffixText="Stunden"     op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%413" Name="CH%C%TimeOffset1QHours"       ParameterType="%AID%_PT-TimeOffset15Mins"   Text="Offset   (A)"     Value="0" SuffixText="1/4 Stunden" op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
               <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="26" BitOffset="0" />
 
-                <!-- TODO check removal of *00 -->
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%421" Name="CH%C%TimeOffset2Days"         ParameterType="%AID%_PT-TimeOffsetDays"     Text="Offset 2"   Value="0" SuffixText="Tage"        op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%422" Name="CH%C%TimeOffset2Hours"        ParameterType="%AID%_PT-TimeOffsetHours"    Text="Offset 2"   Value="0" SuffixText="Stunden"     op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%423" Name="CH%C%TimeOffset2QHours"       ParameterType="%AID%_PT-TimeOffset15Mins"   Text="Offset 2"   Value="0" SuffixText="1/4 Stunden" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%511" Name="CH%C%TimeOffset1EndDays"     ParameterType="%AID%_PT-TimeOffsetDays"     Text="bis Offset   (A)" Value="1" SuffixText="Tage"        op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%512" Name="CH%C%TimeOffset1EndHours"    ParameterType="%AID%_PT-TimeOffsetHours"    Text="bis Offset   (A)" Value="1" SuffixText="Stunden"     op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%513" Name="CH%C%TimeOffset1EndQHours"   ParameterType="%AID%_PT-TimeOffset15Mins"   Text="bis Offset   (A)" Value="1" SuffixText="1/4 Stunden" op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
               <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="28" BitOffset="0" />
 
-                <!-- TODO check removal of *00 -->
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%431" Name="CH%C%TimeOffset3Days"         ParameterType="%AID%_PT-TimeOffsetDays"     Text="Offset 3"   Value="0" SuffixText="Tage"        op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%432" Name="CH%C%TimeOffset3Hours"        ParameterType="%AID%_PT-TimeOffsetHours"    Text="Offset 3"   Value="0" SuffixText="Stunden"     op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%433" Name="CH%C%TimeOffset3QHours"       ParameterType="%AID%_PT-TimeOffset15Mins"   Text="Offset 3"   Value="0" SuffixText="1/4 Stunden" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%421" Name="CH%C%TimeOffset2Days"         ParameterType="%AID%_PT-TimeOffsetDays"     Text="Offset   (B)"   Value="0" SuffixText="Tage"        op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%422" Name="CH%C%TimeOffset2Hours"        ParameterType="%AID%_PT-TimeOffsetHours"    Text="Offset   (B)"   Value="0" SuffixText="Stunden"     op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%423" Name="CH%C%TimeOffset2QHours"       ParameterType="%AID%_PT-TimeOffset15Mins"   Text="Offset   (B)"   Value="0" SuffixText="1/4 Stunden" op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
+              <Union SizeInBit="16">
+                <Memory CodeSegment="%MID%" Offset="30" BitOffset="0" />
 
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%521" Name="CH%C%TimeOffset2EndDays"     ParameterType="%AID%_PT-TimeOffsetDays"     Text="bis Offset   (B)" Value="1" SuffixText="Tage"        op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%522" Name="CH%C%TimeOffset2EndHours"    ParameterType="%AID%_PT-TimeOffsetHours"    Text="bis Offset   (B)" Value="1" SuffixText="Stunden"     op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%523" Name="CH%C%TimeOffset2EndQHours"   ParameterType="%AID%_PT-TimeOffset15Mins"   Text="bis Offset   (B)" Value="1" SuffixText="1/4 Stunden" op:nowarn="true" />
+                <!-- space unused ? -->
+              </Union>
+              <Union SizeInBit="16">
+                <Memory CodeSegment="%MID%" Offset="32" BitOffset="0" />
+
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%431" Name="CH%C%TimeOffset3Days"         ParameterType="%AID%_PT-TimeOffsetDays"     Text="Offset   (C)"   Value="0" SuffixText="Tage"        op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%432" Name="CH%C%TimeOffset3Hours"        ParameterType="%AID%_PT-TimeOffsetHours"    Text="Offset   (C)"   Value="0" SuffixText="Stunden"     op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%433" Name="CH%C%TimeOffset3QHours"       ParameterType="%AID%_PT-TimeOffset15Mins"   Text="Offset   (C)"   Value="0" SuffixText="1/4 Stunden" op:nowarn="true" />
+                <!-- space unused ? -->
+              </Union>
+              <Union SizeInBit="16">
+                <Memory CodeSegment="%MID%" Offset="34" BitOffset="0" />
+
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%531" Name="CH%C%TimeOffset3EndDays"     ParameterType="%AID%_PT-TimeOffsetDays"     Text="bis Offset   (C)" Value="1" SuffixText="Tage"        op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%532" Name="CH%C%TimeOffset3EndHours"    ParameterType="%AID%_PT-TimeOffsetHours"    Text="bis Offset   (C)" Value="1" SuffixText="Stunden"     op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%533" Name="CH%C%TimeOffset3EndQHours"   ParameterType="%AID%_PT-TimeOffset15Mins"   Text="bis Offset   (C)" Value="1" SuffixText="1/4 Stunden" op:nowarn="true" />
+                <!-- space unused ? -->
+              </Union>
 
             </Parameters>
             <ParameterRefs>
@@ -133,7 +149,6 @@
               -->
 
               <ParameterRef Id="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" RefId="%AID%_UP-%TT%%CC%007" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801" RefId="%AID%_UP-%TT%%CC%008" />
               <!--
               <ParameterRef Id="%AID%_UP-%TT%%CC%021_R-%TT%%CC%02101" RefId="%AID%_UP-%TT%%CC%021" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%022_R-%TT%%CC%02201" RefId="%AID%_UP-%TT%%CC%022" />
@@ -142,6 +157,9 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" RefId="%AID%_UP-%TT%%CC%031" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" RefId="%AID%_UP-%TT%%CC%032" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" RefId="%AID%_UP-%TT%%CC%033" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101" RefId="%AID%_UP-%TT%%CC%041" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201" RefId="%AID%_UP-%TT%%CC%042" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301" RefId="%AID%_UP-%TT%%CC%043" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101" RefId="%AID%_UP-%TT%%CC%071" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" RefId="%AID%_UP-%TT%%CC%072" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" RefId="%AID%_UP-%TT%%CC%073" />
@@ -165,6 +183,16 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%431_R-%TT%%CC%43101" RefId="%AID%_UP-%TT%%CC%431" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%432_R-%TT%%CC%43201" RefId="%AID%_UP-%TT%%CC%432" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%433_R-%TT%%CC%43301" RefId="%AID%_UP-%TT%%CC%433" />
+
+              <ParameterRef Id="%AID%_UP-%TT%%CC%511_R-%TT%%CC%51101" RefId="%AID%_UP-%TT%%CC%511" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%512_R-%TT%%CC%51201" RefId="%AID%_UP-%TT%%CC%512" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%513_R-%TT%%CC%51301" RefId="%AID%_UP-%TT%%CC%513" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%521_R-%TT%%CC%52101" RefId="%AID%_UP-%TT%%CC%521" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%522_R-%TT%%CC%52201" RefId="%AID%_UP-%TT%%CC%522" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%523_R-%TT%%CC%52301" RefId="%AID%_UP-%TT%%CC%523" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%531_R-%TT%%CC%53101" RefId="%AID%_UP-%TT%%CC%531" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%532_R-%TT%%CC%53201" RefId="%AID%_UP-%TT%%CC%532" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%533_R-%TT%%CC%53301" RefId="%AID%_UP-%TT%%CC%533" />
 
             </ParameterRefs>
             <ParameterCalculations>
@@ -310,121 +338,67 @@
                         <!-- Ort -->
                         <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" /><!-- TODO HelpContext="IW-Location" -->
 
-                        <!-- Vorhersagezeit-->
-                        <!--
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" />--><!-- TODO HelpContext="IW-TimeDimension" -->
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801" /><!-- TODO HelpContext="IW-TimePeriod" -->
 
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801">
-                          <when test="0"><!-- hide for   Mode == "3 Werte mit identischer Zeit" -->
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert-Auswahl 1" UIHint="Headline" />
-                            <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%901_R-%TT%%CC%90101" /><!-- TODO HelpContext="IW-ChannelName" -->
-                          </when>
-                          <when default="true">
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert-Auswahl" UIHint="Headline" />
-                          </when>
-                        </choose>
-                        <!-- first value is present always -->
                         <!-- b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Wetter-Wert A" UIHint="Headline" />
+                        <!-- Bezeichnung Wert A -->
+                        <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%901_R-%TT%%CC%90101" /><!-- TODO HelpContext="IW-ChannelName" -->
+                        <!-- Kategorie -->
                         <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" />
                         <choose ParamRefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101">
-                          <when test="0"><ParameterSeparator Id="%AID%_PS-nnn" Text="    Kategorie wählen für Auswahl von Messwert" /></when>
-                          <when test="1"><!-- Group: Overview -->
+                          <!-- when test="0"><ParameterSeparator Id="%AID%_PS-nnn" Text="    Kategorie wählen für Auswahl von Messwert" /></when -->
+                          <when test="1"><!-- Kategorie == Überblick -->
                             <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" />
                             <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001" SourceParamRefRef="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" />
                           </when>
-                          <when test="2"><!-- Group: Temperature -->
+                          <when test="2"><!-- Kategorie == Temperatur -->
                             <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" />
                             <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001" SourceParamRefRef="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" />
                           </when>
-                          <when default="true" ><ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert-Kategorie nicht implementiert" UIHint="Error" /></when>
-                          <when test="1 2">
+                          <!-- TODO add more categories and remove --><when test="&gt;2"><ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert-Kategorie nicht implementiert" UIHint="Error" /></when>
+                          <when test="&gt;0">
                             <choose ParamRefId="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001">
                               <when test="&lt;4194304">
                                 <!-- current -->
                                 <!-- IGNORE, Note: Will not be hidden for Disabled Value
-                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Aktuell - keine Zeitauswahl" UIHint="Information" />
                                 -->
                               </when>
                               <when default="true">
+                                <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101" />
+
                                 <choose ParamRefId="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001">
                                   <when test="&lt;8388608">
                                     <!-- daily -->
-                                    <!-- ParameterSeparator Id="%AID%_PS-nnn" Text="Tageswerte" UIHint="Information" /-->
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801">
-                                      <when test="0"><!-- 3 Werte mit identischer Zeit -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%411_R-%TT%%CC%41101" />
-                                      </when>
-                                      <when test="1"><!-- 1 Wert mit 3 Aggregationen über Intervall -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%411_R-%TT%%CC%41101" />
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%421_R-%TT%%CC%42101" />
-                                      </when>
-                                      <when test="2"><!-- 1 Wert zu 3 Zeiten -->
-                                        <ParameterRefRef IndentLevel="3"  RefId="%AID%_P-%TT%%CC%901_R-%TT%%CC%90101" /><!-- TODO HelpContext="IW-ChannelName" -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%411_R-%TT%%CC%41101" />
-                                        <ParameterRefRef IndentLevel="3"  RefId="%AID%_P-%TT%%CC%902_R-%TT%%CC%90201" /><!-- TODO HelpContext="IW-ChannelName" -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%421_R-%TT%%CC%42101" />
-                                        <ParameterRefRef IndentLevel="3"  RefId="%AID%_P-%TT%%CC%903_R-%TT%%CC%90301" /><!-- TODO HelpContext="IW-ChannelName" -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%431_R-%TT%%CC%43101" />
+                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%411_R-%TT%%CC%41101" />
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101">
+                                      <when test="1">
+                                        <!-- TODO check using other offset -->
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%511_R-%TT%%CC%51101" />
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101" />
                                       </when>
                                     </choose>
-
                                   </when>
                                   <when default="true">
                                     <!-- hour -->
-                                    <!--
-                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Stundenwerte" UIHint="Information" />
-                                    -->
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801">
-                                      <when test="0"><!-- 3 Werte mit identischer Zeit -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%412_R-%TT%%CC%41201" />
-                                      </when>
-                                      <when test="1"><!-- 1 Wert mit 3 Aggregationen über Intervall -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%412_R-%TT%%CC%41201" />
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%422_R-%TT%%CC%42201" />
-                                      </when>
-                                      <when test="2"><!-- 1 Wert zu 3 Zeiten -->
-                                        <ParameterRefRef IndentLevel="3"  RefId="%AID%_P-%TT%%CC%901_R-%TT%%CC%90101" /><!-- TODO HelpContext="IW-ChannelName" -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%412_R-%TT%%CC%41201" />
-                                        <ParameterRefRef IndentLevel="3"  RefId="%AID%_P-%TT%%CC%902_R-%TT%%CC%90201" /><!-- TODO HelpContext="IW-ChannelName" -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%422_R-%TT%%CC%42201" />
-                                        <ParameterRefRef IndentLevel="3"  RefId="%AID%_P-%TT%%CC%903_R-%TT%%CC%90301" /><!-- TODO HelpContext="IW-ChannelName" -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%432_R-%TT%%CC%43201" />
+                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%412_R-%TT%%CC%41201" />
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101">
+                                      <when test="1">
+                                        <!-- TODO check using other offset -->
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%512_R-%TT%%CC%51201" />
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101" />
                                       </when>
                                     </choose>
-
                                   </when>
                                   <when test="&gt;=12582912">
                                     <!-- 15-min -->
-                                    <!--
-                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="15-Min-Werte" UIHint="Information" />
-                                    -->
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801">
-                                      <when test="0"><!-- 3 Werte mit identischer Zeit -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%413_R-%TT%%CC%41301" />
-                                      </when>
-                                      <when test="1"><!-- 1 Wert mit 3 Aggregationen über Intervall -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%413_R-%TT%%CC%41301" />
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%423_R-%TT%%CC%42301" />
-
-                                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Aggregation" UIHint="Headline" />
-                                        <ParameterRefRef IndentLevel="3"  RefId="%AID%_P-%TT%%CC%901_R-%TT%%CC%90101" /><!-- TODO HelpContext="IW-ChannelName" -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101" /><!-- TODO HelpContext="IW-Aggregation" -->
-                                        <ParameterRefRef IndentLevel="3"  RefId="%AID%_P-%TT%%CC%902_R-%TT%%CC%90201" /><!-- TODO HelpContext="IW-ChannelName" -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" /><!-- TODO HelpContext="IW-Aggregation" -->
-                                        <ParameterRefRef IndentLevel="3"  RefId="%AID%_P-%TT%%CC%903_R-%TT%%CC%90301" /><!-- TODO HelpContext="IW-ChannelName" -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" /><!-- TODO HelpContext="IW-Aggregation" -->
-                                      </when>
-                                      <when test="2"><!-- 1 Wert zu 3 Zeiten -->
-                                        <ParameterRefRef IndentLevel="3"  RefId="%AID%_P-%TT%%CC%901_R-%TT%%CC%90101" /><!-- TODO HelpContext="IW-ChannelName" -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%413_R-%TT%%CC%41301" />
-                                        <ParameterRefRef IndentLevel="3"  RefId="%AID%_P-%TT%%CC%902_R-%TT%%CC%90201" /><!-- TODO HelpContext="IW-ChannelName" -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%423_R-%TT%%CC%42301" />
-                                        <ParameterRefRef IndentLevel="3"  RefId="%AID%_P-%TT%%CC%903_R-%TT%%CC%90301" /><!-- TODO HelpContext="IW-ChannelName" -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%433_R-%TT%%CC%43301" />
+                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%413_R-%TT%%CC%41301" />
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101">
+                                      <when test="1">
+                                        <!-- TODO check using other offset -->
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%513_R-%TT%%CC%51301" />
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101" />
                                       </when>
                                     </choose>
-
                                   </when>
                                 </choose>
                               </when>
@@ -433,98 +407,143 @@
                         </choose>
                         <!-- END b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
 
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801">
-                          <when test="0"><!-- Mode == "3 Werte mit identischer Zeit" -->
-                            <!-- Value (1) ALWAYS -->
-                            <!-- Value (2) -->
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert-Auswahl 2" UIHint="Headline" />
-                            <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%902_R-%TT%%CC%90201" /><!-- TODO HelpContext="IW-ChannelName" -->
-                            <!-- b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
-                            <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" />
-                            <choose ParamRefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201">
-                              <when test="0"><ParameterSeparator Id="%AID%_PS-nnn" Text="    Kategorie wählen für Auswahl von Messwert" /></when>
-                              <when test="1"><!-- Group: Overview -->
-                                <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" />
-                                <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001" SourceParamRefRef="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" />
-                              </when>
-                              <when test="2"><!-- Group: Temperature -->
-                                <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%202_R-%TT%%CC%20201" />
-                                <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001" SourceParamRefRef="%AID%_UP-%TT%%CC%202_R-%TT%%CC%20201" />
-                              </when>
-                              <when test="1 2" >
-                                <!--
-                                <ParameterSeparator Id="%AID%_PS-nnn" Text="      PLATZHALTER: Prüfung selber Zeit-Typ wie 1" />
-                                -->
-                                <choose ParamRefId="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001">
-                                  <when test="&lt;4194304"><!-- current -->
-                                    <!-- IGNORE, Note: Will not be hidden for Disabled Value
-                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Aktuell - keine Zeitauswahl" UIHint="Information" />
-                                    -->
-                                  </when>
-                                  <when default="true">
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001">
-                                      <when test="&lt;8388608"><!-- daily -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%421_R-%TT%%CC%42101" />
-                                      </when>
-                                      <when default="true"><!-- hourly -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%422_R-%TT%%CC%42201" />
-                                      </when>
-                                      <when test="&gt;=12582912"><!-- 15-min -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%423_R-%TT%%CC%42301" />
-                                      </when>
-                                    </choose>
-                                  </when>
-                                </choose>
-                              </when>
-                              <when default="true" ><ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert-Kategorie nicht implementiert" UIHint="Error" /></when>
-                            </choose>
-                            <!-- END b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
 
-                            <!-- Value (3) -->
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert-Auswahl 3" UIHint="Headline" />
-                            <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%903_R-%TT%%CC%90301" /><!-- TODO HelpContext="IW-ChannelName" -->
-                            <!-- b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
-                            <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" />
-                            <choose ParamRefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301">
-                              <when test="0"><ParameterSeparator Id="%AID%_PS-nnn" Text="    Kategorie wählen für Auswahl von Messwert" /></when>
-                              <when test="1"><!-- Group: Overview -->
-                                <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" />
-                                <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" SourceParamRefRef="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" />
-                              </when>
-                              <when test="2"><!-- Group: Temperature -->
-                                <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" />
-                                <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" SourceParamRefRef="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" />
-                              </when>
-                              <when test="1 2" >
-                                <!--
-                                <ParameterSeparator Id="%AID%_PS-nnn" Text="      PLATZHALTER: Prüfung selber Zeit-Typ wie 1" />
+                        <!-- b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Wetter-Wert B" UIHint="Headline" />
+                        <!-- Bezeichnung Wert A -->
+                        <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%902_R-%TT%%CC%90201" /><!-- TODO HelpContext="IW-ChannelName" -->
+                        <!-- Kategorie -->
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201">
+                          <!-- when test="0"><ParameterSeparator Id="%AID%_PS-nnn" Text="    Kategorie wählen für Auswahl von Messwert" /></when -->
+                          <when test="1"><!-- Kategorie == Überblick -->
+                            <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" />
+                            <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001" SourceParamRefRef="%AID%_UP-%TT%%CC%201_R-%TT%%CC%20101" />
+                          </when>
+                          <when test="2"><!-- Kategorie == Temperatur -->
+                            <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%202_R-%TT%%CC%20201" />
+                            <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001" SourceParamRefRef="%AID%_UP-%TT%%CC%202_R-%TT%%CC%20201" />
+                          </when>
+                          <!-- TODO add more categories and remove --><when test="&gt;2"><ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert-Kategorie nicht implementiert" UIHint="Error" /></when>
+                          <when test="&gt;0">
+                            <choose ParamRefId="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001">
+                              <when test="&lt;4194304">
+                                <!-- current -->
+                                <!-- IGNORE, Note: Will not be hidden for Disabled Value
                                 -->
-                                <choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
-                                  <when test="&lt;4194304"><!-- current -->
-                                    <!-- IGNORE, Note: Will not be hidden for Disabled Value
-                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Aktuell - keine Zeitauswahl" UIHint="Information" />
-                                    -->
+                              </when>
+                              <when default="true">
+                                <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201" />
+
+                                <choose ParamRefId="%AID%_UP-%TT%%CC%200_R-%TT%%CC%20001">
+                                  <when test="&lt;8388608">
+                                    <!-- daily -->
+                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%421_R-%TT%%CC%42101" />
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201">
+                                      <when test="1">
+                                        <!-- TODO check using other offset -->
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%521_R-%TT%%CC%52101" />
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" />
+                                      </when>
+                                    </choose>
                                   </when>
                                   <when default="true">
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
-                                      <when test="&lt;8388608"><!-- daily -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%431_R-%TT%%CC%43101" />
+                                    <!-- hour -->
+                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%422_R-%TT%%CC%42201" />
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201">
+                                      <when test="1">
+                                        <!-- TODO check using other offset -->
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%522_R-%TT%%CC%52201" />
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" />
                                       </when>
-                                      <when default="true"><!-- hourly -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%432_R-%TT%%CC%43201" />
-                                      </when>
-                                      <when test="&gt;=12582912"><!-- 15-min -->
-                                        <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%433_R-%TT%%CC%43301" />
+                                    </choose>
+                                  </when>
+                                  <when test="&gt;=12582912">
+                                    <!-- 15-min -->
+                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%423_R-%TT%%CC%42301" />
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201">
+                                      <when test="1">
+                                        <!-- TODO check using other offset -->
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%523_R-%TT%%CC%52301" />
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" />
                                       </when>
                                     </choose>
                                   </when>
                                 </choose>
                               </when>
-                              <when default="true" ><ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert-Kategorie nicht implementiert" UIHint="Error" /></when>
                             </choose>
-                            <!-- END b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
                           </when>
                         </choose>
+                        <!-- END b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
+
+
+                        <!-- b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Wetter-Wert C" UIHint="Headline" />
+                        <!-- Bezeichnung -->
+                        <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%903_R-%TT%%CC%90301" /><!-- TODO HelpContext="IW-ChannelName" -->
+                        <!-- Kategorie -->
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301">
+                          <!-- when test="0"><ParameterSeparator Id="%AID%_PS-nnn" Text="    Kategorie wählen für Auswahl von Messwert" /></when -->
+                          <when test="1"><!-- Kategorie == Überblick -->
+                            <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" />
+                            <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" SourceParamRefRef="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" />
+                          </when>
+                          <when test="2"><!-- Kategorie == Temperatur -->
+                            <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" />
+                            <Assign TargetParamRefRef="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" SourceParamRefRef="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" />
+                          </when>
+                          <!-- TODO add more categories and remove --><when test="&gt;2"><ParameterSeparator Id="%AID%_PS-nnn" Text="Messwert-Kategorie nicht implementiert" UIHint="Error" /></when>
+                          <when test="&gt;0">
+                            <choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
+                              <when test="&lt;4194304">
+                                <!-- current -->
+                                <!-- IGNORE, Note: Will not be hidden for Disabled Value
+                                -->
+                              </when>
+                              <when default="true">
+                                <ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301" />
+
+                                <choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
+                                  <when test="&lt;8388608">
+                                    <!-- daily -->
+                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%431_R-%TT%%CC%43101" />
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301">
+                                      <when test="1">
+                                        <!-- TODO check using other offset -->
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%531_R-%TT%%CC%53101" />
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" />
+                                      </when>
+                                    </choose>
+                                  </when>
+                                  <when default="true">
+                                    <!-- hour -->
+                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%432_R-%TT%%CC%43201" />
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301">
+                                      <when test="1">
+                                        <!-- TODO check using other offset -->
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%532_R-%TT%%CC%53201" />
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" />
+                                      </when>
+                                    </choose>
+                                  </when>
+                                  <when test="&gt;=12582912">
+                                    <!-- 15-min -->
+                                    <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%433_R-%TT%%CC%43301" />
+                                    <choose ParamRefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301">
+                                      <when test="1">
+                                        <!-- TODO check using other offset -->
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%533_R-%TT%%CC%53301" />
+                                        <ParameterRefRef IndentLevel="4" RefId="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" />
+                                      </when>
+                                    </choose>
+                                  </when>
+                                </choose>
+                              </when>
+                            </choose>
+                          </when>
+                        </choose>
+                        <!-- END b2fc9867-72dc-426e-afc0-d7ec9735ca67 -->
 
 
                         <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IWKOs" Text="%C%: {{0}}" TextParameterRefId="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" Inline="true" ShowInComObjectTree="true">

@@ -137,6 +137,13 @@
 								</TypeRestriction>
 							</ParameterType>
 
+							<ParameterType Id="%AID%_PT-ValueModeSimple" Name="ValueModeSimple">
+								<TypeRestriction Base="Value" SizeInBit="1">
+									<Enumeration Id="%ENID%" Value="0" Text="Einzelwert" />
+									<Enumeration Id="%ENID%" Value="1" Text="Intervall-Aggregationen" />
+								</TypeRestriction>
+							</ParameterType>
+
 							<ParameterType Id="%AID%_PT-TimeOffsetDays" Name="TimeOffsetDays">
 								<TypeNumber SizeInBit="6" Type="signedInt" minInclusive="-28" maxInclusive="16" />
 							</ParameterType>
