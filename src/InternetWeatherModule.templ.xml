@@ -12,9 +12,9 @@
               <Parameter Id="%AID%_P-%TT%%CC%000" Name="CH%C%Name"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
               <Parameter Id="%AID%_P-%TT%%CC%999" Name="CH%C%NameDisplay" ParameterType="%AID%_PT-Text45Byte" Text="Beschreibung (Anzeige)" Value="" Access="Read" op:configTransfer="never" />
 
-              <Parameter Id="%AID%_P-%TT%%CC%901" Name="CH%C%Out1"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung    (A)"     Value="" />
-              <Parameter Id="%AID%_P-%TT%%CC%902" Name="CH%C%Out2"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung    (B)"     Value="" />
-              <Parameter Id="%AID%_P-%TT%%CC%903" Name="CH%C%Out3"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung    (C)"     Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%901" Name="CH%C%Out1"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%902" Name="CH%C%Out2"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%903" Name="CH%C%Out3"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
 
               <!-- Weather outputs -->
               <Union SizeInBit="96">
@@ -34,9 +34,9 @@
                 <!-- 1 Bit unused -->
 
                 <!-- Offset [1;2[ -->
-                <Parameter Offset="1" BitOffset="0" Id="%AID%_UP-%TT%%CC%041" Name="CH%C%MeasurementType1"  ParameterType="%AID%_PT-ValueModeSimple"  Text="Typ   (A)"       Value="0" />
-                <Parameter Offset="1" BitOffset="1" Id="%AID%_UP-%TT%%CC%042" Name="CH%C%MeasurementType2"  ParameterType="%AID%_PT-ValueModeSimple"  Text="Typ   (B)"       Value="0" />
-                <Parameter Offset="1" BitOffset="2" Id="%AID%_UP-%TT%%CC%043" Name="CH%C%MeasurementType3"  ParameterType="%AID%_PT-ValueModeSimple"  Text="Typ   (C)"       Value="0" />
+                <Parameter Offset="1" BitOffset="0" Id="%AID%_UP-%TT%%CC%041" Name="CH%C%MeasurementType1"  ParameterType="%AID%_PT-ValueModeSimple"  Text="Typ"             Value="0" />
+                <Parameter Offset="1" BitOffset="1" Id="%AID%_UP-%TT%%CC%042" Name="CH%C%MeasurementType2"  ParameterType="%AID%_PT-ValueModeSimple"  Text="Typ"             Value="0" />
+                <Parameter Offset="1" BitOffset="2" Id="%AID%_UP-%TT%%CC%043" Name="CH%C%MeasurementType3"  ParameterType="%AID%_PT-ValueModeSimple"  Text="Typ"             Value="0" />
                 <!-- 5 Bit unused -->
 
                 <!-- Offset [2;8[: TimeSelection_* -->
@@ -47,86 +47,86 @@
                 -->
 
                 <!-- Offset [8;10[: MeasurementValue_* -->
-                <Parameter Offset="8" BitOffset="0" Id="%AID%_UP-%TT%%CC%031" Name="CH%C%MeasurementGroup1" ParameterType="%AID%_PT-MeasurementGroup" Text="Kategorie   (A)" Value="0" />
-                <Parameter Offset="9" BitOffset="0" Id="%AID%_UP-%TT%%CC%032" Name="CH%C%MeasurementGroup2" ParameterType="%AID%_PT-MeasurementGroup" Text="Kategorie   (B)" Value="0" />
-                <Parameter Offset="10" BitOffset="0" Id="%AID%_UP-%TT%%CC%033" Name="CH%C%MeasurementGroup3" ParameterType="%AID%_PT-MeasurementGroup" Text="Kategorie   (C)" Value="0" />
+                <Parameter Offset="8"  BitOffset="0" Id="%AID%_UP-%TT%%CC%031" Name="CH%C%MeasurementGroup1" ParameterType="%AID%_PT-MeasurementGroup" Text="Kategorie" Value="0" />
+                <Parameter Offset="9"  BitOffset="0" Id="%AID%_UP-%TT%%CC%032" Name="CH%C%MeasurementGroup2" ParameterType="%AID%_PT-MeasurementGroup" Text="Kategorie" Value="0" />
+                <Parameter Offset="10" BitOffset="0" Id="%AID%_UP-%TT%%CC%033" Name="CH%C%MeasurementGroup3" ParameterType="%AID%_PT-MeasurementGroup" Text="Kategorie" Value="0" />
 
                 <!-- Offset 11: Aggregation_* -->
-                <Parameter Offset="11" BitOffset="0" Id="%AID%_UP-%TT%%CC%071" Name="CH%C%Aggregation1" ParameterType="%AID%_PT-Aggregation" Text="Aggregation   (A)" Value="0" />
-                <Parameter Offset="11" BitOffset="2" Id="%AID%_UP-%TT%%CC%072" Name="CH%C%Aggregation2" ParameterType="%AID%_PT-Aggregation" Text="Aggregation   (B)" Value="1" />
-                <Parameter Offset="11" BitOffset="4" Id="%AID%_UP-%TT%%CC%073" Name="CH%C%Aggregation3" ParameterType="%AID%_PT-Aggregation" Text="Aggregation   (C)" Value="2" />
+                <Parameter Offset="11" BitOffset="0" Id="%AID%_UP-%TT%%CC%071" Name="CH%C%Aggregation1" ParameterType="%AID%_PT-Aggregation" Text="Aggregation" Value="0" />
+                <Parameter Offset="11" BitOffset="2" Id="%AID%_UP-%TT%%CC%072" Name="CH%C%Aggregation2" ParameterType="%AID%_PT-Aggregation" Text="Aggregation" Value="1" />
+                <Parameter Offset="11" BitOffset="4" Id="%AID%_UP-%TT%%CC%073" Name="CH%C%Aggregation3" ParameterType="%AID%_PT-Aggregation" Text="Aggregation" Value="2" />
                 <!-- 2 bit unused -->
               </Union>
               <Union SizeInBit="32">
                 <Memory CodeSegment="%MID%" Offset="12" BitOffset="0" />
 
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%100" Name="CH%C%MeasurementValue1"       ParameterType="%AID%_PT-MeasurementValue" Text="Messwert   (A)"   Value="0" Access="None" op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%101" Name="CH%C%MeasurementValue1Group1" ParameterType="%AID%_PT-GroupOverview"    Text="Messwert   (A)"   Value="0"               op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%102" Name="CH%C%MeasurementValue1Group2" ParameterType="%AID%_PT-GroupTemperature" Text="Messwert   (A)"   Value="0"               op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%100" Name="CH%C%MeasurementValue1"       ParameterType="%AID%_PT-MeasurementValue" Text="Messwert"   Value="0" Access="None" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%101" Name="CH%C%MeasurementValue1Group1" ParameterType="%AID%_PT-GroupOverview"    Text="Messwert"   Value="0"               op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%102" Name="CH%C%MeasurementValue1Group2" ParameterType="%AID%_PT-GroupTemperature" Text="Messwert"   Value="0"               op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
               <Union SizeInBit="32">
                 <Memory CodeSegment="%MID%" Offset="16" BitOffset="0" />
 
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%200" Name="CH%C%MeasurementValue2"       ParameterType="%AID%_PT-MeasurementValue" Text="Messwert   (B)"   Value="0" Access="None" op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%201" Name="CH%C%MeasurementValue2Group1" ParameterType="%AID%_PT-GroupOverview"    Text="Messwert   (B)"   Value="0"               op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%202" Name="CH%C%MeasurementValue2Group2" ParameterType="%AID%_PT-GroupTemperature" Text="Messwert   (B)"   Value="0"               op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%200" Name="CH%C%MeasurementValue2"       ParameterType="%AID%_PT-MeasurementValue" Text="Messwert"   Value="0" Access="None" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%201" Name="CH%C%MeasurementValue2Group1" ParameterType="%AID%_PT-GroupOverview"    Text="Messwert"   Value="0"               op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%202" Name="CH%C%MeasurementValue2Group2" ParameterType="%AID%_PT-GroupTemperature" Text="Messwert"   Value="0"               op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
               <Union SizeInBit="32">
                 <Memory CodeSegment="%MID%" Offset="20" BitOffset="0" />
 
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%300" Name="CH%C%MeasurementValue3"       ParameterType="%AID%_PT-MeasurementValue" Text="Messwert   (C)"   Value="0" Access="None" op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%301" Name="CH%C%MeasurementValue3Group1" ParameterType="%AID%_PT-GroupOverview"    Text="Messwert   (C)"   Value="0"               op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%302" Name="CH%C%MeasurementValue3Group2" ParameterType="%AID%_PT-GroupTemperature" Text="Messwert   (C)"   Value="0"               op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%300" Name="CH%C%MeasurementValue3"       ParameterType="%AID%_PT-MeasurementValue" Text="Messwert"   Value="0" Access="None" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%301" Name="CH%C%MeasurementValue3Group1" ParameterType="%AID%_PT-GroupOverview"    Text="Messwert"   Value="0"               op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%302" Name="CH%C%MeasurementValue3Group2" ParameterType="%AID%_PT-GroupTemperature" Text="Messwert"   Value="0"               op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
               <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="24" BitOffset="0" />
 
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%411" Name="CH%C%TimeOffset1Days"         ParameterType="%AID%_PT-TimeOffsetDays"     Text="Offset   (A)"     Value="0" SuffixText="Tage"        op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%412" Name="CH%C%TimeOffset1Hours"        ParameterType="%AID%_PT-TimeOffsetHours"    Text="Offset   (A)"     Value="0" SuffixText="Stunden"     op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%413" Name="CH%C%TimeOffset1QHours"       ParameterType="%AID%_PT-TimeOffset15Mins"   Text="Offset   (A)"     Value="0" SuffixText="1/4 Stunden" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%411" Name="CH%C%TimeOffset1Days"         ParameterType="%AID%_PT-TimeOffsetDays"     Text="Offset"     Value="0" SuffixText="Tage"        op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%412" Name="CH%C%TimeOffset1Hours"        ParameterType="%AID%_PT-TimeOffsetHours"    Text="Offset"     Value="0" SuffixText="Stunden"     op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%413" Name="CH%C%TimeOffset1QHours"       ParameterType="%AID%_PT-TimeOffset15Mins"   Text="Offset"     Value="0" SuffixText="1/4 Stunden" op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
               <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="26" BitOffset="0" />
 
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%511" Name="CH%C%TimeOffset1EndDays"     ParameterType="%AID%_PT-TimeOffsetDays"     Text="bis Offset   (A)" Value="1" SuffixText="Tage"        op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%512" Name="CH%C%TimeOffset1EndHours"    ParameterType="%AID%_PT-TimeOffsetHours"    Text="bis Offset   (A)" Value="1" SuffixText="Stunden"     op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%513" Name="CH%C%TimeOffset1EndQHours"   ParameterType="%AID%_PT-TimeOffset15Mins"   Text="bis Offset   (A)" Value="1" SuffixText="1/4 Stunden" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%511" Name="CH%C%TimeOffset1EndDays"     ParameterType="%AID%_PT-TimeOffsetDays"     Text="bis Offset" Value="1" SuffixText="Tage"        op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%512" Name="CH%C%TimeOffset1EndHours"    ParameterType="%AID%_PT-TimeOffsetHours"    Text="bis Offset" Value="1" SuffixText="Stunden"     op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%513" Name="CH%C%TimeOffset1EndQHours"   ParameterType="%AID%_PT-TimeOffset15Mins"   Text="bis Offset" Value="1" SuffixText="1/4 Stunden" op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
               <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="28" BitOffset="0" />
 
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%421" Name="CH%C%TimeOffset2Days"         ParameterType="%AID%_PT-TimeOffsetDays"     Text="Offset   (B)"   Value="0" SuffixText="Tage"        op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%422" Name="CH%C%TimeOffset2Hours"        ParameterType="%AID%_PT-TimeOffsetHours"    Text="Offset   (B)"   Value="0" SuffixText="Stunden"     op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%423" Name="CH%C%TimeOffset2QHours"       ParameterType="%AID%_PT-TimeOffset15Mins"   Text="Offset   (B)"   Value="0" SuffixText="1/4 Stunden" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%421" Name="CH%C%TimeOffset2Days"         ParameterType="%AID%_PT-TimeOffsetDays"     Text="Offset"   Value="0" SuffixText="Tage"        op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%422" Name="CH%C%TimeOffset2Hours"        ParameterType="%AID%_PT-TimeOffsetHours"    Text="Offset"   Value="0" SuffixText="Stunden"     op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%423" Name="CH%C%TimeOffset2QHours"       ParameterType="%AID%_PT-TimeOffset15Mins"   Text="Offset"   Value="0" SuffixText="1/4 Stunden" op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
               <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="30" BitOffset="0" />
 
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%521" Name="CH%C%TimeOffset2EndDays"     ParameterType="%AID%_PT-TimeOffsetDays"     Text="bis Offset   (B)" Value="1" SuffixText="Tage"        op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%522" Name="CH%C%TimeOffset2EndHours"    ParameterType="%AID%_PT-TimeOffsetHours"    Text="bis Offset   (B)" Value="1" SuffixText="Stunden"     op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%523" Name="CH%C%TimeOffset2EndQHours"   ParameterType="%AID%_PT-TimeOffset15Mins"   Text="bis Offset   (B)" Value="1" SuffixText="1/4 Stunden" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%521" Name="CH%C%TimeOffset2EndDays"     ParameterType="%AID%_PT-TimeOffsetDays"     Text="bis Offset" Value="1" SuffixText="Tage"        op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%522" Name="CH%C%TimeOffset2EndHours"    ParameterType="%AID%_PT-TimeOffsetHours"    Text="bis Offset" Value="1" SuffixText="Stunden"     op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%523" Name="CH%C%TimeOffset2EndQHours"   ParameterType="%AID%_PT-TimeOffset15Mins"   Text="bis Offset" Value="1" SuffixText="1/4 Stunden" op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
               <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="32" BitOffset="0" />
 
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%431" Name="CH%C%TimeOffset3Days"         ParameterType="%AID%_PT-TimeOffsetDays"     Text="Offset   (C)"   Value="0" SuffixText="Tage"        op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%432" Name="CH%C%TimeOffset3Hours"        ParameterType="%AID%_PT-TimeOffsetHours"    Text="Offset   (C)"   Value="0" SuffixText="Stunden"     op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%433" Name="CH%C%TimeOffset3QHours"       ParameterType="%AID%_PT-TimeOffset15Mins"   Text="Offset   (C)"   Value="0" SuffixText="1/4 Stunden" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%431" Name="CH%C%TimeOffset3Days"         ParameterType="%AID%_PT-TimeOffsetDays"     Text="Offset"   Value="0" SuffixText="Tage"        op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%432" Name="CH%C%TimeOffset3Hours"        ParameterType="%AID%_PT-TimeOffsetHours"    Text="Offset"   Value="0" SuffixText="Stunden"     op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%433" Name="CH%C%TimeOffset3QHours"       ParameterType="%AID%_PT-TimeOffset15Mins"   Text="Offset"   Value="0" SuffixText="1/4 Stunden" op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
               <Union SizeInBit="16">
                 <Memory CodeSegment="%MID%" Offset="34" BitOffset="0" />
 
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%531" Name="CH%C%TimeOffset3EndDays"     ParameterType="%AID%_PT-TimeOffsetDays"     Text="bis Offset   (C)" Value="1" SuffixText="Tage"        op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%532" Name="CH%C%TimeOffset3EndHours"    ParameterType="%AID%_PT-TimeOffsetHours"    Text="bis Offset   (C)" Value="1" SuffixText="Stunden"     op:nowarn="true" />
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%533" Name="CH%C%TimeOffset3EndQHours"   ParameterType="%AID%_PT-TimeOffset15Mins"   Text="bis Offset   (C)" Value="1" SuffixText="1/4 Stunden" op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%531" Name="CH%C%TimeOffset3EndDays"     ParameterType="%AID%_PT-TimeOffsetDays"     Text="bis Offset" Value="1" SuffixText="Tage"        op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%532" Name="CH%C%TimeOffset3EndHours"    ParameterType="%AID%_PT-TimeOffsetHours"    Text="bis Offset" Value="1" SuffixText="Stunden"     op:nowarn="true" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%533" Name="CH%C%TimeOffset3EndQHours"   ParameterType="%AID%_PT-TimeOffset15Mins"   Text="bis Offset" Value="1" SuffixText="1/4 Stunden" op:nowarn="true" />
                 <!-- space unused ? -->
               </Union>
 
