@@ -33,13 +33,24 @@
 									<Enumeration Value="3" Id="%ENID%" Text="Jede Stunde" />
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-WeatherChannelProvider" Name="WeatherChannelProvider">
+
+							<ParameterType Id="%AID%_PT-WeatherChannelType" Name="WeatherChannelType">
 								<TypeRestriction Base="Value" SizeInBit="2">
 									<Enumeration Value="0" Id="%ENID%" Text="Deaktiviert"  />
 									<Enumeration Value="2" Id="%ENID%" Text="Open-Meteo" />
 									<Enumeration Value="1" Id="%ENID%" Text="OpenWeatherMap" />
 								</TypeRestriction>
 							</ParameterType>
+							<ParameterType Id="%AID%_PT-WeatherService" Name="WeatherService">
+								<TypeRestriction Base="Value" SizeInBit="2">
+									<!--
+									<Enumeration Value="0" Id="%ENID%" Text="Deaktiviert"  />
+									-->
+									<Enumeration Value="2" Id="%ENID%" Text="Open-Meteo" />
+									<Enumeration Value="1" Id="%ENID%" Text="OpenWeatherMap" />
+								</TypeRestriction>
+							</ParameterType>
+
 							<ParameterType Id="%AID%_PT-WeatherChannelLocation" Name="WeatherChannelLocation">
 								<TypeRestriction Base="Value" SizeInBit="2">
 									<Enumeration Value="0" Id="%ENID%" Text="Gerätestandort" />

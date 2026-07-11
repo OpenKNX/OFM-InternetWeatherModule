@@ -37,6 +37,7 @@
               -->
 
               <!-- Kanal Name -->
+              <Parameter Id="%AID%_P-%TT%%CC%008" Name="CH%C%TypeOnly"    ParameterType="%AID%_PT-WeatherService" Text="Wetterservice"      Value="1"              op:configTransfer="never" />
               <Parameter Id="%AID%_P-%TT%%CC%009" Name="CH%C%Name"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
               <Parameter Id="%AID%_P-%TT%%CC%999" Name="CH%C%NameDisplay" ParameterType="%AID%_PT-Text45Byte" Text="Beschreibung (Anzeige)" Value="" Access="Read" op:configTransfer="never" />
 
@@ -156,6 +157,8 @@
 
             </Parameters>
             <ParameterRefs>
+              <ParameterRef Id="%AID%_P-%TT%%CC%008_R-%TT%%CC%00801" RefId="%AID%_P-%TT%%CC%008" />
+
               <!-- Kanal Name -->
               <ParameterRef Id="%AID%_P-%TT%%CC%009_R-%TT%%CC%00901" RefId="%AID%_P-%TT%%CC%009" />
               <ParameterRef Id="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" RefId="%AID%_P-%TT%%CC%999" />
@@ -216,6 +219,14 @@
 
             </ParameterRefs>
             <ParameterCalculations>
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0001" Language="JavaScript" Name="SyncType%C%" RLTransformationFunc="BASE_SyncChannelType" LRTransformationFunc="BASE_SyncChannelType">
+                <LParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" AliasName="TypeValue" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%008_R-%TT%%CC%00801" AliasName="TypeValue" />
+                </RParameters>
+              </ParameterCalculation>
               <ParameterCalculation Id="%AID%_PC-%TT%%CC%0091" Language="JavaScript" Name="MarkInactive%CC%" LRTransformationFunc="BASE_MarkInactive" RLTransformationFunc="BASE_Nop">
                 <LParameters>
                   <ParameterRefRef RefId="%AID%_P-%TT%%CC%009_R-%TT%%CC%00901"  AliasName="TextInput" />
@@ -247,7 +258,7 @@
                     <Column Id="%AID%_PB-nnn_C-3" Width="55%" />
                   </Columns>
                   <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,1" Text="Kanal %C%" />
-                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" Cell="1,2" HelpContext="%DOC%" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" Cell="1,2" /><!-- TODO HelpContext="%DOC%" -->
                   <ParameterRefRef RefId="%AID%_P-%TT%%CC%009_R-%TT%%CC%00901" Cell="1,3" HelpContext="IW-ChannelName" />
                 </ParameterBlock>
               </ParameterBlock>
@@ -261,8 +272,8 @@
                     <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%009_R-%TT%%CC%00901" HelpContext="IW-ChannelName" />
 
                     <!-- Provider -->
-                    <ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" /><!-- TODO HelpContext="IW-Provider" -->
-                    <choose ParamRefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001">
+                    <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%008_R-%TT%%CC%00801" /><!-- TODO HelpContext="IW-Provider" -->
+                    <choose ParamRefId="%AID%_P-%TT%%CC%008_R-%TT%%CC%00801">
                       <!-- Open-Meteo -->
                       <when test="2">
                         <choose ParamRefId="%AID%_UP-%TT%00020_R-%TT%0002001">
