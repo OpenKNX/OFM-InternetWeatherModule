@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-model href="../../Organization/knxprod-support/knx_project_14/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
-<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+<?xml-model href="../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/20" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
 	<ManufacturerData>
-		<Manufacturer>
+		<Manufacturer RefId="M-00FA">
 			<ApplicationPrograms>
-				<ApplicationProgram>
+				<ApplicationProgram ApplicationNumber="0" ApplicationVersion="0" DefaultLanguage="de-DE" DynamicTableManagement="false" Id="M-00FA_CS-OpenKNX" Linkable="true" LoadProcedureStyle="MergedProcedure" MaskVersion="MV-07B0" Name="" PeiType="0" ProgramType="ApplicationProgram">
 					<Static>
 						<ParameterTypes>
 							<ParameterType Id="%AID%_PT-APIKEY" Name="API Key">
