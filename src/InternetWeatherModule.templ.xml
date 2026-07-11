@@ -11,8 +11,33 @@
           </op:part>
           <Static>
             <Parameters>
+              <!-- Ids used by large channel concept (should not be used to force new configuration):
+                0 Name
+                1 ChannelType
+                2 LocationType
+                3 Lat
+                4 Lon
+
+                Used in single channel dev:
+                - 5
+                - 6
+                - 7
+
+                11 Current
+                12 Forecast Today
+                13 Forecast Tomorrow
+                14 Forecast Today/Tomorrow Switch
+                15 Forecast next Hour
+                16 Forecast hour after next
+
+                Used in single channel dev:
+                - 101
+                - 102
+                - 201
+              -->
+
               <!-- Kanal Name -->
-              <Parameter Id="%AID%_P-%TT%%CC%000" Name="CH%C%Name"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%009" Name="CH%C%Name"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
               <Parameter Id="%AID%_P-%TT%%CC%999" Name="CH%C%NameDisplay" ParameterType="%AID%_PT-Text45Byte" Text="Beschreibung (Anzeige)" Value="" Access="Read" op:configTransfer="never" />
 
               <Parameter Id="%AID%_P-%TT%%CC%901" Name="CH%C%Out1"        ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung"            Value="" />
@@ -25,9 +50,9 @@
 
                 <!-- Offset [0;1[ -->
                 <!-- Provider -->
-                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%001" Name="CH%C%Provider" ParameterType="%AID%_PT-WeatherChannelProvider" Text="Wetterdienst" Value="0" />
+                <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%010" Name="CH%C%Provider" ParameterType="%AID%_PT-WeatherChannelType" Text="Wetterkanal-Typ" Value="0" />
                 <!-- Ort -->
-                <Parameter Offset="0" BitOffset="2" Id="%AID%_UP-%TT%%CC%002" Name="CH%C%Location" ParameterType="%AID%_PT-WeatherChannelLocation" Text="Ort" Value="0" />
+                <Parameter Offset="0" BitOffset="2" Id="%AID%_UP-%TT%%CC%017" Name="CH%C%Location" ParameterType="%AID%_PT-WeatherChannelLocation" Text="Ort" Value="0" />
                 <!-- Kanal Deaktiviert zu Testzwecke -->
                 <Parameter Offset="0" BitOffset="6" Id="%AID%_UP-%TT%%CC%007" Name="CH%C%Suspended" ParameterType="%AID%_PT-Suspended" Text="Suspendiert" Value="0" />
                 <!-- 1 Bit unused -->
@@ -132,20 +157,16 @@
             </Parameters>
             <ParameterRefs>
               <!-- Kanal Name -->
-              <ParameterRef Id="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" RefId="%AID%_P-%TT%%CC%000" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%009_R-%TT%%CC%00901" RefId="%AID%_P-%TT%%CC%009" />
               <ParameterRef Id="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" RefId="%AID%_P-%TT%%CC%999" />
               <ParameterRef Id="%AID%_P-%TT%%CC%901_R-%TT%%CC%90101" RefId="%AID%_P-%TT%%CC%901" />
               <ParameterRef Id="%AID%_P-%TT%%CC%902_R-%TT%%CC%90201" RefId="%AID%_P-%TT%%CC%902" />
               <ParameterRef Id="%AID%_P-%TT%%CC%903_R-%TT%%CC%90301" RefId="%AID%_P-%TT%%CC%903" />
 
               <!-- Provider -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_UP-%TT%%CC%001" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" RefId="%AID%_UP-%TT%%CC%010" />
               <!-- Ort -->
-              <ParameterRef Id="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_UP-%TT%%CC%002" />
-              <!-- Vorhersagezeit -->
-              <!--
-              <ParameterRef Id="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_UP-%TT%%CC%004" />
-              -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701" RefId="%AID%_UP-%TT%%CC%017" />
 
               <ParameterRef Id="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" RefId="%AID%_UP-%TT%%CC%007" />
               <!--
@@ -195,9 +216,9 @@
 
             </ParameterRefs>
             <ParameterCalculations>
-              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0001" Language="JavaScript" Name="MarkInactive%CC%" LRTransformationFunc="BASE_MarkInactive" RLTransformationFunc="BASE_Nop">
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0091" Language="JavaScript" Name="MarkInactive%CC%" LRTransformationFunc="BASE_MarkInactive" RLTransformationFunc="BASE_Nop">
                 <LParameters>
-                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"  AliasName="TextInput" />
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%009_R-%TT%%CC%00901"  AliasName="TextInput" />
                   <ParameterRefRef RefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" AliasName="CheckboxInactive" />
                 </LParameters>
                 <RParameters>
@@ -226,22 +247,22 @@
                     <Column Id="%AID%_PB-nnn_C-3" Width="55%" />
                   </Columns>
                   <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,1" Text="Kanal %C%" />
-                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" Cell="1,2" HelpContext="%DOC%" />
-                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Cell="1,3" HelpContext="IW-ChannelName" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" Cell="1,2" HelpContext="%DOC%" />
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%009_R-%TT%%CC%00901" Cell="1,3" HelpContext="IW-ChannelName" />
                 </ParameterBlock>
               </ParameterBlock>
               <ParameterBlock Id="" Name="ChannelDefinition">
-               <choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+               <choose ParamRefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001">
                 <when test="!=0">
                   <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%IW" Text="%C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%999_R-%TT%%CC%99901" Icon="map-marker-radius-outline" ShowInComObjectTree="true"><!-- TODO HelpContext="IW-Channel" -->
 
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Wetter-Kanal" UIHint="Headline" />
                     <!-- Kanal Name -->
-                    <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="IW-ChannelName" />
+                    <ParameterRefRef IndentLevel="1"  RefId="%AID%_P-%TT%%CC%009_R-%TT%%CC%00901" HelpContext="IW-ChannelName" />
 
                     <!-- Provider -->
-                    <ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" /><!-- TODO HelpContext="IW-Provider" -->
-                    <choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+                    <ParameterRefRef IndentLevel="1"  RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" /><!-- TODO HelpContext="IW-Provider" -->
+                    <choose ParamRefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001">
                       <!-- Open-Meteo -->
                       <when test="2">
                         <choose ParamRefId="%AID%_UP-%TT%00020_R-%TT%0002001">
@@ -276,7 +297,7 @@
                         <!-- Nicht deaktiviert -->
                         <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" /><!-- TODO add ContextHelp Suspended -->
                         <!-- Ort -->
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" /><!-- TODO HelpContext="IW-Location" -->
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701" /><!-- TODO HelpContext="IW-Location" -->
 
                         <op:usePart name="OUTPUT" xpath="//Dynamic/ChannelIndependentBlock/*" />
 
