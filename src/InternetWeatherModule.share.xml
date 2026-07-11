@@ -24,12 +24,7 @@
 								<TypeText SizeInBit="8" />
 								<!-- 1 character -->
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-WeatherLocationType" Name="WeatherLocation">
-								<TypeRestriction Base="Value" SizeInBit="1">
-									<Enumeration Value="0" Id="%ENID%" Text="Gerätestandort aus Allgemein"/>
-									<Enumeration Value="1" Id="%ENID%" Text="Anderer Ort" />
-								</TypeRestriction>
-							</ParameterType>
+
 							<ParameterType Id="%AID%_PT-WeatherRefreshInterval" Name="WeatherRefreshInterval">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Value="0" Id="%ENID%" Text="Keine" />
@@ -52,6 +47,8 @@
 									<Enumeration Value="2" Id="%ENID%" Text="Ort 2" />
 								</TypeRestriction>
 							</ParameterType>
+
+							<!--
 							<ParameterType Id="%AID%_PT-WeatherChannelCategory" Name="WeatherChannelCategory">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Value="1" Id="%ENID%" Text="Temperatur"           />
@@ -105,14 +102,8 @@
 									<Enumeration Value="5" Id="%ENID%" Text="Nacht"   />
 								</TypeRestriction>
 							</ParameterType>
+							-->
 
-
-							<ParameterType Id="%AID%_PT-WeatherChannelTempUnit" Name="WeatherChannelTempUnit">
-								<TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
-									<Enumeration Value="0" Id="%ENID%" Text="°C"  />
-									<Enumeration Value="1" Id="%ENID%" Text="°F"  />
-								</TypeRestriction>
-							</ParameterType>
 							<ParameterType Id="%AID%_PT-WeatherChannelSpeedUnit" Name="WeatherChannelSpeedUnit">
 								<TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
 									<Enumeration Value="0" Id="%ENID%" Text="m/s"  />

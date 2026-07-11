@@ -28,10 +28,6 @@
                 <Parameter Offset="0" BitOffset="0" Id="%AID%_UP-%TT%%CC%001" Name="CH%C%Provider" ParameterType="%AID%_PT-WeatherChannelProvider" Text="Wetterdienst" Value="0" />
                 <!-- Ort -->
                 <Parameter Offset="0" BitOffset="2" Id="%AID%_UP-%TT%%CC%002" Name="CH%C%Location" ParameterType="%AID%_PT-WeatherChannelLocation" Text="Ort" Value="0" />
-                <!-- Vorhersagezeit -->
-                <!--
-                <Parameter Offset="0" BitOffset="4" Id="%AID%_UP-%TT%%CC%006" Name="CH%C%ForecastTime" ParameterType="%AID%_PT-WeatherChannelForecastTimeType" Text="Zeitliche Dimension" Value="0" />
-                -->
                 <!-- Kanal Deaktiviert zu Testzwecke -->
                 <Parameter Offset="0" BitOffset="6" Id="%AID%_UP-%TT%%CC%007" Name="CH%C%Suspended" ParameterType="%AID%_PT-Suspended" Text="Suspendiert" Value="0" />
                 <!-- 1 Bit unused -->
