@@ -1,3 +1,4 @@
+#ifndef OPENKNX_INTERNETWEATHER_IGNORE
 #include "OpenMeteoChannel.h"
 #ifdef ARDUINO_ARCH_RP2040
 #define OpenMeteoUrl "http://api.open-meteo.com/v1/forecast"
@@ -262,3 +263,4 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, JsonObject& jsonHourly, in
     JsonArray hourlyCloud = jsonHourly["cloud_cover"];
     wheater.cloudsCover_percent = avg(hourlyCloud, vih, 24);
 }
+#endif
