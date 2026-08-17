@@ -1,4 +1,11 @@
-# (upcoming) v0.5.1
+# (2026-08-17) v0.5.2
+
+* Unterstützung von optionaler Einbindung in OAM
+  * Hinweis: Durch Setzen von `OPENKNX_INTERNETWEATHER_IGNORE` wird das Modul nicht in die Firmware integriert 
+* Fix: Fehlender Version-Tag von Missing Version Definition
+* Fix: Missing Changelog-Entry (Rollback zu Old Changelog-Format)
+
+# v0.5.1
 
 * Fix: Open-Meteo API hatte die komplette Basis-URL überschrieben
 * Fix: KO Morning feels like temperature was filled with evening feels like temperature 
