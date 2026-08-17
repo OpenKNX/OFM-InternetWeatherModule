@@ -1,7 +1,8 @@
 # (2026-08-17) v0.5.2
 
 * Unterstützung von optionaler Einbindung in OAM
-  * Hinweis: Durch Setzen von `OPENKNX_INTERNETWEATHER_IGNORE` wird das Modul nicht in die Firmware integriert 
+  * Hinweis: Durch Setzen von `OPENKNX_INTERNETWEATHER_IGNORE` wird das Modul nicht in die Firmware integriert
+* Fix Typo/Refactor: "Wheather" to "Weather" Bezeichnern
 * Fix: Fehlender Version-Tag von Missing Version Definition
 * Fix: Missing Changelog-Entry (Rollback zu Old Changelog-Format)
 
