@@ -59,6 +59,9 @@ Getestete Hardware:
 In das Anwendungs XML muss OFM-Network (oder OFM-WLAN) und das OFM-InternetWeatherModule aufgenommen werden:
 
 ```xml
+  <!-- Set current version to use: -->
+  <op:config name="%IW_VerifyVersion%"  value="..." />
+
   <op:define prefix="NET" ModuleType="11" 
     share="../lib/OFM-Network/src/Network.share.xml">
     <op:verify File="../lib/OFM-Network/library.json" ModuleVersion="2" /> 
@@ -70,7 +73,7 @@ In das Anwendungs XML muss OFM-Network (oder OFM-WLAN) und das OFM-InternetWeath
     NumChannels="5"
     KoSingleOffset="400"
     KoOffset="410">
-    <op:verify File="../lib/OFM-InternetWeatherModule/library.json" ModuleVersion="0.1" /> 
+    <op:verify File="../lib/OFM-InternetWeatherModule/library.json" ModuleVersion="%IW_VerifyVersion%" /> 
   </op:define>
 ```
 
