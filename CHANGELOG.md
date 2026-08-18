@@ -1,3 +1,10 @@
+# (2026-08-18) v0.5.3
+
+* Fix: Build von v0.5.2 scheiterte
+* Automatisierter Build-Check
+* Doc Fix: Veraltete Version in Readme
+* Doc: Warnung vor blockierender Request Impelementation
+
 # (2026-08-17) v0.5.2
 
 * Unterstützung von optionaler Einbindung in OAM
