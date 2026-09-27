@@ -6,6 +6,13 @@ Dies ist ein Modul zur Integration von Internet Wetterdiensten.
 
 Das Modul setzt [OFM-Network](https://github.com/OpenKNX/OFM-Network) oder [OFM-WLAN](https://github.com/mgeramb/OFM-WLANModule) voraus.
 
+> [!WARNING]
+> ## Achtung blockierende Netzwerkabfragen!
+>
+> Die aktuelle Implementierung nutzt (derzeit noch) lange blockierenden HTTP-Requests,
+> diese können die **Funktion bzw. das Zeitverhalten anderer Module stören**.
+> Von einem kombinierten Einsatz wird daher abgeraten, bzw. sollte dieser nur nach sorgfältiger Abwegung der Risiken erfolgen.
+
 ## Features
 
 - Aktuelle Werte
@@ -59,6 +66,9 @@ Getestete Hardware:
 In das Anwendungs XML muss OFM-Network (oder OFM-WLAN) und das OFM-InternetWeatherModule aufgenommen werden:
 
 ```xml
+  <!-- Set current version to use: -->
+  <op:config name="%IW_VerifyVersion%"  value="..." />
+
   <op:define prefix="NET" ModuleType="11" 
     share="../lib/OFM-Network/src/Network.share.xml">
     <op:verify File="../lib/OFM-Network/library.json" ModuleVersion="2" /> 
@@ -70,7 +80,7 @@ In das Anwendungs XML muss OFM-Network (oder OFM-WLAN) und das OFM-InternetWeath
     NumChannels="5"
     KoSingleOffset="400"
     KoOffset="410">
-    <op:verify File="../lib/OFM-InternetWeatherModule/library.json" ModuleVersion="0.1" /> 
+    <op:verify File="../lib/OFM-InternetWeatherModule/library.json" ModuleVersion="%IW_VerifyVersion%" /> 
   </op:define>
 ```
 
@@ -99,20 +109,10 @@ Die Architektur dieses Moduls erlaubt die Nutzung verschiedener Wetter-Dienste.
 
 Derzeit sind folgende Wetteranbieter integriert:
 
-* [OpenWeatherMap](#openweathermap)
 * [Open-Meteo](#open-meteo)
+* [OpenWeatherMap](#openweathermap)
 
 Pull Requests für weitere Dienste sind willkommen!
-
-### OpenWeatherMap
-
-Für die Anfragen wird ein API Key von [https://openweathermap.org](https://openweathermap.org) benötigt.
-1000 Aufrufe pro Tag können gratis durchgeführt werden, jedoch muss auch dafür ein Account angelegt werden und die Subscription für das `One Call API 3.0` aktiviert werden. 
-Bei der Subscription sollte das `Call per day limit` auf 1000 eingestellt werden, damit keine Kosten anfallen können.
-
-![Subscription](doc/IW-Subscription.png)
-
-Siehe https://openweathermap.org/price
 
 ### Open-Meteo
 
@@ -120,6 +120,15 @@ Siehe https://openweathermap.org/price
 Dieser ist auf maximal 10.000 gewichtete Aufrufe ("API calls") pro Tag beschränkt (Stand 2025-06-01, entspricht mit etwa 3.000 Aktualisierungen in Summe für alle Orte deutlich mehr als zu erwarten);
 Nutzungsbedingungen siehe https://open-meteo.com/en/terms (nur englisch).
 
+### OpenWeatherMap
+
+Für die Anfragen wird ein API-Key von [https://openweathermap.org](https://openweathermap.org) benötigt.
+1000 Aufrufe pro Tag können gratis durchgeführt werden, jedoch muss auch dafür ein Account angelegt werden und die Subscription für das `One Call API 3.0` aktiviert werden.
+Bei der Subscription sollte das `Call per day limit` auf 1000 eingestellt werden, damit keine Kosten anfallen können.
+
+![Subscription](doc/IW-Subscription.png)
+
+Siehe https://openweathermap.org/price
 
 
 ## Lizenz

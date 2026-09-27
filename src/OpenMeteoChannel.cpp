@@ -1,3 +1,4 @@
+#ifndef OPENKNX_INTERNETWEATHER_IGNORE
 #include "OpenMeteoChannel.h"
 #ifdef ARDUINO_ARCH_RP2040
 #define OpenMeteoUrl "http://api.open-meteo.com/v1/forecast"
@@ -15,7 +16,7 @@ const std::string OpenMeteoChannel::name()
     return "OpenMeteo";
 }
 
-int16_t OpenMeteoChannel::fillWeather(CurrentWheatherData& currentWeather, ForecastDayWheatherData& todayWeather, ForecastDayWheatherData& tomorrowWeather, ForecastHourWheatherData& hour1Weather, ForecastHourWheatherData& hour2Weather)
+int16_t OpenMeteoChannel::fillWeather(CurrentWeatherData& currentWeather, ForecastDayWeatherData& todayWeather, ForecastDayWeatherData& tomorrowWeather, ForecastHourWeatherData& hour1Weather, ForecastHourWeatherData& hour2Weather)
 {
     // TODO check using csv-result
 
@@ -262,3 +263,4 @@ void OpenMeteoChannel::fillForecast(JsonObject& json, JsonObject& jsonHourly, in
     JsonArray hourlyCloud = jsonHourly["cloud_cover"];
     wheater.cloudsCover_percent = avg(hourlyCloud, vih, 24);
 }
+#endif

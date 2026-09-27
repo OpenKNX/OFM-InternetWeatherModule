@@ -1,3 +1,4 @@
+#ifndef OPENKNX_INTERNETWEATHER_IGNORE
 #include "BaseWeatherChannel.h"
 #ifdef WLAN_WifiSSID
 #include "WiFi.h"
@@ -359,3 +360,4 @@ void BaseWeatherChannel::updateDayForecastKo(ForecastDayWeatherDataWithDescripti
     setValueCompare(koOffset + IW_KoCHTodayClouds, fd.cloudsCover_percent, DPT_Scaling);
     logIndentDown();
 }
+#endif

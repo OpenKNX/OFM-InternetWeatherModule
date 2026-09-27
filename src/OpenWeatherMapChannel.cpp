@@ -1,3 +1,4 @@
+#ifndef OPENKNX_INTERNETWEATHER_IGNORE
 #include "OpenWeatherMapChannel.h"
 #ifdef ARDUINO_ARCH_RP2040 
 #define OpenWeatherMapUrl "http://api.openweathermap.org/data/3.0/onecall?units=metric&lang=de&exclude=minutely,alerts"
@@ -109,3 +110,4 @@ void OpenWeatherMapChannel::fillForecast(JsonObject& json, ForecastDayWeatherDat
     wheater.uvi_unitOne = json["uvi"];                           // 6.29
     wheater.cloudsCover_percent = json["clouds"];                     // 40
 }
+#endif
