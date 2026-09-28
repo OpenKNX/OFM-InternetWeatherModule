@@ -78,3 +78,20 @@ U.u. sollte die Auswahl auf auf zwei Ebenen aufgeteilt werden um eine bessere Ü
 * Maximale Temperatur bis zum Tagesende
 * Maximale Minimaltemperatur der nächsten 7 Tage
 
+
+## Abfrageermittlung
+
+* Der abgefragte Umfang soll minimiert werden
+  * Zunächst minimale Anzahl von Requests
+* Requests müssen disjunkt nach Ort erfolgen. D.h.: separat für Geräteort, Ort1, Ort2
+* Requests müssen disjunkt nach Radiation direction inkl. ohne erfolgen
+* Zeitfenster müssen minimiert gesetzt werden:
+  * \[past_days, forecast_days\]
+  * \[past_hours, forecast_hours\]
+  * \[past_minutely_15; forecast_minutely_15\]
+
+````
+Request[location 1..3][]
+for c in enabled_channels
+
+````
