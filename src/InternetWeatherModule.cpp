@@ -1,3 +1,4 @@
+#ifndef OPENKNX_INTERNETWEATHER_IGNORE
 #include "InternetWeatherModule.h"
 #include "OpenWeatherMapChannel.h"
 #include "OpenMeteoChannel.h"
@@ -100,3 +101,4 @@ bool InternetWeatherModule::processCommand(const std::string cmd, bool diagnoseK
  
 
 InternetWeatherModule openknxInternetWeatherModule;
+#endif

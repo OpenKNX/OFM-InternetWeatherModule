@@ -516,7 +516,7 @@
                       <when test="2">         
                         <choose ParamRefId="%AID%_UP-%TT%00020_R-%TT%0002001">
                           <when test="0">
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Nutzung/Lizenz muss ausgewählt werden zur Verwendung von Open-Meteo!&#10;Hinweis: Die Einstellung kann auf der Seite 'Basiseinstellungen' vorgenommen werden." UIHint="Error"/>
+                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Nutzung/Lizenz muss ausgewählt werden zur Verwendung von Open-Meteo!&#10;Hinweis: Die Einstellung kann auf der Seite 'Internet Wetter'/'Allgemein' vorgenommen werden." UIHint="Error"/>
                           </when>
                           <when default="true">
                             <!-- 2024-08-01/2025-05-30: Free-API erlaubt Maximal 10000 API-Aufrufe pro Tag, 5000 pro Stunde und 600 pro Minute. 
