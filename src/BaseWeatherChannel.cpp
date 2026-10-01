@@ -111,7 +111,7 @@ bool BaseWeatherChannel::processCommand(const std::string cmd, bool diagnoseKo)
 
 void BaseWeatherChannel::buildDescription(char* description, float rain, float snow, uint8_t clouds, const char* prefix)
 {
-    memset(description, 0, 15) ; // Must be 0 terminated
+    memset(description, 0, 15); // Must be 0 terminated
     char* buffer = description;
     int bufferSize = 15;
     auto prefixLen = strlen(prefix);
