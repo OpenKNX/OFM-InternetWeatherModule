@@ -26,23 +26,16 @@ int16_t OpenWeatherMapChannel::fillWeather(CurrentWeatherData& currentWeather, F
     url += "&lon=";
     url += ParamIW_CHWeatherLocationType == 0 ? ParamBASE_Longitude : ParamIW_CHLongitude;
     logDebugP("Call: %s", url.c_str());
-    HTTPClient http;
-#ifdef ARDUINO_ARCH_RP2040   
-    if (url.startsWith("https://"))
-        http.setInsecure();
-#endif
-    http.begin(url);
 
+    String responseBody;
     // Send HTTP GET request
-    auto httpStatus = http.GET();
+    auto httpStatus = getHttpResponse(url, responseBody);
     if (httpStatus != 200)
-    {   
-        http.end();
+    {
         return httpStatus;
     }
     JsonDocument doc;
-    deserializeJson(doc, http.getString());
-    http.end();
+    deserializeJson(doc, responseBody);
 
     JsonObject current = doc["current"];
     fillForecast(current, currentWeather);

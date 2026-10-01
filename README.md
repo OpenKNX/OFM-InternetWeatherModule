@@ -4,13 +4,15 @@ Dies ist ein Modul zur Integration von Internet Wetterdiensten.
 
 ## Abhängigkeiten
 
-Das Modul setzt [OFM-Network](https://github.com/OpenKNX/OFM-Network) oder [OFM-WLAN](https://github.com/mgeramb/OFM-WLANModule) voraus.
+Das Modul setzt [OFM-Network](https://github.com/OpenKNX/OFM-Network) mit `OPENKNX_WEBCLIENT` voraus.
 
 > [!WARNING]
 > ## Achtung blockierende Netzwerkabfragen!
 >
-> Die aktuelle Implementierung nutzt (derzeit noch) lange blockierenden HTTP-Requests,
+> Die aktuelle Implementierung führt (derzeit noch) blockierenden HTTP-Requests durch,
 > diese können die **Funktion bzw. das Zeitverhalten anderer Module stören**.
+> Die HTTP-Übertragung verwendet nun zwar den nicht-blockierenden Webclient,
+> wartet jedoch auf den Abschluss des Requests, da die Architektur noch nicht angepasst wurde.
 > Von einem kombinierten Einsatz wird daher abgeraten, bzw. sollte dieser nur nach sorgfältiger Abwegung der Risiken erfolgen.
 
 ## Features

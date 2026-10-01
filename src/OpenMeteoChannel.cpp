@@ -86,24 +86,15 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWeatherData& currentWeather, Foreca
     }
 #endif
 
-    HTTPClient http;
-#ifdef ARDUINO_ARCH_RP2040
-    if (url.startsWith("https://"))
-        http.setInsecure();
-#endif
-    http.begin(url);
-
-    // Send HTTP GET request
-    auto httpStatus = http.GET();
+    String responseBody;
+    auto httpStatus = getHttpResponse(url, responseBody);
     if (httpStatus != 200)
     {
-        http.end();
         return httpStatus;
     }
 
     JsonDocument doc;
-    deserializeJson(doc, http.getString());
-    http.end();
+    deserializeJson(doc, responseBody);
 
     JsonObject current = doc["current"];
     fillForecast(current, currentWeather);

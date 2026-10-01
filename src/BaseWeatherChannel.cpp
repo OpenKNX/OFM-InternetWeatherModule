@@ -1,10 +1,11 @@
 #ifndef OPENKNX_INTERNETWEATHER_IGNORE
 #include "BaseWeatherChannel.h"
-#ifdef WLAN_WifiSSID
-#include "WiFi.h"
-#else
 #include "NetworkModule.h"
+
+#ifndef OPENKNX_WEBCLIENT
+#error "OFM-InternetWeatherModule requires OFM-Network with OPENKNX_WEBCLIENT"
 #endif
+
 BaseWeatherChannel::BaseWeatherChannel(uint8_t index)
 {
     _channelIndex = index;
@@ -166,6 +167,50 @@ void BaseWeatherChannel::setValueCompare(uint goNumber, const KNXValue& value, c
 {
     GroupObject& groupObject = (knx.getGroupObject(IW_KoCalcNumber(goNumber)));
     setValueCompare(groupObject, value, type);
+}
+
+int16_t BaseWeatherChannel::getHttpResponse(const String& url, String& responseBody)
+{
+    static constexpr size_t maxResponseSize = 16384;
+    const uint32_t tStart = millis();
+    bool done = false;
+    OpenKNX::Network::Webclient::Response response;
+
+    const bool queued = openknxNetwork.webclient.get(url.c_str())
+                            .maxBodySize(maxResponseSize)
+                            .ignoreHeaders()
+                            .onDone([&done, &response](const OpenKNX::Network::Webclient::Response& result) {
+                                response = result;
+                                done = true;
+                            })
+                            .send();
+    if (!queued && !done)
+    {
+        logErrorP("Webclient request could not be queued");
+        return 0;
+    }
+
+    while (!done)
+    {
+        openknxNetwork.webclient.loop();
+        yield();
+        if (delayCheckMillis(tStart, OPENKNX_WEBCLIENT_TIMEOUT))
+        {
+            logErrorP("Webclient request timed out");
+            return -1;
+        }
+    }
+
+    if (!response.success())
+        return response.status();
+    if (response.bodyIncomplete())
+    {
+        logErrorP("Weather response exceeded %u bytes, truncated", static_cast<unsigned>(maxResponseSize));
+        return -1;
+    }
+
+    responseBody = response.body().c_str();
+    return response.status();
 }
 
 void BaseWeatherChannel::fetchData()
