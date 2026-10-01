@@ -9,7 +9,8 @@ class OpenWeatherMapChannel : public BaseWeatherChannel
     void fillForecast(JsonObject& json, CurrentWeatherData& wheater);
     void fillForecast(JsonObject& json, ForecastHourWeatherData& wheater);
   protected:
-    int16_t fillWeather(CurrentWeatherData& currentWeather, ForecastDayWeatherData& todayWeather, ForecastDayWeatherData& tomorrowWeather, ForecastHourWeatherData& hour1Weather, ForecastHourWeatherData& hour2Weather) override;
+    bool sendWeatherRequest() override;
+    void fillWeather(const std::string& responseBody, CurrentWeatherData& currentWeather, ForecastDayWeatherData& todayWeather, ForecastDayWeatherData& tomorrowWeather, ForecastHourWeatherData& hour1Weather, ForecastHourWeatherData& hour2Weather) override;
 
   public:
     OpenWeatherMapChannel(uint8_t index);

@@ -66,15 +66,80 @@ void BaseWeatherChannel::loop()
     if (openknxNetwork.established())
 #endif
     {
-        auto now = millis();
-        if (now == 0)
-            now++; // Do not use 0 because it is used as marker for unitialized
-
-        if (_updateIntervalInMs > 0 &&
-            (_lastApiCall == 0 || (now - _lastApiCall > _updateIntervalInMs)))
+        if (_state == RequestState::Idle)
         {
-            _lastApiCall = now;
-            fetchData();
+            auto now = millis();
+            if (now == 0)
+                now++; // Do not use 0 because it is used as marker for unitialized
+    
+            if (_updateIntervalInMs > 0 &&
+                (_lastApiCall == 0 || (now - _lastApiCall > _updateIntervalInMs)))
+            {
+                _lastApiCall = now;
+                fetchData();
+            }
+        }
+        if (_state == RequestState::Planned)
+        {
+            // Step 1: Send the request (without waiting for result)
+            if (!sendWeatherRequest())
+            {
+                // _state is expected to be RequestState::Error
+                _available = false;
+                logErrorP("Webclient request could not be queued");
+                // TODO: send error-state to KO
+                setRequestState(RequestState::Error);
+                return;
+            }
+            // _state is expected to be RequestState::Waiting
+        }
+        if (_state == RequestState::Waiting)
+        {
+            // Step 2: wait until response is available
+
+            // TODO check improving timeout-mechanism; now 20 seconds
+            if (delayCheck(_stateEntryTime, 20*1000))
+            {
+                setRequestState(RequestState::Error);
+            }            
+        }
+        if (_state == RequestState::Received)
+        {
+            // Step 3: process response
+
+            if (_requestResponse.bodyIncomplete())
+            {
+                KoIW_CHHTTPStatus.value((uint16_t)0, DPT_Value_2_Count);
+                _available = false;
+                setRequestState(RequestState::Error);
+                logErrorP("Weather response exceeded %u bytes, truncated", static_cast<unsigned>(maxResponseSize));
+                return;
+            } 
+            const int16_t httpStatus = _requestResponse.status();
+            if (!_requestResponse.success() || httpStatus != 200)
+            {
+                KoIW_CHHTTPStatus.value(httpStatus, DPT_Value_2_Count);
+                _available = false;
+                logErrorP("Http result %d", httpStatus);
+                setRequestState(RequestState::Error);
+                return;
+            }
+
+            fetchDataProcess();
+
+            logDebugP("Http result %d", httpStatus);
+            KoIW_CHHTTPStatus.value(httpStatus, DPT_Value_2_Count);
+
+            setRequestState(RequestState::Idle);
+        }
+        if (_state == RequestState::Error)
+        {
+            // TODO check improving retry; now: after 7 minutes
+            if (delayCheck(_stateEntryTime, 7*60*1000))
+            {
+                setRequestState(RequestState::Idle);
+                _lastApiCall = 0; // force retry without waiting again!
+            }
         }
     }
 }
@@ -169,69 +234,69 @@ void BaseWeatherChannel::setValueCompare(uint goNumber, const KNXValue& value, c
     setValueCompare(groupObject, value, type);
 }
 
-int16_t BaseWeatherChannel::getHttpResponse(const String& url, String& responseBody)
+void BaseWeatherChannel::setRequestState(RequestState newState)
 {
-    static constexpr size_t maxResponseSize = 16384;
-    const uint32_t tStart = millis();
-    bool done = false;
-    OpenKNX::Network::Webclient::Response response;
+    if (_state == newState)
+        return; // do not restart timeouts
 
-    const bool queued = openknxNetwork.webclient.get(url.c_str())
-                            .maxBodySize(maxResponseSize)
-                            .ignoreHeaders()
-                            .onDone([&done, &response](const OpenKNX::Network::Webclient::Response& result) {
-                                response = result;
-                                done = true;
-                            })
-                            .send();
-    if (!queued && !done)
+    _state = newState;
+    _stateEntryTime = delayTimerInit();
+    switch (_state)
     {
-        logErrorP("Webclient request could not be queued");
-        return 0;
-    }
-
-    while (!done)
-    {
-        openknxNetwork.webclient.loop();
-        yield();
-        if (delayCheckMillis(tStart, OPENKNX_WEBCLIENT_TIMEOUT))
-        {
-            logErrorP("Webclient request timed out");
-            return -1;
-        }
-    }
-
-    if (!response.success())
-        return response.status();
-    if (response.bodyIncomplete())
-    {
-        logErrorP("Weather response exceeded %u bytes, truncated", static_cast<unsigned>(maxResponseSize));
-        return -1;
-    }
-
-    responseBody = response.body().c_str();
-    return response.status();
+        case RequestState::Idle:
+        case RequestState::Error:
+            // TODO check OpenKNX Web-Client, if we can use a fixed shared memory block for responses
+            _requestResponse = OpenKNX::Network::Webclient::Response();
+            break;
+    }    
 }
 
 void BaseWeatherChannel::fetchData()
+{
+    switch (_state)
+    {
+        case RequestState::Idle:
+        case RequestState::Error:
+            setRequestState(RequestState::Planned);
+            break;
+        case RequestState::Planned:
+        case RequestState::Waiting:
+        case RequestState::Received:
+        default:
+            break;
+    }
+}
+
+bool BaseWeatherChannel::sendHttpRequest(const String& url)
+{
+    setRequestState(RequestState::Waiting);
+    const bool queued = openknxNetwork.webclient.get(url.c_str())
+                            .maxBodySize(maxResponseSize)
+                            .ignoreHeaders()
+                            .onDone([this](const OpenKNX::Network::Webclient::Response& result) {
+                                if (_state == RequestState::Waiting)
+                                {
+                                    // TODO check using reference, not copy
+                                    _requestResponse = result;
+                                    setRequestState(RequestState::Received);
+                                }
+                            })
+                            .send();
+    if (!queued)
+    {
+        setRequestState(RequestState::Error);
+    }
+    return queued;
+}
+
+void BaseWeatherChannel::fetchDataProcess()
 {
     CurrentWeatherData current = CurrentWeatherData();
     ForecastHourWeatherData hour1 = ForecastHourWeatherData();
     ForecastHourWeatherData hour2 = ForecastHourWeatherData();
 
-    int16_t httpStatus = fillWeather(current, _today, _tomorrow, hour1, hour2);
-    KoIW_CHHTTPStatus.value(httpStatus, DPT_Value_2_Count);
-    if (httpStatus != 200)
-    {
-        _available = false;
-        logErrorP("Http result %d", httpStatus);
-        return;
-    }
-    else
-    {
-        // set _available to true after description is
-        logDebugP("Http result %d", httpStatus);
-    }
+    fillWeather(_requestResponse.body(), current, _today, _tomorrow, hour1, hour2);
+
     buildDescription(_today.description, _today.rain_mm, _today.snow_mm, _today.cloudsCover_percent, (const char*)ParamIW_TextPrefixDayCurrent);
     buildDescription(_tomorrow.description, _tomorrow.rain_mm, _tomorrow.snow_mm, _tomorrow.cloudsCover_percent, (const char*)ParamIW_TextPrefixDayNext);
     _available = true;

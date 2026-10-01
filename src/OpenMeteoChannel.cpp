@@ -16,7 +16,7 @@ const std::string OpenMeteoChannel::name()
     return "OpenMeteo";
 }
 
-int16_t OpenMeteoChannel::fillWeather(CurrentWeatherData& currentWeather, ForecastDayWeatherData& todayWeather, ForecastDayWeatherData& tomorrowWeather, ForecastHourWeatherData& hour1Weather, ForecastHourWeatherData& hour2Weather)
+bool OpenMeteoChannel::sendWeatherRequest()
 {
     // TODO check using csv-result
 
@@ -86,14 +86,13 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWeatherData& currentWeather, Foreca
     }
 #endif
 
-    String responseBody;
-    auto httpStatus = getHttpResponse(url, responseBody);
-    if (httpStatus != 200)
-    {
-        return httpStatus;
-    }
+    return sendHttpRequest(url);
+}
 
+void OpenMeteoChannel::fillWeather(const std::string& responseBody, CurrentWeatherData& currentWeather, ForecastDayWeatherData& todayWeather, ForecastDayWeatherData& tomorrowWeather, ForecastHourWeatherData& hour1Weather, ForecastHourWeatherData& hour2Weather)
+{
     JsonDocument doc;
+    // TODO check for error!
     deserializeJson(doc, responseBody);
 
     JsonObject current = doc["current"];
@@ -160,8 +159,6 @@ int16_t OpenMeteoChannel::fillWeather(CurrentWeatherData& currentWeather, Foreca
 
     fillForecast(hourly, hour + 0, hour1Weather);
     fillForecast(hourly, hour + 1, hour2Weather);
-
-    return httpStatus;
 }
 
 void OpenMeteoChannel::fillForecast(JsonObject& json, CurrentWeatherData& wheater)

@@ -16,7 +16,7 @@ const std::string OpenWeatherMapChannel::name()
     return "OpenWeatherMap";
 }
 
-int16_t OpenWeatherMapChannel::fillWeather(CurrentWeatherData& currentWeather, ForecastDayWeatherData& todayWeather, ForecastDayWeatherData& tomorrowWeather, ForecastHourWeatherData& hour1Weather, ForecastHourWeatherData& hour2Weather)
+bool OpenWeatherMapChannel::sendWeatherRequest()
 {
     String url = OpenWeatherMapUrl;
     url += "&appid=";
@@ -27,13 +27,11 @@ int16_t OpenWeatherMapChannel::fillWeather(CurrentWeatherData& currentWeather, F
     url += ParamIW_CHWeatherLocationType == 0 ? ParamBASE_Longitude : ParamIW_CHLongitude;
     logDebugP("Call: %s", url.c_str());
 
-    String responseBody;
-    // Send HTTP GET request
-    auto httpStatus = getHttpResponse(url, responseBody);
-    if (httpStatus != 200)
-    {
-        return httpStatus;
-    }
+    return sendHttpRequest(url);
+}
+
+void OpenWeatherMapChannel::fillWeather(const std::string& responseBody, CurrentWeatherData& currentWeather, ForecastDayWeatherData& todayWeather, ForecastDayWeatherData& tomorrowWeather, ForecastHourWeatherData& hour1Weather, ForecastHourWeatherData& hour2Weather)
+{
     JsonDocument doc;
     deserializeJson(doc, responseBody);
 
@@ -51,8 +49,6 @@ int16_t OpenWeatherMapChannel::fillWeather(CurrentWeatherData& currentWeather, F
     fillForecast(hour1, hour1Weather);
     JsonObject hour2 = hourly[2];
     fillForecast(hour2, hour2Weather);
-
-    return httpStatus;
 }
 
 void OpenWeatherMapChannel::fillForecast(JsonObject& json, CurrentWeatherData& wheater)

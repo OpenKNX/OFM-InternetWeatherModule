@@ -1,5 +1,6 @@
 #pragma once
 #include "OpenKNX.h"
+#include "NetworkModule.h"
 
 #include "ArduinoJson.h"
 
@@ -87,19 +88,45 @@ struct ForecastDayWeatherDataWithDescription : ForecastDayWeatherData
 class BaseWeatherChannel : public OpenKNX::Channel
 {
   private:
+
+    enum class RequestState : uint8_t
+    {
+        Idle,      // no request scheduled or active
+        Planned,   // request is scheduled (for next loop), but not yet sent
+        Waiting,   // request was send, needs to wait for response
+        Received,  // response was received, needs to be processed
+        Error,     // request failed, needs to be handled
+    };
+
+    static constexpr size_t maxResponseSize = 16384;
     unsigned long _lastApiCall = 0;
     unsigned long _updateIntervalInMs = 0;
     bool _available = false;
+
+    RequestState _state = RequestState::Idle;
+    OpenKNX::Network::Webclient::Response _requestResponse;
+
+    void setRequestState(RequestState newState);
+    unsigned long _stateEntryTime = 0;
+
     ForecastDayWeatherDataWithDescription _today = ForecastDayWeatherDataWithDescription();
     ForecastDayWeatherDataWithDescription _tomorrow = ForecastDayWeatherDataWithDescription();
     void buildDescription(char* description, float rain, float snow, uint8_t clouds, const char* prefix);
     void updateDayForecastKo(ForecastDayWeatherDataWithDescription& day, int koOffset);
-    void fetchData();
 
+    void fetchData();
+    void fetchDataProcess();
+    
   protected:
     BaseWeatherChannel(uint8_t index);
-    int16_t getHttpResponse(const String& url, String& responseBody);
-    virtual int16_t fillWeather(CurrentWeatherData& currentWeather, ForecastDayWeatherData& todayWeather, ForecastDayWeatherData& tomorrowWeather, ForecastHourWeatherData& hour1Weather, ForecastHourWeatherData& hour2Weather) = 0;
+
+    // Step 1: Send the request (without waiting for result)
+    bool sendHttpRequest(const String& url);
+    virtual bool sendWeatherRequest() = 0;
+    // Step 2: wait for response
+    // Step 3: process response
+    virtual void fillWeather(const std::string& responseBody, CurrentWeatherData& currentWeather, ForecastDayWeatherData& todayWeather, ForecastDayWeatherData& tomorrowWeather, ForecastHourWeatherData& hour1Weather, ForecastHourWeatherData& hour2Weather) = 0;
+
     void setValueCompare(GroupObject& groupObject, const KNXValue& value, const Dpt& type);
     void setValueCompare(uint goNumber, const KNXValue& value, const Dpt& type);
 
