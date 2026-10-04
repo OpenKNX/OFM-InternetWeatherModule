@@ -6,6 +6,13 @@
 #error "OFM-InternetWeatherModule requires OFM-Network with OPENKNX_WEBCLIENT"
 #endif
 
+// static initialization:
+
+static_assert(IW_ChannelCount < IW_HTTP_REQUEST_SLOT_FREE);
+uint16_t BaseWeatherChannel::_httpRequestSlot = IW_HTTP_REQUEST_SLOT_FREE;
+
+// static initialization // END
+
 BaseWeatherChannel::BaseWeatherChannel(uint8_t index)
 {
     _channelIndex = index;
@@ -81,17 +88,20 @@ void BaseWeatherChannel::loop()
         }
         if (_state == RequestState::Planned)
         {
-            // Step 1: Send the request (without waiting for result)
-            if (!sendWeatherRequest())
+            if (blockHttpRequestSlot())
             {
-                // _state is expected to be RequestState::Error
-                _available = false;
-                logErrorP("Webclient request could not be queued");
-                // TODO: send error-state to KO
-                setRequestState(RequestState::Error);
-                return;
+                // Step 1: Send the request (without waiting for result)
+                if (!sendWeatherRequest())
+                {
+                    // _state is expected to be RequestState::Error
+                    _available = false;
+                    logErrorP("Webclient request could not be queued");
+                    // TODO: send error-state to KO
+                    setRequestState(RequestState::Error);
+                    return;
+                }
+                // _state is expected to be RequestState::Waiting
             }
-            // _state is expected to be RequestState::Waiting
         }
         if (_state == RequestState::Waiting)
         {
@@ -247,6 +257,7 @@ void BaseWeatherChannel::setRequestState(RequestState newState)
         case RequestState::Error:
             // TODO check OpenKNX Web-Client, if we can use a fixed shared memory block for responses
             _requestResponse = OpenKNX::Network::Webclient::Response();
+            clearHttpRequestSlot();
             break;
     }    
 }
@@ -265,6 +276,25 @@ void BaseWeatherChannel::fetchData()
         default:
             break;
     }
+}
+
+bool BaseWeatherChannel::blockHttpRequestSlot()
+{
+    if (_httpRequestSlot != IW_HTTP_REQUEST_SLOT_FREE)
+        return false;
+
+    _httpRequestSlot = _channelIndex;
+    return true;
+}
+
+bool BaseWeatherChannel::clearHttpRequestSlot()
+{
+    if (_httpRequestSlot != _channelIndex)
+        return false;
+
+    _httpRequestSlot = IW_HTTP_REQUEST_SLOT_FREE;
+    return true;
+
 }
 
 bool BaseWeatherChannel::sendHttpRequest(const String& url)

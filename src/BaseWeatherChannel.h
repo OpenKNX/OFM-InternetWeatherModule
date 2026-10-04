@@ -16,6 +16,8 @@
     #error "different structure of KO-groups"
 #endif
 
+#define IW_HTTP_REQUEST_SLOT_FREE (0xff)
+
 // ko numbers relative to today forecast
 #define IW_KoOffset_Tomorrow (IW_KoCHTomorrowDescription - IW_KoCHTodayDescription)
 #define IW_KoOffset_Forecast (IW_KoCHForecastDescription - IW_KoCHTodayDescription)
@@ -116,6 +118,10 @@ class BaseWeatherChannel : public OpenKNX::Channel
 
     void fetchData();
     void fetchDataProcess();
+
+    static uint16_t _httpRequestSlot;
+    bool blockHttpRequestSlot();
+    bool clearHttpRequestSlot();
     
   protected:
     BaseWeatherChannel(uint8_t index);
